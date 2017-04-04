@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.EmpKuDao">
+    <resultMap id="empKu" type="com.liangxunwang.unimanager.model.EmpKu">
+        <id column="empkuid" property="empkuid"/>
+        <result column="mobile" property="mobile"/>
+        <result column="nickname" property="nickname"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.liangxunwang.unimanager.model.EmpKu">
+        INSERT INTO emp_ku(empkuid, mobile, nickname,dateline)
+         VALUES (#{empkuid}, #{mobile}, #{nickname}, #{dateline})
+    </insert>
+
+
+    <select id="lists" resultMap="empKu">
+        SELECT sn.*
+        from emp_ku sn
+        limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.empkuid) FROM emp_ku sn
+    </select>
+
+    <select id="findByMobile" resultMap="empKu" parameterType="String">
+        SELECT sn.*
+        from emp_ku sn
+        WHERE sn.mobile=#{mobile}
+    </select>
+
+
+    <insert id="saveList" parameterType="java.util.List">
+        INSERT INTO emp_ku(empkuid, mobile, nickname, dateline)
+        VALUES
+        <foreach  collection="list" item="item" index="index" separator=",">
+            (#{item.empkuid},
+            #{item.mobile},
+            #{item.nickname},
+            #{item.dateline})
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM emp_ku where empkuid = #{empkuid}
+    </delete>
+</mapper>

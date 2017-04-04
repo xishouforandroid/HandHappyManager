@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AdminDao">
+    <resultMap id="my_admin" type="com.liangxunwang.unimanager.model.Admin">
+        <id column="manager_id" property="manager_id"/>
+        <result column="manager_admin" property="manager_admin"/>
+        <result column="manager_cover" property="manager_cover"/>
+        <result column="manager_pass" property="manager_pass"/>
+        <result column="is_use" property="is_use"/>
+        <result column="emp_id" property="emp_id"/>
+        <result column="permissions" property="permissions"/>
+    </resultMap>
+
+    <select id="findById" resultMap="my_admin" parameterType="String">
+        SELECT sn.*
+        from manager sn
+         WHERE sn.manager_id=#{manager_id}
+    </select>
+
+    <select id="findByName" resultMap="my_admin" parameterType="String">
+        SELECT sn.*
+        from manager sn
+        WHERE sn.manager_admin=#{manager_admin}
+    </select>
+
+    <insert id="add" parameterType="com.liangxunwang.unimanager.model.Admin">
+        INSERT INTO manager(manager_id, manager_admin, manager_cover, manager_pass, is_use,emp_id,permissions)
+         VALUES (#{manager_id}, #{manager_admin}, #{manager_cover}, #{manager_pass}, #{is_use}, #{emp_id, jdbcType=VARCHAR}, #{permissions, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM manager WHERE manager_id=#{manager_id}
+    </delete>
+
+    <update id="updatePass" parameterType="String">
+        UPDATE manager SET manager_pass=#{manager_pass} WHERE manager_id=#{manager_id}
+    </update>
+
+    <update id="updateStatus" parameterType="String">
+        UPDATE manager SET is_use=#{is_use} WHERE manager_id=#{manager_id}
+    </update>
+
+    <select id="lists" resultMap="my_admin">
+        SELECT sn.*
+        from manager sn
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.manager_id) FROM manager sn
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.EmpDao">
+    <resultMap id="emp" type="com.liangxunwang.unimanager.model.Emp">
+        <id column="empid" property="empid"/>
+        <result column="mobile" property="mobile"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="cover" property="cover"/>
+        <result column="sign" property="sign"/>
+        <result column="age" property="age"/>
+        <result column="sex" property="sex"/>
+        <result column="heightl" property="heightl"/>
+        <result column="education" property="education"/>
+        <result column="provinceid" property="provinceid"/>
+        <result column="cityid" property="cityid"/>
+        <result column="areaid" property="areaid"/>
+        <result column="marriage" property="marriage"/>
+        <result column="company" property="company"/>
+        <result column="likeids" property="likeids"/>
+        <result column="state" property="state"/>
+        <result column="cardpic" property="cardpic"/>
+        <result column="rzstate1" property="rzstate1"/>
+        <result column="rzstate2" property="rzstate2"/>
+        <result column="rzstate3" property="rzstate3"/>
+        <result column="is_use" property="is_use"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.liangxunwang.unimanager.model.Emp">
+        INSERT INTO emp(empid, mobile, password, nickname,
+        cover,sign,age,sex,
+        heightl,education,provinceid,cityid,
+        marriage,company,likeids,state,
+        cardpic,rzstate1,rzstate2,rzstate3,
+        is_use)
+         VALUES (#{empid}, #{mobile}, #{password}, #{nickname},
+          #{cover}, #{sign}, #{age},#{sex},
+          #{heightl},#{education},#{provinceid},#{cityid},
+          #{marriage},#{company},#{likeids},#{state},
+          #{cardpic},#{rzstate1},#{rzstate2},#{rzstate3},
+          #{is_use})
+    </insert>
+
+    <update id="updatePass" parameterType="String">
+        UPDATE emp SET password=#{password} WHERE empid=#{empid}
+    </update>
+
+    <select id="lists" resultMap="emp">
+        SELECT sn.*
+        from emp sn
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sn.sex = #{sex}
+        </if>
+        <if test="education != null and education != ''">
+            AND sn.education = #{education}
+        </if>
+        <if test="marriage != null and marriage != ''">
+            AND sn.marriage = #{marriage}
+        </if>
+        <if test="state != null and state != ''">
+            AND sn.state = #{state}
+        </if>
+        <if test="rzstate1 != null and rzstate1 != ''">
+            AND sn.rzstate1 = #{rzstate1}
+        </if>
+        <if test="rzstate2 != null and rzstate2 != ''">
+            AND sn.rzstate2 = #{rzstate2}
+        </if>
+        <if test="rzstate3 != null and rzstate3 != ''">
+            AND sn.rzstate3 = #{rzstate3}
+        </if>
+        limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.empid) FROM emp sn
+        WHERE 1=1
+        <if test="is_use != null and is_use != ''">
+            AND sn.is_use = #{is_use}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sn.sex = #{sex}
+        </if>
+        <if test="education != null and education != ''">
+            AND sn.education = #{education}
+        </if>
+        <if test="marriage != null and marriage != ''">
+            AND sn.marriage = #{marriage}
+        </if>
+        <if test="state != null and state != ''">
+            AND sn.state = #{state}
+        </if>
+        <if test="rzstate1 != null and rzstate1 != ''">
+            AND sn.rzstate1 = #{rzstate1}
+        </if>
+        <if test="rzstate2 != null and rzstate2 != ''">
+            AND sn.rzstate2 = #{rzstate2}
+        </if>
+        <if test="rzstate3 != null and rzstate3 != ''">
+            AND sn.rzstate3 = #{rzstate3}
+        </if>
+    </select>
+
+    <select id="findById" resultMap="emp" parameterType="String">
+        SELECT sn.*
+        from emp sn
+        WHERE sn.empid=#{empid}
+    </select>
+
+    <select id="findByMobile" resultMap="emp" parameterType="String">
+        SELECT sn.*
+        from emp sn
+        WHERE sn.mobile=#{mobile}
+    </select>
+
+    <update id="updateStatus" parameterType="String">
+        UPDATE emp SET is_use=#{is_use} WHERE empid=#{empid}
+    </update>
+
+</mapper>

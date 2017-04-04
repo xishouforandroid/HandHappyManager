@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.SuggestDao">
+    <resultMap id="suggest" type="com.liangxunwang.unimanager.model.SuggestObj">
+        <id column="mm_suggest_id" property="mm_suggest_id"/>
+        <result column="mm_suggest_cont" property="mm_suggest_cont"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+    <resultMap id="suggest_vo" type="com.liangxunwang.unimanager.mvc.vo.SuggestVO">
+        <id column="mm_suggest_id" property="mm_suggest_id"/>
+        <result column="mm_suggest_cont" property="mm_suggest_cont"/>
+        <result column="mm_emp_id" property="mm_emp_id"/>
+        <result column="dateline" property="dateline"/>
+        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+    </resultMap>
+
+    <select id="lists" resultMap="suggest_vo">
+         SELECT sn.*,lemp.nickname as nickname from mm_suggest sn
+          LEFT JOIN emp lemp ON sn.mm_emp_id=lemp.empid
+          limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.mm_suggest_id) FROM mm_suggest sn
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.SuggestObj">
+        INSERT INTO mm_suggest(mm_suggest_id, mm_suggest_cont, mm_emp_id, dateline)
+        VALUES (#{mm_suggest_id}, #{mm_suggest_cont ,jdbcType=VARCHAR}, #{mm_emp_id}, #{dateline})
+    </insert>
+
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM mm_suggest where mm_suggest_id = #{mm_suggest_id}
+    </delete>
+
+    <select id="findById" parameterType="String" resultMap="suggest">
+        SELECT * FROM mm_suggest where mm_suggest_id=#{mm_suggest_id}
+    </select>
+
+</mapper>
