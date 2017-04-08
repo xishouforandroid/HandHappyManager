@@ -19,6 +19,7 @@
     <group id="LIKES_MANAGE" name="爱好管理">
         <permission id="ADD_LIKES" name="添加爱好"/>
         <permission id="LIKES_LIST" name="爱好列表"/>
+        <permission id="GROUPS_LIST" name="群组列表"/>
     </group>
 
     <group id="ORDER_MANAGE" name="订单管理">

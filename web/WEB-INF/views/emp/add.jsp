@@ -87,7 +87,7 @@
                 var data = $.parseJSON(_data);
                 if (data.success) {
                     alert("添加成功");
-                    window.location.href = "#module=/emp/listku"+ "&_t=" + new Date().getTime();
+                    window.location.href = "#module=/emp/listku&page=1"+ "&_t=" + new Date().getTime();
                 } else {
                     alert(data.message);
                 }

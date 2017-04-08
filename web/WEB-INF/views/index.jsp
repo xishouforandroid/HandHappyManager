@@ -164,7 +164,7 @@
                     </li>
                 </c:if>
 
-                <c:if test="${um:permission('ADD_LIKES', sessionScope.powers)||um:permission('LIKES_LIST', sessionScope.powers)}">
+                <c:if test="${um:permission('ADD_LIKES', sessionScope.powers)||um:permission('LIKES_LIST', sessionScope.powers) || um:permission('GROUPS_LIST', sessionScope.powers)}">
                     <li class="dropdown">
                         <a href="javascript:void (0);" class="dropdown-toggle">
                             <i class="fa fa-bullhorn"></i>
@@ -177,6 +177,10 @@
                             </c:if>
                             <c:if test="${um:permission('LIKES_LIST', sessionScope.powers)}">
                                 <li><a href="javascript:void(0);" onclick="toPage('likes/list','1')">爱好列表</a>
+                                </li>
+                            </c:if>
+                            <c:if test="${um:permission('GROUPS_LIST', sessionScope.powers)}">
+                                <li><a href="javascript:void(0);" onclick="toPage('groups/list','1')">群组列表</a>
                                 </li>
                             </c:if>
                         </ul>

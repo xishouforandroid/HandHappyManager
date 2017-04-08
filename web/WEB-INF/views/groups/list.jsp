@@ -8,8 +8,8 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="javascript:void(0)" onclick="toPage('mainPage','')">主页</a></li>
-            <li><a href="javascript:void(0)">爱好管理</a></li>
-            <li><a href="javascript:void(0)">爱好列表</a></li>
+            <li><a href="javascript:void(0)">群组管理</a></li>
+            <li><a href="javascript:void(0)">群组列表</a></li>
         </ol>
 
     </div>
@@ -21,7 +21,7 @@
             <div class="box-header">
                 <div class="box-name ui-draggable-handle">
                     <i class="fa fa-table"></i>
-                    <span>爱好列表</span>
+                    <span>群组列表</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -40,7 +40,8 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>标题</th>
+                        <th>名称</th>
+                        <th>详细介绍</th>
                         <th>是否使用</th>
                         <th>操作</th>
                     </tr>
@@ -48,16 +49,15 @@
                     <tbody>
                     <c:forEach items="${list}" var="e" varStatus="st">
                         <tr>
-                            <td>${e.likename}</td>
+                            <td>${e.title}</td>
+                            <td>${e.content}</td>
                             <td>
                                 <c:if test="${e.is_use=='0'}">否</c:if>
                                 <c:if test="${e.is_use=='1'}">是</c:if>
                             </td>
                             <td>
                                 <a class="btn btn-default btn-sm" href="javascript:void (0)"
-                                   onclick="editRole('${e.likeid}')" role="button">详情</a>
-                                <a class="btn btn-default btn-sm" href="javascript:void (0)"
-                                   onclick="addGropups('${e.likeid}','${e.likename}')" role="button">群组</a>
+                                   onclick="editRole('${e.groupid}')" role="button">编辑</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -118,7 +118,7 @@
         var size = getCookie("contract_size");
 
         if (_index <= ${page.pageCount} && _index >= 1) {
-            window.location.href = "#module=/likes/list&page=" + _index + "&size=" + size + "&_t=" + new Date().getTime();
+            window.location.href = "#module=/groups/list&page=" + _index + "&size=" + size + "&_t=" + new Date().getTime();
         } else {
             alert("请输入1-${page.pageCount}的页码数");
         }
@@ -128,7 +128,7 @@
         var size = $("#size").val();
         addCookie("contract_size", size, 36);
         if ((page <= ${page.pageCount} && page >= 1)) {
-            window.location.href = "#module=/likes/list&page=" + page + "&size=" + size + "&_t=" + new Date().getTime();
+            window.location.href = "#module=/groups/list&page=" + page + "&size=" + size + "&_t=" + new Date().getTime();
         } else {
             alert("请输入1-${page.pageCount}的页码数");
         }
@@ -139,22 +139,13 @@
         $.ajax({
             type: "GET",
             data: {"id": _id},
-            url: "/likes/toDetail.do",
+            url: "/groups/toDetail.do",
             success: function (response) {
                 $("#content").html(response);
             }
         });
     }
-    function addGropups(_id,likename) {
-        $.ajax({
-            type: "GET",
-            data: {"id": _id, "likename":likename},
-            url: "/groups/toAdd.do",
-            success: function (response) {
-                $("#content").html(response);
-            }
-        });
-    }
+
 </script>
 
 

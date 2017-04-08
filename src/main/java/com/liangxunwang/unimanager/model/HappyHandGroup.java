@@ -9,7 +9,16 @@ public class HappyHandGroup {
     private String content;
     private String likeid;
     private String topnum;
+    private String pic;
     private String is_use;
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
 
     public String getGroupid() {
         return groupid;

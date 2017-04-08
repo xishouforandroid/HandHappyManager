@@ -45,7 +45,7 @@
                         <input type="hidden" id="likeid" name="likeid" value="${like.likeid}">
 
                         <div class="col-sm-4">
-                            <input type="text" id="likename" class="form-control" placeholder="公告标题" value="${like.likename}"
+                            <input type="text" id="likename" class="form-control" placeholder="爱好标题" value="${like.likename}"
                                    data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                 var data = $.parseJSON(_data);
                 if (data.success) {
                     alert("执行成功");
-                    window.location.href = "#module=likes/list"+ "&_t=" + new Date().getTime();
+                    window.location.href = "#module=likes/list&page=1"+ "&_t=" + new Date().getTime();
                 } else {
                     alert("执行失败，请检查")
                 }
