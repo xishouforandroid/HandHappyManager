@@ -20,6 +20,9 @@
     <link href="/plugins/chartist/chartist.min.css" rel="stylesheet">
     <link href="/css/cat.css" rel="stylesheet">
 
+    <%--icon css 20170405--%>
+    <link rel="stylesheet" href="/plugins/icon/css/style.css"/>
+
     <%--<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>--%>
     <%--<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>--%>
 
