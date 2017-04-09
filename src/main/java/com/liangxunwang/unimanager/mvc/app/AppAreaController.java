@@ -5,8 +5,6 @@ import com.liangxunwang.unimanager.model.Province;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.service.ListService;
-import com.liangxunwang.unimanager.service.app.CityService;
-import com.liangxunwang.unimanager.service.app.ProvinceService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
