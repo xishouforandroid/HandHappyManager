@@ -9,10 +9,11 @@
     <meta name="keyword" content="keywords">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
     <link href="/plugins/bootstrap/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico"/>
     <script src="/plugins/jquery/jquery.min.js"></script>
     <script src="/js/md5.js"></script>
-    <script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
-    <script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+    <%--<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>--%>
+    <%--<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>--%>
 
     <style type="text/css">
         html {

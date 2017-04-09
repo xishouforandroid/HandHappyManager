@@ -26,21 +26,12 @@
         <result column="rzstate2" property="rzstate2"/>
         <result column="rzstate3" property="rzstate3"/>
         <result column="is_use" property="is_use"/>
+        <result column="dateline" property="dateline"/>
     </resultMap>
 
-    <insert id="add" parameterType="com.liangxunwang.unimanager.model.Emp">
-        INSERT INTO emp(empid, mobile, password, nickname,
-        cover,sign,age,sex,
-        heightl,education,provinceid,cityid,
-        marriage,company,likeids,state,
-        cardpic,rzstate1,rzstate2,rzstate3,
-        is_use)
-         VALUES (#{empid}, #{mobile}, #{password}, #{nickname},
-          #{cover}, #{sign}, #{age},#{sex},
-          #{heightl},#{education},#{provinceid},#{cityid},
-          #{marriage},#{company},#{likeids},#{state},
-          #{cardpic},#{rzstate1},#{rzstate2},#{rzstate3},
-          #{is_use})
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.Emp">
+         INSERT INTO emp(empid, mobile, sex, password, is_use, dateline)
+         VALUES (#{empid}, #{mobile}, #{sex}, #{password}, #{is_use}, #{dateline})
     </insert>
 
     <update id="updatePass" parameterType="String">
@@ -121,6 +112,10 @@
 
     <update id="updateStatus" parameterType="String">
         UPDATE emp SET is_use=#{is_use} WHERE empid=#{empid}
+    </update>
+
+    <update id="updateCover" parameterType="String">
+        UPDATE emp SET cover=#{cover} WHERE empid=#{empid}
     </update>
 
 </mapper>

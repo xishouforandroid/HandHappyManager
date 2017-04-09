@@ -128,7 +128,10 @@
                             <td>${e.mobile}</td>
                             <td><img src="${e.cover}" style="width:60px;height: 60px;"></td>
                             <td>${e.age}</td>
-                            <td>${e.sex}</td>
+                            <td>
+                                <c:if test="${e.sex=='0'}">女</c:if>
+                                <c:if test="${e.sex=='1'}">男</c:if>
+                            </td>
                             <td>${e.heightl}</td>
                             <td>
                                 <c:if test="${e.education=='1'}">高中以下</c:if>
@@ -161,6 +164,7 @@
                             <td>
                                 <c:if test="${e.is_use=='0'}">否</c:if>
                                 <c:if test="${e.is_use=='1'}">是</c:if>
+                                <c:if test="${e.is_use=='2'}">未完善资料</c:if>
                             </td>
                             <td>
                                 <a class="btn btn-default btn-sm" href="#module=/admin/detail&empid=${e.empid}"

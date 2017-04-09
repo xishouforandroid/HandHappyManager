@@ -13,8 +13,8 @@ import java.lang.reflect.Type;
 
 public class ControllerConstants {
 
-    public static final String QINIU_AK = "BlO03oIsOtiABwi5ir7uN6Sltkj1g_wdiDKJQnXO";
-    public static final String QINIU_SK = "l4yRw7Jvo3jZQCBoKBHKKzVKa743u_wfXw5ljf8s";
+    public static final String QINIU_AK = "Gtm_frmskgjbyj6FIKD6emEQnDqelQrITyqKi-40";
+    public static final String QINIU_SK = "7aH9ICF4XefQZL5l-s7IRnoOH5PEK7EPKej2RgkX";
 
     public static final String ACCOUNT_KEY = "account";
     public static final String MEMBER_KEY = "member";

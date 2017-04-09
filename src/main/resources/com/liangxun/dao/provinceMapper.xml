@@ -5,7 +5,7 @@
 <mapper namespace="com.liangxunwang.unimanager.dao.ProvinceDao">
     <resultMap id="my_province" type="com.liangxunwang.unimanager.model.Province">
         <id column="pid" property="pid"/>
-        <result column="provinceid" property="provinceId"/>
+        <result column="provinceid" property="provinceid"/>
         <result column="pname" property="pname"/>
     </resultMap>
 

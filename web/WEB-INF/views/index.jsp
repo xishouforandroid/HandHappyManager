@@ -19,7 +19,7 @@
     <link href="/css/style_v2.css" rel="stylesheet">
     <link href="/plugins/chartist/chartist.min.css" rel="stylesheet">
     <link href="/css/cat.css" rel="stylesheet">
-
+    <link rel="shortcut icon" type="image/x-icon" href="../../img/favicon.ico"/>
     <%--icon css 20170405--%>
     <link rel="stylesheet" href="/plugins/icon/css/style.css"/>
 

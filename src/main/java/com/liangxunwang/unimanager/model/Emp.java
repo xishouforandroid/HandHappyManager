@@ -27,6 +27,15 @@ public class Emp
     private String rzstate2;
     private String rzstate3;
     private String is_use;
+    private String dateline;
+
+    public String getDateline() {
+        return dateline;
+    }
+
+    public void setDateline(String dateline) {
+        this.dateline = dateline;
+    }
 
     public String getEmpid() {
         return empid;

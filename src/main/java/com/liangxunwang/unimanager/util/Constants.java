@@ -4,16 +4,13 @@ package com.liangxunwang.unimanager.util;
  * Created by zhl on 2015/1/29.
  */
 public class Constants {
-        public static final String URL = "http://smilekyle.xicp.net:42765/";
+        public static final String URL = "http://157j1274e3.iask.in/";
 //        public static final String URL = "http://www.zhlmlt.cn/";
 
-        public static final String DOWNLOAD_URL = URL + "html/MltApp.apk";
+        public static final String QINIU_URL = "http://oo4c4r583.bkt.clouddn.com/";
 
-        public static final String QINIU_URL = "http://7xqzj9.com1.z0.glb.clouddn.com/";
-
-        public static final String QINIU_SPACE = "hmmm-pic";
+        public static final String QINIU_SPACE = "meetlove-pic";
         public static final String COVER_DEFAULT = "default_avatar.png";
-        public static final String FILE_PATH = "D://recordfile";
 
         public static final String API_KEY = "HGGcyEBPPlfjIieCVnWSlMD6";
         public static final String SECRET_KEY = "vFypyImE4aFxWspAHTCbpsm4Nh2P2pPN";
@@ -45,7 +42,6 @@ public class Constants {
         public static final String SMS_MESSAGE_URL = "http://60.209.7.78:8080/smsServer/submit";
 
         public static final Long DAY_MILLISECOND = 86400000L;
-
 
         //商户PID
         public static final String PARTNER = "2088421398530212";

@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
-/**
- * Created by zhl on 2015/8/12.
- */
+
 @Controller
 public class EmpController extends ControllerConstants {
 

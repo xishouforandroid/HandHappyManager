@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by zhl on 2015/8/12.
  */
 @Service("empService")
-public class EmpService implements ExecuteService,ListService,SaveService,FindService,UpdateService {
+public class EmpService implements ExecuteService,ListService,FindService,UpdateService {
 
     @Autowired
     @Qualifier("empDao")
@@ -70,15 +70,6 @@ public class EmpService implements ExecuteService,ListService,SaveService,FindSe
 
         return new Object[]{lists, count};
     }
-
-
-    @Override
-    public Object save(Object object) throws ServiceException {
-        Emp emp = (Emp) object;
-        empDao.add(emp);
-        return null;
-    }
-
 
     @Override
     public Object findById(Object object) throws ServiceException {

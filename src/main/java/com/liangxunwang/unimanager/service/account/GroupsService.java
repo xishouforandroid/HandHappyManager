@@ -1,11 +1,13 @@
 package com.liangxunwang.unimanager.service.account;
 
+import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.GroupsDao;
 import com.liangxunwang.unimanager.model.HappyHandGroup;
 import com.liangxunwang.unimanager.query.GroupsQuery;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.StringUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;
+import io.swagger.client.model.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class GroupsService implements ListService,SaveService,DeleteService,Exec
     @Autowired
     @Qualifier("groupsDao")
     private GroupsDao groupsDao;
+
+    private EasemobChatGroup easemobChatGroup = new EasemobChatGroup();
 
     @Override
     public Object list(Object object) throws ServiceException {
@@ -49,10 +53,21 @@ public class GroupsService implements ListService,SaveService,DeleteService,Exec
 
     @Override
     public Object save(Object object) throws ServiceException {
-        HappyHandGroup level = (HappyHandGroup) object;
-        level.setGroupid(UUIDFactory.random());
-        level.setIs_use("1");
-        groupsDao.save(level);
+        HappyHandGroup happyHandGroup = (HappyHandGroup) object;
+        happyHandGroup.setGroupid(UUIDFactory.random());
+        happyHandGroup.setIs_use("1");
+        groupsDao.save(happyHandGroup);
+        //添加群组成功，在环信添加群组
+        Group group = new Group();
+//        "groupname":"testrestgrp12", //群组名称，此属性为必须的
+//         "desc":"server create group", //群组描述，此属性为必须的
+//                "public":true, //是否是公开群，此属性为必须的
+//                "maxusers":300, //群组成员最大数（包括群主），值为数值类型，默认值200，最大值2000，此属性为可选的
+//                "approval":true, //加入公开群是否需要批准，默认值是false（加入公开群不需要群主批准），此属性为必选的，私有群必须为true
+//                "owner":"jma1", //群组的管理员，此属性为必须的
+//                "members":["jma2","jma3"] //群组成员，此属性为可选的，但是如果加了此项，数组元素至少一个（注：群主jma1不需要写入到members里面）
+        group.groupname(happyHandGroup.getTitle()).desc(happyHandGroup.getContent())._public(true).maxusers(2000).approval(false).owner("0aca2b9b12cd4b73ad79426ddd28cee5");
+        Object result = easemobChatGroup.createChatGroup(group);
         return null;
     }
 

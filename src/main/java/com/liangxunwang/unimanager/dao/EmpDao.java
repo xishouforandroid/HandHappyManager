@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Repository("empDao")
 public interface EmpDao {
-    void add(Emp emp);
+    void save(Emp emp);
 
     void updatePass(@Param(value = "empid") String empid, @Param(value = "password") String password);
 
@@ -22,4 +22,6 @@ public interface EmpDao {
     Emp findByMobile(String mobile);
 
     void updateStatus(@Param(value = "empid") String empid, @Param(value = "is_use") String is_use);
+
+    void updateCover(@Param(value = "empid") String empid, @Param(value = "cover") String is_use);
 }

@@ -11,7 +11,6 @@
             <li><a href="javascript:void(0)">群组管理</a></li>
             <li><a href="javascript:void(0)">群组列表</a></li>
         </ol>
-
     </div>
 </div>
 
@@ -40,6 +39,7 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th>图片</th>
                         <th>名称</th>
                         <th>详细介绍</th>
                         <th>是否使用</th>
@@ -49,6 +49,7 @@
                     <tbody>
                     <c:forEach items="${list}" var="e" varStatus="st">
                         <tr>
+                            <td><img src="${e.pic}" style="width: 60px;height: 60px;"></td>
                             <td>${e.title}</td>
                             <td>${e.content}</td>
                             <td>

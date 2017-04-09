@@ -5,7 +5,7 @@ package com.liangxunwang.unimanager.model;
  */
 public class Province {
     private String pid;
-    private String provinceId;
+    private String provinceid;
     private String pname;
 
     public String getPid() {
@@ -16,12 +16,12 @@ public class Province {
         this.pid = pid;
     }
 
-    public String getProvinceId() {
-        return provinceId;
+    public String getProvinceid() {
+        return provinceid;
     }
 
-    public void setProvinceId(String provinceId) {
-        this.provinceId = provinceId;
+    public void setProvinceid(String provinceid) {
+        this.provinceid = provinceid;
     }
 
     public String getPname() {
