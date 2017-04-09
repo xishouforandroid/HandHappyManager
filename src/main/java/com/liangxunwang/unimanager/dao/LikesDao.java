@@ -32,4 +32,6 @@ public interface LikesDao {
     public HappyHandLike findById(String likeid);
 
     void update(HappyHandLike happyHandLike);
+
+    List<HappyHandLike> listsAll();
 }

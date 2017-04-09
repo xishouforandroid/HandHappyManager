@@ -30,6 +30,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/token\\.do$)" +
                         "|(^/appProvinces\\.do$)" +
                         "|(^/appCitys\\.do$)" +
+                        "|(^/appLikes\\.do$)" +
+                        "|(^/appUpdateProfile\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 

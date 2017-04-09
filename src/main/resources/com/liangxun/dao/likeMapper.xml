@@ -47,4 +47,8 @@
         UPDATE happy_hand_like SET likename=#{likename},is_use=#{is_use},topnum=#{topnum} WHERE likeid=#{likeid}
     </update>
 
+    <select id="listsAll" resultMap="likes">
+        SELECT sn.* from happy_hand_like sn
+        ORDER by sn.topnum DESC
+    </select>
 </mapper>

@@ -24,4 +24,6 @@ public interface EmpDao {
     void updateStatus(@Param(value = "empid") String empid, @Param(value = "is_use") String is_use);
 
     void updateCover(@Param(value = "empid") String empid, @Param(value = "cover") String is_use);
+
+    void updateProfile(Emp emp);
 }

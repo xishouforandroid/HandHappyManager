@@ -29,6 +29,63 @@ public class Emp
     private String is_use;
     private String dateline;
 
+    //择偶要求
+    private String agestart;
+    private String ageend;
+    private String heightlstart;
+    private String heightlend;
+    private String educationm;
+    private String marriagem;
+
+
+    public String getEducationm() {
+        return educationm;
+    }
+
+    public void setEducationm(String educationm) {
+        this.educationm = educationm;
+    }
+
+    public String getMarriagem() {
+        return marriagem;
+    }
+
+    public void setMarriagem(String marriagem) {
+        this.marriagem = marriagem;
+    }
+
+    public String getAgestart() {
+        return agestart;
+    }
+
+    public void setAgestart(String agestart) {
+        this.agestart = agestart;
+    }
+
+    public String getAgeend() {
+        return ageend;
+    }
+
+    public void setAgeend(String ageend) {
+        this.ageend = ageend;
+    }
+
+    public String getHeightlstart() {
+        return heightlstart;
+    }
+
+    public void setHeightlstart(String heightlstart) {
+        this.heightlstart = heightlstart;
+    }
+
+    public String getHeightlend() {
+        return heightlend;
+    }
+
+    public void setHeightlend(String heightlend) {
+        this.heightlend = heightlend;
+    }
+
     public String getDateline() {
         return dateline;
     }

@@ -118,4 +118,21 @@
         UPDATE emp SET cover=#{cover} WHERE empid=#{empid}
     </update>
 
+    <update id="updateProfile" parameterType="com.liangxunwang.unimanager.model.Emp">
+        UPDATE emp SET
+        sign=#{sign},
+        nickname=#{nickname},
+        age=#{age},
+        heightl=#{heightl},
+        education=#{education},
+        provinceid=#{provinceid},
+        cityid=#{cityid},
+        marriage=#{marriage},
+        company=#{company},
+        likeids=#{likeids},
+        state=#{state},
+        is_use = '1'
+        WHERE empid=#{empid}
+    </update>
+
 </mapper>
