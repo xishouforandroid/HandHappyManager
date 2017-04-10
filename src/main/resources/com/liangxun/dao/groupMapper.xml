@@ -34,7 +34,7 @@
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandGroup">
         INSERT INTO happy_hand_group(groupid, title,content,likeid, is_use, topnum, pic)
-        VALUES (#{groupid}, #{title},#{content},#{likeid}, #{is_use}, #{topnum}, #{pic})
+        VALUES (#{groupid}, #{title},#{content},#{likeid ,jdbcType=VARCHAR}, #{is_use}, #{topnum}, #{pic})
     </insert>
 
     <delete id="delete" parameterType="String">

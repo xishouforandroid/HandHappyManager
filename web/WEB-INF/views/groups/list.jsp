@@ -36,6 +36,18 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
+                <form action="" class="form">
+                    <div class="form-group">
+
+                        <div class="col-md-2 col-lg-2">
+                            <button type="button" onclick="saveSingle()"
+                                    class="btn w12 form-control btn-block btn-danger btn-sm">非兴趣爱好群添加
+                            </button>
+                        </div>
+
+
+                    </div>
+                </form>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -145,6 +157,10 @@
                 $("#content").html(response);
             }
         });
+    }
+
+    function saveSingle() {
+        window.location.href = "#module=/groups/toAddGroups" + "&_t=" + new Date().getTime();
     }
 
 </script>

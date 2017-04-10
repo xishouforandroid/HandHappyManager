@@ -39,7 +39,7 @@
                         <label class="col-sm-2 control-label">名称</label>
                         <input type="hidden" id="likeid" name="likeid" value="${like.likeid}">
                         <div class="col-sm-4">
-                            <input type="text" id="title" class="form-control"
+                            <input type="text" id="title" class="form-control" value="${like.likename}群"
                                     data-toggle="tooltip" data-placement="bottom"
                                    title="Tooltip for name">
                         </div>
@@ -73,7 +73,7 @@
                         <label class="col-sm-2 control-label">排序数字</label>
 
                         <div class="col-sm-4">
-                            <input type="text" id="topnum" class="form-control" placeholder="越大越靠前"
+                            <input type="text" id="topnum" class="form-control" placeholder="越大越靠前" value="${like.topnum}"
                                    data-toggle="tooltip" data-placement="bottom" title="Tooltip for name">
                         </div>
                     </div>

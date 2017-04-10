@@ -112,4 +112,12 @@ public class GroupsController extends ControllerConstants {
         return toJSONString(SUCCESS);
     }
 
+    //非兴趣爱好群添加
+    @RequestMapping(value = "/toAddGroups", produces = "text/plain;charset=UTF-8")
+    public String toAddGroups(ModelMap map, String id) throws Exception {
+        HappyHandLike like = new HappyHandLike();
+        map.put("like", like);
+        return "/groups/add";
+    }
+
 }
