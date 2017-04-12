@@ -4,6 +4,7 @@ import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.query.EmpQuery;
 import com.liangxunwang.unimanager.service.*;
+import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -66,6 +67,17 @@ public class EmpService implements ExecuteService,ListService,FindService,Update
             map.put("rzstate3", query.getRzstate3());
         }
         List<Emp> lists = empDao.lists(map);
+        if(lists != null){
+            for(Emp member:lists){
+                if(!StringUtil.isNullOrEmpty(member.getCover())){
+                    if (member.getCover().startsWith("upload")) {
+                        member.setCover(Constants.URL + member.getCover());
+                    }else {
+                        member.setCover(Constants.QINIU_URL + member.getCover());
+                    }
+                }
+            }
+        }
         long count = empDao.count(map);
 
         return new Object[]{lists, count};
@@ -73,8 +85,15 @@ public class EmpService implements ExecuteService,ListService,FindService,Update
 
     @Override
     public Object findById(Object object) throws ServiceException {
-        Emp emp = empDao.findById((String) object);
-        return emp;
+        Emp member = empDao.findById((String) object); if(!StringUtil.isNullOrEmpty(member.getCover())){
+            if (member.getCover().startsWith("upload")) {
+                member.setCover(Constants.URL + member.getCover());
+            }else {
+                member.setCover(Constants.QINIU_URL + member.getCover());
+            }
+        }
+
+        return member;
     }
 
     @Override

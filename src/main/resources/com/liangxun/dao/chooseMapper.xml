@@ -41,5 +41,15 @@
         WHERE sn.empid=#{empid}
     </select>
 
+    <update id="update" parameterType="String">
+        UPDATE happy_hand_choose SET
+        agestart=#{agestart}
+        ,ageend=#{ageend}
+        ,heightlstart=#{heightlstart}
+        ,heightlend=#{heightlend}
+        ,educationm=#{educationm}
+        ,marriagem=#{marriagem}
+         WHERE chooseid=#{chooseid}
+    </update>
 
 </mapper>

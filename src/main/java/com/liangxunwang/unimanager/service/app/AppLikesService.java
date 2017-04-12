@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Map;
  * Created by zhl on 2015/3/3.
  */
 @Service("appLikesService")
-public class AppLikesService implements ListService{
+public class AppLikesService implements ListService,ExecuteService{
     @Autowired
     @Qualifier("likesDao")
     private LikesDao likesDao;
@@ -29,4 +30,19 @@ public class AppLikesService implements ListService{
         return lists;
     }
 
+    @Override
+    public Object execute(Object object) throws Exception {
+        String likeids = (String) object;
+        List<HappyHandLike> lists = new ArrayList<>();
+        if(!StringUtil.isNullOrEmpty(likeids)){
+            String[] arras = likeids.split(",");
+            if(arras != null){
+                for(int i=0;i<arras.length;i++){
+                    HappyHandLike like = likesDao.findById(arras[i]);
+                    lists.add(like);
+                }
+            }
+        }
+        return lists;
+    }
 }

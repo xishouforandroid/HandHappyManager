@@ -55,10 +55,12 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService {
         if ("0".equals(member.getIs_use())){
             throw new ServiceException("NotUse");
         }
-        if (member.getCover().startsWith("upload")) {
-            member.setCover(Constants.URL + member.getCover());
-        }else {
-            member.setCover(Constants.QINIU_URL + member.getCover());
+        if(!StringUtil.isNullOrEmpty(member.getCover())){
+            if (member.getCover().startsWith("upload")) {
+                member.setCover(Constants.URL + member.getCover());
+            }else {
+                member.setCover(Constants.QINIU_URL + member.getCover());
+            }
         }
         return member;
     }

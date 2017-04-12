@@ -105,6 +105,7 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th>#</th>
                         <th>姓名</th>
                         <th>手机号</th>
                         <th>头像</th>
@@ -117,13 +118,14 @@
                         <th>身份认证</th>
                         <th>会员认证</th>
                         <th>诚信认证</th>
-                        <th>是否禁用</th>
+                        <th>是否使用</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${list}" var="e" varStatus="st">
                         <tr>
+                            <td>${st.index+1}</td>
                             <td>${e.nickname}</td>
                             <td>${e.mobile}</td>
                             <td><img src="${e.cover}" style="width:60px;height: 60px;"></td>
@@ -141,7 +143,7 @@
                                 <c:if test="${e.education=='5'}">研究生以上</c:if>
                             </td>
                             <td>
-                                <c:if test="${e.marriage=='1'}">单身</c:if>
+                                <c:if test="${e.marriage=='1'}">未婚</c:if>
                                 <c:if test="${e.marriage=='2'}">离异</c:if>
                                 <c:if test="${e.marriage=='3'}">丧偶</c:if>
                             </td>
@@ -167,8 +169,8 @@
                                 <c:if test="${e.is_use=='2'}">未完善资料</c:if>
                             </td>
                             <td>
-                                <a class="btn btn-default btn-sm" href="#module=/admin/detail&empid=${e.empid}"
-                                   role="button">管理</a>
+                                <a class="btn btn-default btn-sm" href="#module=/emp/toEdit&empid=${e.empid}"
+                                   role="button">编辑</a>
                             </td>
                         </tr>
                     </c:forEach>

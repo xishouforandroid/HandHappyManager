@@ -10,6 +10,17 @@ public class HappyHandPhoto {
     private String photos;
     private String dateline;
 
+    //会员姓名
+    private String nickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public String getPhotoid() {
         return photoid;
     }

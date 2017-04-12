@@ -30,6 +30,7 @@ public class Emp
     private String dateline;
 
     //择偶要求
+    private String chooseid;
     private String agestart;
     private String ageend;
     private String heightlstart;
@@ -37,6 +38,33 @@ public class Emp
     private String educationm;
     private String marriagem;
 
+    //城市
+    private String pname;
+    private String cityName;
+
+    public String getChooseid() {
+        return chooseid;
+    }
+
+    public void setChooseid(String chooseid) {
+        this.chooseid = chooseid;
+    }
+
+    public String getPname() {
+        return pname;
+    }
+
+    public void setPname(String pname) {
+        this.pname = pname;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 
     public String getEducationm() {
         return educationm;

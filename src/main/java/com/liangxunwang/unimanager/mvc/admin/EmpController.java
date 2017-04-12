@@ -1,12 +1,11 @@
 package com.liangxunwang.unimanager.mvc.admin;
 
+import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.EmpKu;
+import com.liangxunwang.unimanager.model.Province;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.query.EmpQuery;
-import com.liangxunwang.unimanager.service.DeleteService;
-import com.liangxunwang.unimanager.service.ListService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.ServiceException;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import com.liangxunwang.unimanager.util.Page;
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -106,4 +106,27 @@ public class EmpController extends ControllerConstants {
         }
     }
 
+
+
+
+    @Autowired
+    @Qualifier("empService")
+    private FindService empServiceFind;
+
+
+    @Autowired
+    @Qualifier("provinceService")
+    private ListService provinceServiceList;
+
+    @RequestMapping("/emp/toEdit")
+    public String toEdit(HttpSession session,ModelMap map, String empid){
+        Emp emp = (Emp) empServiceFind.findById(empid);
+        map.put("emp", emp);
+
+        //查询省份
+        List<Province> listProvinces = (List<Province>) provinceServiceList.list("");
+        map.put("listProvinces", listProvinces);
+
+        return "/emp/edit";
+    }
 }

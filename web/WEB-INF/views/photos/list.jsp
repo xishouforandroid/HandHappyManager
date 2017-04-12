@@ -8,19 +8,20 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="javascript:void(0)" onclick="toPage('mainPage','')">主页</a></li>
-            <li><a href="javascript:void(0)">会员库管理</a></li>
-            <li><a href="javascript:void(0)">会员库列表</a></li>
+            <li><a href="javascript:void(0)">相册管理</a></li>
+            <li><a href="javascript:void(0)">相册列表</a></li>
         </ol>
 
     </div>
 </div>
+
 <div class="row">
     <div class="col-xs-12 col-sm-12">
         <div class="box ui-draggable ui-droppable">
             <div class="box-header">
                 <div class="box-name ui-draggable-handle">
                     <i class="fa fa-table"></i>
-                    <span>会员库列表</span>
+                    <span>相册列表</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -36,41 +37,28 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form action="" class="form">
-                    <div class="form-group">
-
-                        <div class="col-md-2 col-lg-2">
-                            <button type="button" onclick="saveSingle()"
-                                    class="btn w12 form-control btn-block btn-danger btn-sm">单个添加
-                            </button>
-                        </div>
-                        <div class="col-md-2 col-lg-2">
-                            <button type="button" onclick="P_daoru_Select()"
-                                    class="btn w12 form-control btn-block btn-danger btn-sm">批量导入
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
-
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>姓名</th>
-                        <th>手机号</th>
+                        <th>会员姓名</th>
+                        <th>标题</th>
+                        <th>图片</th>
+                        <th>时间</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${list}" var="e" varStatus="st">
                         <tr>
-                            <td>${st.index+1}</td>
                             <td>${e.nickname}</td>
-                            <td>${e.mobile}</td>
+                            <td>${e.title}</td>
                             <td>
-                                <a class="btn btn-default btn-sm" href="javaScript:void(0)" onclick="deleteRole('${e.empkuid}')"
-                                   role="button">删除</a>
+                                 ${e.photos}
+                            </td>
+                            <td>${e.dateline}</td>
+                            <td>
+                                <a class="btn btn-default btn-sm" href="javascript:void (0)"
+                                   onclick="editRole('${e.photoid}')" role="button">详情</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -118,27 +106,20 @@
                         </c:choose>
                     </ul>
                 </div>
+
+
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-
-    function P_daoru_Select() {
-        window.location.href = "#module=/data/toAdd";
-    }
-
-    function saveSingle() {
-        window.location.href = "#module=/emp/toAdd" + "&_t=" + new Date().getTime();
-    }
     function searchIndex(e) {
         if (e.keyCode != 13) return;
         var _index = $("#index").val();
         var size = getCookie("contract_size");
+
         if (_index <= ${page.pageCount} && _index >= 1) {
-            window.location.href = "#module=/emp/listku&page=" + _index
-            + "&size=" + size
-            + "&_t=" + new Date().getTime();
+            window.location.href = "#module=/photos/list&page=" + _index + "&size=" + size + "&_t=" + new Date().getTime();
         } else {
             alert("请输入1-${page.pageCount}的页码数");
         }
@@ -148,48 +129,22 @@
         var size = $("#size").val();
         addCookie("contract_size", size, 36);
         if ((page <= ${page.pageCount} && page >= 1)) {
-            window.location.href = "#module=/emp/listku&page=" + page
-            + "&size=" + size
-            + "&_t=" + new Date().getTime();
+            window.location.href = "#module=/photos/list&page=" + page + "&size=" + size + "&_t=" + new Date().getTime();
         } else {
             alert("请输入1-${page.pageCount}的页码数");
         }
     }
 
-    function searchOrder(_page) {
-        var page = parseInt(_page);
-        var size = $("#size").val();
-        addCookie("contract_size", size, 36);
-        if ((page <= ${page.pageCount} && page >= 1)) {
-            window.location.href = "#module=/emp/listku&page=" + page
-            + "&size=" + size
-            + "&_t=" + new Date().getTime();
-        } else {
-            alert("请输入1-${page.pageCount}的页码数");
-        }
-    }
 
-    function deleteRole(empkuid) {
-        if (confirm("确定要删除该数据么？")) {
-            $.ajax({
-                url: "/empku/deleteById.do",
-                data: {"empkuid": empkuid},
-                type: "POST",
-                success: function (_data) {
-                    var data = $.parseJSON(_data);
-                    if (data.success) {
-                        alert("删除成功");
-                        var _index = $("#index").val();
-                        var size = getCookie("contract_size");
-                        window.location.href = "#module=/emp/listku&page=" + _index
-                        + "&size=" + size
-                        + "&_t=" + new Date().getTime();
-                    } else {
-                        alert(data.message)
-                    }
-                }
-            });
-        }
+    function editRole(_id) {
+        $.ajax({
+            type: "GET",
+            data: {"id": _id},
+            url: "/photos/toDetail.do",
+            success: function (response) {
+                $("#content").html(response);
+            }
+        });
     }
 
 </script>

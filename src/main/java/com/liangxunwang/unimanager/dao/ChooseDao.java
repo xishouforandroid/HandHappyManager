@@ -18,4 +18,6 @@ public interface ChooseDao {
     HappyHandChoose findById(String chooseid);
 
     HappyHandChoose findByEmpid(String empid);
+
+    void update(HappyHandChoose happyHandChoose);
 }

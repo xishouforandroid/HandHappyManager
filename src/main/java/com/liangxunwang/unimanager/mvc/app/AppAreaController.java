@@ -5,6 +5,7 @@ import com.liangxunwang.unimanager.model.Province;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.service.ListService;
+import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -52,4 +56,17 @@ public class AppAreaController extends ControllerConstants {
         }
     }
 
+
+    @RequestMapping("/getAllCitys")
+    @ResponseBody
+    public String getAllCitys(String provinceid,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<City> listCitysAll = (List<City>) cityService.list(provinceid);
+        try {
+            DataTip tip = new DataTip();
+            tip.setData(listCitysAll);
+            return reBack(toJSONString(tip), request, response);
+        }catch (ServiceException e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
 }

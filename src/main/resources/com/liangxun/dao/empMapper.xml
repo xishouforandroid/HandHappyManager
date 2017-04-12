@@ -27,6 +27,17 @@
         <result column="rzstate3" property="rzstate3"/>
         <result column="is_use" property="is_use"/>
         <result column="dateline" property="dateline"/>
+
+        <result column="chooseid" property="chooseid"/>
+        <result column="agestart" property="agestart"/>
+        <result column="ageend" property="ageend"/>
+        <result column="heightlstart" property="heightlstart"/>
+        <result column="heightlend" property="heightlend"/>
+        <result column="educationm" property="educationm"/>
+        <result column="marriagem" property="marriagem"/>
+
+        <result column="pname" property="pname"/>
+        <result column="cityName" property="cityName"/>
     </resultMap>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.Emp">
@@ -39,8 +50,20 @@
     </update>
 
     <select id="lists" resultMap="emp">
-        SELECT sn.*
+        SELECT sn.*,
+        lcity.cityName as cityName,
+        lpro.pname as pname,
+        lchoose.chooseid as chooseid,
+        lchoose.agestart as agestart,
+        lchoose.ageend as ageend,
+        lchoose.heightlstart as heightlstart,
+        lchoose.heightlend as heightlend,
+        lchoose.educationm as educationm,
+        lchoose.marriagem as marriagem
         from emp sn
+        LEFT JOIN province lpro ON lpro.provinceid = sn.provinceid
+        LEFT JOIN city lcity ON lcity.cityid = sn.cityid
+        LEFT JOIN happy_hand_choose lchoose ON lchoose.empid = sn.empid
         WHERE 1=1
         <if test="is_use != null and is_use != ''">
             AND sn.is_use = #{is_use}
@@ -99,14 +122,38 @@
     </select>
 
     <select id="findById" resultMap="emp" parameterType="String">
-        SELECT sn.*
+       SELECT sn.*,
+        lcity.cityName as cityName,
+        lpro.pname as pname,
+        lchoose.chooseid as chooseid,
+        lchoose.agestart as agestart,
+        lchoose.ageend as ageend,
+        lchoose.heightlstart as heightlstart,
+        lchoose.heightlend as heightlend,
+        lchoose.educationm as educationm,
+        lchoose.marriagem as marriagem
         from emp sn
+        LEFT JOIN province lpro ON lpro.provinceid = sn.provinceid
+        LEFT JOIN city lcity ON lcity.cityid = sn.cityid
+        LEFT JOIN happy_hand_choose lchoose ON lchoose.empid = sn.empid
         WHERE sn.empid=#{empid}
     </select>
 
     <select id="findByMobile" resultMap="emp" parameterType="String">
-        SELECT sn.*
+      SELECT sn.*,
+        lcity.cityName as cityName,
+        lpro.pname as pname,
+        lchoose.chooseid as chooseid,
+        lchoose.agestart as agestart,
+        lchoose.ageend as ageend,
+        lchoose.heightlstart as heightlstart,
+        lchoose.heightlend as heightlend,
+        lchoose.educationm as educationm,
+        lchoose.marriagem as marriagem
         from emp sn
+        LEFT JOIN province lpro ON lpro.provinceid = sn.provinceid
+        LEFT JOIN city lcity ON lcity.cityid = sn.cityid
+        LEFT JOIN happy_hand_choose lchoose ON lchoose.empid = sn.empid
         WHERE sn.mobile=#{mobile}
     </select>
 

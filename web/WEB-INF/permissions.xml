@@ -12,6 +12,10 @@
         <permission id="LIST_EMPLOYEE_JY" name="会员库管理"/>
     </group>
 
+    <group id="PHOTO_LIST_MANAGER" name="客服管理">
+        <permission id="PHOTO_LIST" name="客服列表"/>
+    </group>
+
     <group id="TEL_MANAGE" name="客服电话">
         <permission id="TEL_KEFU_MANAGE" name="客服电话"/>
     </group>

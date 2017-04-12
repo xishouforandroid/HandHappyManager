@@ -39,7 +39,7 @@ public class AppEmpSecondService implements UpdateService {
     @Override
     public Object update(Object object) {
         Emp emp = (Emp) object;
-        HappyHandChoose happyHandChoose = new HappyHandChoose();
+
         if(emp == null){
             throw new ServiceException("null");
         }
@@ -47,15 +47,38 @@ public class AppEmpSecondService implements UpdateService {
             throw new ServiceException("empidnull");
         }
         empDao.updateProfile(emp);
-        happyHandChoose.setChooseid(UUIDFactory.random());
-        happyHandChoose.setEmpid(emp.getEmpid());
-        happyHandChoose.setAgestart(emp.getAgestart());
-        happyHandChoose.setAgeend(emp.getAgeend());
-        happyHandChoose.setHeightlstart(emp.getHeightlstart());
-        happyHandChoose.setHeightlend(emp.getHeightlend());
-        happyHandChoose.setEducationm(emp.getEducationm());
-        happyHandChoose.setMarriagem(emp.getMarriagem());
-        chooseDao.save(happyHandChoose);
-        return emp;
+        if(!StringUtil.isNullOrEmpty(emp.getChooseid())){
+            //更新
+            HappyHandChoose happyHandChoose = new HappyHandChoose();
+            happyHandChoose.setChooseid(emp.getChooseid());
+            happyHandChoose.setAgestart(emp.getAgestart());
+            happyHandChoose.setAgeend(emp.getAgeend());
+            happyHandChoose.setHeightlstart(emp.getHeightlstart());
+            happyHandChoose.setHeightlend(emp.getHeightlend());
+            happyHandChoose.setEducationm(emp.getEducationm());
+            happyHandChoose.setMarriagem(emp.getMarriagem());
+            chooseDao.update(happyHandChoose);
+        }else {
+            //新增
+            HappyHandChoose happyHandChoose = new HappyHandChoose();
+            happyHandChoose.setChooseid(UUIDFactory.random());
+            happyHandChoose.setEmpid(emp.getEmpid());
+            happyHandChoose.setAgestart(emp.getAgestart());
+            happyHandChoose.setAgeend(emp.getAgeend());
+            happyHandChoose.setHeightlstart(emp.getHeightlstart());
+            happyHandChoose.setHeightlend(emp.getHeightlend());
+            happyHandChoose.setEducationm(emp.getEducationm());
+            happyHandChoose.setMarriagem(emp.getMarriagem());
+            chooseDao.save(happyHandChoose);
+        }
+        Emp emp1 = empDao.findById(emp.getEmpid());
+        if(!StringUtil.isNullOrEmpty(emp1.getCover())){
+            if (emp1.getCover().startsWith("upload")) {
+                emp1.setCover(Constants.URL + emp1.getCover());
+            }else {
+                emp1.setCover(Constants.QINIU_URL + emp1.getCover());
+            }
+        }
+        return emp1;
     }
 }

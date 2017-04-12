@@ -119,6 +119,7 @@
                         </ul>
                     </li>
                 </c:if>
+
                 <c:if test="${um:permission('MANAGER_LIST_MANAGE', sessionScope.powers)}">
                     <li class="dropdown">
                         <a href="javascript:void (0);" class="dropdown-toggle">
@@ -145,6 +146,20 @@
                             </c:if>
                             <c:if test="${um:permission('LIST_EMPLOYEE_JY', sessionScope.powers)}">
                                 <li><a href="javascript:void(0);" onclick="toPage('/emp/listku','1')">会员库管理</a></li>
+                            </c:if>
+                        </ul>
+                    </li>
+                </c:if>
+
+                <c:if test="${um:permission('PHOTO_LIST', sessionScope.powers)}">
+                    <li class="dropdown">
+                        <a href="javascript:void (0);" class="dropdown-toggle">
+                            <i class="fa fa-user"></i>
+                            <span>相册管理</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:if test="${um:permission('PHOTO_LIST', sessionScope.powers)}">
+                                <li><a href="javascript:void(0);" onclick="toPage('/photos/list','1')">相册列表</a></li>
                             </c:if>
                         </ul>
                     </li>
@@ -254,6 +269,7 @@
                         </ul>
                     </li>
                 </c:if>
+
                 <c:if test="${um:permission('ABOUT_US_MANA', sessionScope.powers)}">
                     <li class="dropdown">
                         <a href="javascript:void (0);" class="dropdown-toggle">
