@@ -25,5 +25,9 @@ public interface EmpDao {
 
     void updateCover(@Param(value = "empid") String empid, @Param(value = "cover") String is_use);
 
+    //前台更新
     void updateProfile(Emp emp);
+
+    //后台管理员修改会员数据
+    void updateManage(Emp emp);
 }

@@ -85,13 +85,8 @@ public class EmpService implements ExecuteService,ListService,FindService,Update
 
     @Override
     public Object findById(Object object) throws ServiceException {
-        Emp member = empDao.findById((String) object); if(!StringUtil.isNullOrEmpty(member.getCover())){
-            if (member.getCover().startsWith("upload")) {
-                member.setCover(Constants.URL + member.getCover());
-            }else {
-                member.setCover(Constants.QINIU_URL + member.getCover());
-            }
-        }
+        Emp member = empDao.findById((String) object);
+
 
         return member;
     }

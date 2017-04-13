@@ -182,4 +182,22 @@
         WHERE empid=#{empid}
     </update>
 
+    <update id="updateManage" parameterType="com.liangxunwang.unimanager.model.Emp">
+        UPDATE emp SET
+        sign=#{sign},
+        nickname=#{nickname},
+        age=#{age},
+        heightl=#{heightl},
+        cover=#{cover},
+        cardpic=#{cardpic},
+        education=#{education},
+        provinceid=#{provinceid},
+        cityid=#{cityid},
+        marriage=#{marriage},
+        company=#{company},
+        sex=#{sex},
+        is_use = #{is_use}
+        WHERE empid=#{empid}
+    </update>
+
 </mapper>

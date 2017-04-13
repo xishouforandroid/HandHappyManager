@@ -164,8 +164,8 @@
                                 <c:if test="${e.rzstate3=='1'}">是</c:if>
                             </td>
                             <td>
-                                <c:if test="${e.is_use=='0'}">否</c:if>
-                                <c:if test="${e.is_use=='1'}">是</c:if>
+                                <c:if test="${e.is_use=='0'}">禁用</c:if>
+                                <c:if test="${e.is_use=='1'}">使用</c:if>
                                 <c:if test="${e.is_use=='2'}">未完善资料</c:if>
                             </td>
                             <td>
