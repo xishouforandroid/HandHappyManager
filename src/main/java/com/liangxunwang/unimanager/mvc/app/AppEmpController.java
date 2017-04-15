@@ -1,9 +1,6 @@
 package com.liangxunwang.unimanager.mvc.app;
 
 import com.liangxunwang.unimanager.model.Emp;
-import com.liangxunwang.unimanager.model.EmpKu;
-import com.liangxunwang.unimanager.model.HappyHandChoose;
-import com.liangxunwang.unimanager.model.HappyHandLike;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.service.ExecuteService;
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 
 @Controller

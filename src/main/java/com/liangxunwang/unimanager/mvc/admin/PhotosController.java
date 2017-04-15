@@ -1,7 +1,6 @@
 package com.liangxunwang.unimanager.mvc.admin;
 
 import com.liangxunwang.unimanager.model.Admin;
-import com.liangxunwang.unimanager.model.HappyHandLike;
 import com.liangxunwang.unimanager.model.HappyHandPhoto;
 import com.liangxunwang.unimanager.query.PhotosQuery;
 import com.liangxunwang.unimanager.service.*;

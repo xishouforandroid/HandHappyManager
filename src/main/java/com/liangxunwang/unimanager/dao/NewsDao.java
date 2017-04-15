@@ -1,7 +1,6 @@
 package com.liangxunwang.unimanager.dao;
 
 import com.liangxunwang.unimanager.model.HappyHandNews;
-import com.liangxunwang.unimanager.model.HappyHandNotice;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

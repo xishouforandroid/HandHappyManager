@@ -3,7 +3,6 @@ package com.liangxunwang.unimanager.service.account;
 import com.liangxunwang.unimanager.dao.LikesDao;
 import com.liangxunwang.unimanager.model.HappyHandLike;
 import com.liangxunwang.unimanager.query.LikesQuery;
-import com.liangxunwang.unimanager.query.SuggestQuery;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.StringUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;

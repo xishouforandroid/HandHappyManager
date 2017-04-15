@@ -1,8 +1,6 @@
 package com.liangxunwang.unimanager.mvc.app;
 
-import com.liangxunwang.unimanager.model.City;
 import com.liangxunwang.unimanager.model.HappyHandLike;
-import com.liangxunwang.unimanager.model.Province;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.service.ExecuteService;

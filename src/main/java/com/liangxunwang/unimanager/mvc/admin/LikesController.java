@@ -2,9 +2,7 @@ package com.liangxunwang.unimanager.mvc.admin;
 
 import com.liangxunwang.unimanager.model.Admin;
 import com.liangxunwang.unimanager.model.HappyHandLike;
-import com.liangxunwang.unimanager.model.HappyHandNotice;
 import com.liangxunwang.unimanager.query.LikesQuery;
-import com.liangxunwang.unimanager.query.SuggestQuery;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import com.liangxunwang.unimanager.util.Page;

@@ -1,9 +1,7 @@
 package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.dao.CityDao;
-import com.liangxunwang.unimanager.dao.ProvinceDao;
 import com.liangxunwang.unimanager.model.City;
-import com.liangxunwang.unimanager.model.Province;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.util.StringUtil;

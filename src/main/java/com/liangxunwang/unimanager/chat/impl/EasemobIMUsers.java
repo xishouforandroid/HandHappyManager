@@ -1,6 +1,5 @@
 package com.liangxunwang.unimanager.chat.impl;
 
-import com.liangxunwang.unimanager.chat.ChatMessageAPI;
 import com.liangxunwang.unimanager.chat.IMUserAPI;
 import com.liangxunwang.unimanager.chat.comm.EasemobAPI;
 import com.liangxunwang.unimanager.chat.comm.OrgInfo;

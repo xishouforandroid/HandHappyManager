@@ -6,7 +6,6 @@ import com.liangxunwang.unimanager.model.Admin;
 import com.liangxunwang.unimanager.model.Role;
 import com.liangxunwang.unimanager.query.AdminQuery;
 import com.liangxunwang.unimanager.service.*;
-import com.liangxunwang.unimanager.util.MD5Util;
 import com.liangxunwang.unimanager.util.StringUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;
 import org.springframework.beans.factory.annotation.Autowired;

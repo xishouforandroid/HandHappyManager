@@ -1,11 +1,10 @@
 package com.liangxunwang.unimanager.chat.impl;
-import com.liangxunwang.unimanager.chat.ChatMessageAPI;
+
 import com.liangxunwang.unimanager.chat.SendMessageAPI;
 import com.liangxunwang.unimanager.chat.comm.EasemobAPI;
 import com.liangxunwang.unimanager.chat.comm.OrgInfo;
 import com.liangxunwang.unimanager.chat.comm.ResponseHandler;
 import com.liangxunwang.unimanager.chat.comm.TokenUtil;
-
 import io.swagger.client.ApiException;
 import io.swagger.client.api.MessagesApi;
 import io.swagger.client.model.Msg;

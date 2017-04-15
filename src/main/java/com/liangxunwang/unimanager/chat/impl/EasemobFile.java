@@ -1,13 +1,13 @@
 package com.liangxunwang.unimanager.chat.impl;
 
-import com.liangxunwang.unimanager.chat.ChatMessageAPI;
+import com.liangxunwang.unimanager.chat.FileAPI;
 import com.liangxunwang.unimanager.chat.comm.EasemobAPI;
 import com.liangxunwang.unimanager.chat.comm.OrgInfo;
 import com.liangxunwang.unimanager.chat.comm.ResponseHandler;
 import com.liangxunwang.unimanager.chat.comm.TokenUtil;
-import com.liangxunwang.unimanager.chat.FileAPI;
 import io.swagger.client.ApiException;
 import io.swagger.client.api.UploadAndDownloadFilesApi;
+
 import java.io.File;
 
 
