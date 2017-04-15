@@ -76,6 +76,13 @@ public class EmpService implements ExecuteService,ListService,FindService,Update
                         member.setCover(Constants.QINIU_URL + member.getCover());
                     }
                 }
+                if(!StringUtil.isNullOrEmpty(member.getCardpic())){
+                    if (member.getCardpic().startsWith("upload")) {
+                        member.setCardpic(Constants.URL + member.getCardpic());
+                    }else {
+                        member.setCardpic(Constants.QINIU_URL + member.getCardpic());
+                    }
+                }
             }
         }
         long count = empDao.count(map);

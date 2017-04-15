@@ -133,6 +133,8 @@ public class EmpController extends ControllerConstants {
             }else {
                 member.setCover(Constants.QINIU_URL + member.getCover());
             }
+        }
+        if(!StringUtil.isNullOrEmpty(member.getCardpic())){
             if (member.getCardpic().startsWith("upload")) {
                 member.setCardpic(Constants.URL + member.getCardpic());
             }else {
