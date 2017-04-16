@@ -34,6 +34,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appUpdateProfile\\.do$)" +
                         "|(^/appLikesBylikeIds\\.do$)" +
                         "|(^/getAllCitys\\.do$)" +
+                        "|(^/appAboutUs\\.do$)" +
+                        "|(^/getVersionCode\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
