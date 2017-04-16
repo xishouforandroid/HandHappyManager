@@ -31,7 +31,10 @@
     </group>
 
     <group id="SUGGEST_MANAGE" name="意见反馈">
-        <permission id="SUGGEST_MANAGE" name="意见反馈"/>
+        <permission id="SUGGEST_LIST" name="意见反馈"/>
+    </group>
+    <group id="REPORT_MANAGE" name="投诉中心">
+        <permission id="REPORT_LIST" name="投诉中心"/>
     </group>
 
     <group id="NOTICE_MANAGE" name="公告管理">

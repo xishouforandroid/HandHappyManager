@@ -14,7 +14,7 @@
         <result column="mm_suggest_cont" property="mm_suggest_cont"/>
         <result column="mm_emp_id" property="mm_emp_id"/>
         <result column="dateline" property="dateline"/>
-        <result column="mm_emp_nickname" property="mm_emp_nickname"/>
+        <result column="nickname" property="nickname"/>
     </resultMap>
 
     <select id="lists" resultMap="suggest_vo">

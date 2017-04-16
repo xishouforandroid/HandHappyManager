@@ -42,18 +42,18 @@ public class SuggestService implements ListService,SaveService,DeleteService,Exe
 
     @Override
     public Object save(Object object) throws ServiceException {
-        SuggestObj level = (SuggestObj) object;
-        level.setMm_suggest_id(UUIDFactory.random());
-        level.setDateline(System.currentTimeMillis() + "");
-        suggestDao.save(level);
-        return null;
+        SuggestObj suggestObj = (SuggestObj) object;
+        suggestObj.setMm_suggest_id(UUIDFactory.random());
+        suggestObj.setDateline(System.currentTimeMillis() + "");
+        suggestDao.save(suggestObj);
+        return 200;
     }
 
     @Override
     public Object delete(Object object) throws ServiceException {
         String mm_suggest_id = (String) object;
         suggestDao.delete(mm_suggest_id);
-        return null;
+        return 200;
     }
 
     @Override

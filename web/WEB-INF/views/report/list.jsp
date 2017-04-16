@@ -8,8 +8,8 @@
         </a>
         <ol class="breadcrumb pull-left">
             <li><a href="javascript:void(0)" onclick="toPage('mainPage','')">主页</a></li>
-            <li><a href="javascript:void(0)">建议反馈</a></li>
-            <li><a href="javascript:void(0)">建议反馈</a></li>
+            <li><a href="javascript:void(0)">投诉中心</a></li>
+            <li><a href="javascript:void(0)">投诉中心</a></li>
         </ol>
 
     </div>
@@ -21,7 +21,7 @@
             <div class="box-header">
                 <div class="box-name ui-draggable-handle">
                     <i class="fa fa-table"></i>
-                    <span>建议反馈</span>
+                    <span>投诉中心</span>
                 </div>
                 <div class="box-icons">
                     <a class="collapse-link">
@@ -41,17 +41,29 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>用户</th>
-                        <th>建议内容</th>
+                        <th>投诉人</th>
+                        <th>被投诉人</th>
+                        <th>投诉内容</th>
                         <th>时间</th>
+                        <th>是否处理</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${list}" var="e" varStatus="st">
                         <tr>
+                            <td>${e.nicknameJbr}</td>
                             <td>${e.nickname}</td>
-                            <td>${e.mm_suggest_cont}</td>
+                            <td>${e.content}</td>
                             <td>${um:format(e.dateline, 'yyyy-MM-dd')}</td>
+                            <td>
+                                <c:if test="${e.is_read=='0'}">否</c:if>
+                                <c:if test="${e.is_read=='1'}">是</c:if>
+                            </td>
+                            <td>
+                                <a class="btn btn-default btn-sm" href="#module=/report/toEdit&reportid=${e.reportid}"
+                                   role="button">处理</a>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -110,7 +122,7 @@
         var _index = $("#index").val();
         var size = getCookie("contract_size");
         if (_index <= ${page.pageCount} && _index >= 1) {
-            window.location.href = "#module=/suggest/list&page=" + _index
+            window.location.href = "#module=/report/list&page=" + _index
             + "&size=" + size
             + "&_t=" + new Date().getTime();
         } else {
@@ -122,7 +134,7 @@
         var size = $("#size").val();
         addCookie("contract_size", size, 36);
         if ((page <= ${page.pageCount} && page >= 1)) {
-            window.location.href = "#module=/suggest/list&page=" + page
+            window.location.href = "#module=/report/list&page=" + page
             + "&size=" + size
             + "&_t=" + new Date().getTime();
         } else {

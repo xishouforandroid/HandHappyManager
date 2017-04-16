@@ -36,6 +36,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/getAllCitys\\.do$)" +
                         "|(^/appAboutUs\\.do$)" +
                         "|(^/getVersionCode\\.do$)" +
+                        "|(^/appSaveSuggest\\.do$)" +
+                        "|(^/appSaveReport\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
