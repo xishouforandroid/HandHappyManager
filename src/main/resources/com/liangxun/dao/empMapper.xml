@@ -200,4 +200,12 @@
         WHERE empid=#{empid}
     </update>
 
+    <update id="updateMobile" parameterType="String">
+        UPDATE emp SET mobile=#{mobile} WHERE empid=#{empid}
+    </update>
+
+    <update id="updatePassByMobile" parameterType="String">
+        UPDATE emp SET password=#{password} WHERE mobile=#{mobile}
+    </update>
+
 </mapper>

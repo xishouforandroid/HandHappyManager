@@ -30,4 +30,10 @@ public interface EmpDao {
 
     //后台管理员修改会员数据
     void updateManage(Emp emp);
+
+
+    void updateMobile(@Param(value = "empid") String empid, @Param(value = "mobile") String is_use);
+
+    void updatePassByMobile(@Param(value = "mobile") String empid, @Param(value = "password") String password);
+
 }

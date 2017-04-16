@@ -38,6 +38,9 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/getVersionCode\\.do$)" +
                         "|(^/appSaveSuggest\\.do$)" +
                         "|(^/appSaveReport\\.do$)" +
+                        "|(^/appUpdateMoible\\.do$)" +
+                        "|(^/appUpdatePwrById\\.do$)" +
+                        "|(^/appUpdatePwrByMobile\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 

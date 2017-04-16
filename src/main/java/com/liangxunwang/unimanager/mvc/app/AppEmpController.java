@@ -143,4 +143,89 @@ public class AppEmpController extends ControllerConstants {
         }
     }
 
+
+    @Autowired
+    @Qualifier("appEmpUpdateMobileService")
+    private UpdateService appEmpUpdateMobileServiceUpdate;
+
+    //手机号码修改
+    @RequestMapping(value = "/appUpdateMoible", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appUpdateMoible(Emp emp){
+        if(emp == null){
+            return toJSONString(new ErrorTip(1, "会员信息不存在，请检查！"));
+        }
+        try {
+            appEmpUpdateMobileServiceUpdate.update(emp);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            if (msg.equals("null")){
+                return toJSONString(new ErrorTip(1, "修改手机号码失败，请检查填写信息是否有误！"));
+            }else
+            if (msg.equals("empidnull")){
+                return toJSONString(new ErrorTip(1, "修改手机号码失败，请检查用户是否存在！"));
+            }else{
+                return toJSONString(new ErrorTip(1, "修改手机号码失败，请稍后重试！"));
+            }
+        }
+    }
+
+
+    @Autowired
+    @Qualifier("appEmpUpdatePwrById")
+    private UpdateService appEmpUpdatePwrById;
+    //根据会员ID修改密码
+    @RequestMapping(value = "/appUpdatePwrById", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appUpdatePwrById(Emp emp){
+        if(emp == null){
+            return toJSONString(new ErrorTip(1, "会员信息不存在，请检查！"));
+        }
+        try {
+            appEmpUpdatePwrById.update(emp);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            if (msg.equals("null")){
+                return toJSONString(new ErrorTip(1, "修改密码失败，请检查填写信息是否有误！"));
+            }else
+            if (msg.equals("empidnull")){
+                return toJSONString(new ErrorTip(1, "修改密码失败，请检查用户是否存在！"));
+            }else{
+                return toJSONString(new ErrorTip(1, "修改密码失败，请稍后重试！"));
+            }
+        }
+    }
+
+
+    @Autowired
+    @Qualifier("appEmpUpdatePwrByMobile")
+    private UpdateService appEmpUpdatePwrByMobile;
+    //根据会员ID修改密码
+    @RequestMapping(value = "/appUpdatePwrByMobile", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appUpdatePwrByMobile(Emp emp){
+        if(emp == null){
+            return toJSONString(new ErrorTip(1, "会员信息不存在，请检查！"));
+        }
+        try {
+            appEmpUpdatePwrByMobile.update(emp);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            if (msg.equals("null")){
+                return toJSONString(new ErrorTip(1, "修改密码失败，请检查填写信息是否有误！"));
+            }else{
+                return toJSONString(new ErrorTip(1, "修改密码失败，请稍后重试！"));
+            }
+        }
+    }
+
 }
