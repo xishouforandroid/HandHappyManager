@@ -41,6 +41,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appUpdateMoible\\.do$)" +
                         "|(^/appUpdatePwrById\\.do$)" +
                         "|(^/appUpdatePwrByMobile\\.do$)" +
+                        "|(^/appUpdateCard\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 

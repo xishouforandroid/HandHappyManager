@@ -36,4 +36,6 @@ public interface EmpDao {
 
     void updatePassByMobile(@Param(value = "mobile") String empid, @Param(value = "password") String password);
 
+    void updateCard(@Param(value = "empid") String empid, @Param(value = "cardpic") String password);
+
 }

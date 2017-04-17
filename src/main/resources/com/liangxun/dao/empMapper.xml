@@ -208,4 +208,8 @@
         UPDATE emp SET password=#{password} WHERE mobile=#{mobile}
     </update>
 
+    <update id="updateCard" parameterType="String">
+        UPDATE emp SET cardpic=#{cardpic} WHERE empid=#{empid}
+    </update>
+
 </mapper>

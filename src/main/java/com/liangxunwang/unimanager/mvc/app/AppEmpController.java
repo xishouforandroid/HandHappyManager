@@ -228,4 +228,44 @@ public class AppEmpController extends ControllerConstants {
         }
     }
 
+
+    @Autowired
+    @Qualifier("appEmpUpdateCard")
+    private UpdateService appEmpUpdateCard;
+    //更新用户身份证
+    @RequestMapping(value = "/appUpdateCard", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appUpdateCard(Emp emp){
+        if(emp == null){
+            return toJSONString(new ErrorTip(1, "会员信息不存在，请检查！"));
+        }
+        if(StringUtil.isNullOrEmpty(emp.getMobile())){
+            return toJSONString(new ErrorTip(1, "会员手机号不存在，请检查！"));
+        }
+        if(StringUtil.isNullOrEmpty(emp.getEmpid())){
+            return toJSONString(new ErrorTip(1, "会员ID不存在，请检查！"));
+        }
+        if(StringUtil.isNullOrEmpty(emp.getNickname())){
+            return toJSONString(new ErrorTip(1, "会员昵称不存在，请检查！"));
+        }
+        if(StringUtil.isNullOrEmpty(emp.getCardpic())){
+            return toJSONString(new ErrorTip(1, "会员身份证不存在，请检查！"));
+        }
+        try {
+            appEmpUpdateCard.update(emp);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            if (msg.equals("null")){
+                return toJSONString(new ErrorTip(1, "身份认证失败，请检查填写信息是否有误！"));
+            }else if(msg.equals("empkunull")){
+                return toJSONString(new ErrorTip(1, "身份认证失败，请确认资料是否正确！"));
+            }
+            else{
+                return toJSONString(new ErrorTip(1, "身份认证失败，请稍后重试！"));
+            }
+        }
+    }
 }
