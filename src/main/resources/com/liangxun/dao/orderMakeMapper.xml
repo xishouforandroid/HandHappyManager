@@ -25,6 +25,24 @@
         <result column="dateline" property="dateline"/>
     </resultMap>
 
+    <resultMap id="orderVO" type="com.liangxunwang.unimanager.mvc.vo.OrderVO">
+        <id column="order_no" property="order_no"/>
+        <result column="empid" property="empid"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="out_trade_no" property="out_trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="is_dxk_order" property="is_dxk_order"/>
+        <result column="order_cont" property="order_cont"/>
+
+        <result column="nickname" property="nickname"/>
+        <result column="mobile" property="mobile"/>
+    </resultMap>
+
     <insert id="saveTrade" parameterType="com.liangxunwang.unimanager.model.ShoppingTrade">
         INSERT INTO PAOPAO_SHOPPINGTRADE(out_trade_no, trade_prices, pay_status, dateline)
         VALUES (#{out_trade_no},#{trade_prices},#{pay_status},#{dateline})
@@ -123,5 +141,50 @@
     <update id="updateOrderByOrderNo" parameterType="com.liangxunwang.unimanager.model.Order">
         UPDATE PAOPAO_SHOPPING_ORDER SET status= #{status}  WHERE order_no= #{order_no}
     </update>
+
+
+    <select id="lists" resultMap="orderVO">
+        SELECT sn.*,lemp.nickname  as nickname,lemp.mobile as mobile
+        from PAOPAO_SHOPPING_ORDER sn
+        LEFT JOIN emp lemp ON lemp.empid = sn.empid
+        WHERE 1=1
+        <if test="empid != null and empid != ''">
+            AND sn.empid = #{empid}
+        </if>
+        <if test="status != null and status != ''">
+            AND sn.status = #{status}
+        </if>
+        <if test="pay_status != null and pay_status != ''">
+            AND sn.pay_status = #{pay_status}
+        </if>
+        <if test="is_dxk_order != null and is_dxk_order != ''">
+            AND sn.is_dxk_order = #{is_dxk_order}
+        </if>
+        <if test="trade_type != null and trade_type != ''">
+            AND sn.trade_type = #{trade_type}
+        </if>
+        ORDER  by create_time DESC
+        limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.order_no) FROM PAOPAO_SHOPPING_ORDER sn
+        WHERE 1=1
+        <if test="empid != null and empid != ''">
+            AND sn.empid = #{empid}
+        </if>
+        <if test="status != null and status != ''">
+            AND sn.status = #{status}
+        </if>
+        <if test="pay_status != null and pay_status != ''">
+            AND sn.pay_status = #{pay_status}
+        </if>
+        <if test="is_dxk_order != null and is_dxk_order != ''">
+            AND sn.is_dxk_order = #{is_dxk_order}
+        </if>
+        <if test="trade_type != null and trade_type != ''">
+            AND sn.trade_type = #{trade_type}
+        </if>
+    </select>
 
 </mapper>

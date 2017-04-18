@@ -210,7 +210,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <c:if test="${um:permission('ORDER_LIST', sessionScope.powers)}">
-                                <li><a href="javascript:void(0);" onclick="toPage('order/list','1')">订单列表</a></li>
+                                <li><a href="javascript:void(0);" onclick="toPage('orders/list','1')">订单列表</a></li>
                             </c:if>
                         </ul>
                     </li>

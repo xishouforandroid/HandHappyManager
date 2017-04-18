@@ -2,6 +2,7 @@ package com.liangxunwang.unimanager.dao;
 
 import com.liangxunwang.unimanager.model.Order;
 import com.liangxunwang.unimanager.model.ShoppingTrade;
+import com.liangxunwang.unimanager.mvc.vo.OrderVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -56,4 +57,7 @@ public interface AppOrderMakeDao {
 
     //根据订单号查询订单状态
     Order findOrderByOrderNo(String order_no);
+
+    List<OrderVO> lists(Map<String, Object> map);
+    long count(Map<String, Object> map);
  }
