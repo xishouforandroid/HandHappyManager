@@ -43,6 +43,14 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appUpdatePwrByMobile\\.do$)" +
                         "|(^/appUpdateCard\\.do$)" +
 
+                        "|(^/payWxHyNotifyAction\\.do$)" +
+                        "|(^/payWxCxNotifyAction\\.do$)" +
+                        "|(^/orderSave\\.do$)" +
+                        "|(^/orderSaveWx\\.do$)" +
+                        "|(^/orderUpdate\\.do$)" +
+                        "|(^/payZfbHyNotifyAction\\.do$)" +
+                        "|(^/payZfbCxNotifyAction\\.do$)" +
+
                         "|(^/uploadUnCompressImage\\.do$)"
 
         ) || account != null) {

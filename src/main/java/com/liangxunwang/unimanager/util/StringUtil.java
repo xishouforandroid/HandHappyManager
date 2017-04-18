@@ -1,9 +1,15 @@
 package com.liangxunwang.unimanager.util;
 
 
+import com.liangxunwang.unimanager.alipay.AlipayConfig;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,104 +92,36 @@ public class StringUtil {
     /**
      * 删除某个文件夹下的所有文件夹和文件
      */
-        public static boolean deletefile(String delpath)
-                        throws FileNotFoundException, IOException {
-                try {
-                        File file = new File(delpath);
-                        if (!file.isDirectory()) {
+    public static boolean deletefile(String delpath)
+            throws FileNotFoundException, IOException {
+        try {
+            File file = new File(delpath);
+            if (!file.isDirectory()) {
 //                                System.out.println("不是文件夹");
-                                file.delete();
-                        } else if (file.isDirectory()) {
-                                System.out.println("2");
-                                String[] filelist = file.list();
-                                for (int i = 0; i < filelist.length; i++) {
-                                        File delfile = new File(delpath + "\\" + filelist[i]);
-                                        if (!delfile.isDirectory()) {
+                file.delete();
+            } else if (file.isDirectory()) {
+                System.out.println("2");
+                String[] filelist = file.list();
+                for (int i = 0; i < filelist.length; i++) {
+                    File delfile = new File(delpath + "\\" + filelist[i]);
+                    if (!delfile.isDirectory()) {
 //                                                System.out.println("path=" + delfile.getPath());
 //                                                System.out.println("absolutepath="
 //                                                                + delfile.getAbsolutePath());
 //                                                System.out.println("name=" + delfile.getName());
-                                                delfile.delete();
+                        delfile.delete();
 //                                                System.out.println("删除文件成功");
-                                        } else if (delfile.isDirectory()) {
-                                                deletefile(delpath + "\\" + filelist[i]);
-                                        }
-                                }
-//                                file.delete();//这个是删除该文件夹的
-                        }
-                } catch (FileNotFoundException e) {
-//                        System.out.println("deletefile()   Exception:" + e.getMessage());
+                    } else if (delfile.isDirectory()) {
+                        deletefile(delpath + "\\" + filelist[i]);
+                    }
                 }
-                return true;
+//                                file.delete();//这个是删除该文件夹的
+            }
+        } catch (FileNotFoundException e) {
+//                        System.out.println("deletefile()   Exception:" + e.getMessage());
         }
-
-
-
-    /**
-     * create the order info. 创建订单信息
-     *
-     */
-    public static String getOrderInfo(String outTradeNo, String subject, String body, String price) {
-        // 签约合作者身份ID
-        String orderInfo = "partner=" + "\"" + Constants.PARTNER + "\"";
-
-        // 签约卖家支付宝账号
-        orderInfo += "&seller_id=" + "\"" + Constants.SELLER + "\"";
-
-        // 商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + outTradeNo + "\"";
-
-        // 商品名称
-        orderInfo += "&subject=" + "\"" + subject + "\"";
-
-        // 商品详情
-        orderInfo += "&body=" + "\"" + body + "\"";
-
-        // 商品金额
-        orderInfo += "&total_fee=" + "\"" + price + "\"";
-
-        // 服务器异步通知页面路径
-        orderInfo += "&notify_url=" + "\"" + Constants.URL+"pay/notify_url_alipay.jsp"
-                + "\"";
-
-        // 服务接口名称， 固定值
-        orderInfo += "&service=\"mobile.securitypay.pay\"";
-
-        // 支付类型， 固定值
-        orderInfo += "&payment_type=\"1\"";
-
-        // 参数编码， 固定值
-        orderInfo += "&_input_charset=\"utf-8\"";
-
-        // 设置未付款交易的超时时间
-        // 默认30分钟，一旦超时，该笔交易就会自动被关闭。
-        // 取值范围：1m～15d。
-        // m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点关闭）。
-        // 该参数数值不接受小数点，如1.5h，可转换为90m。
-        orderInfo += "&it_b_pay=\"30m\"";
-
-        // extern_token为经过快登授权获取到的alipay_open_id,带上此参数用户将使用授权的账户进行支付
-        // orderInfo += "&extern_token=" + "\"" + extern_token + "\"";
-
-        // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
-        orderInfo += "&return_url=\"m.alipay.com\"";
-
-        // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
-        // orderInfo += "&paymethod=\"expressGateway\"";
-
-        return orderInfo;
+        return true;
     }
-
-    /**
-     * sign the order info. 对订单信息进行签名
-     *
-     * @param content
-     *            待签名订单信息
-     */
-    public static String sign(String content) {
-        return SignUtils.sign(content, Constants.RSA_PRIVATE);
-    }
-
 
 
     /**
@@ -225,9 +163,219 @@ public class StringUtil {
         return sb.toString();
     }
 
-    public static String getSignWx(String strA){
-        return MD5Util.getMD5ofStr(strA).toUpperCase();
+    //随机生成5位数字 不包含1
+    public static int getFiveInt(){
+        Random random = new Random();
+        int num = -1 ;
+        while(true) {
+            num = (int)(random.nextDouble()*(100000 - 10000) + 10000);
+            if(!(num+"").contains("1")) break ;
+        }
+        return num;
+    }
+
+    //生成随机数字和字母,
+    public static String getStringRandom() {
+        StringBuilder str=new StringBuilder();//定义变长字符串
+        Random random=new Random();
+//随机生成数字，并添加到字符串
+        for(int i=0;i< 8;i++){
+            str.append(random.nextInt(10));
+        }
+//将字符串转换为数字并输出
+//        int num=Integer.parseInt(str.toString());
+        return str.toString();
     }
 
 
+    /**
+     * create the order info. 创建订单信息
+     *
+     */
+    public static String getOrderInfo(String outTradeNo, String subject, String body, String price, String notify_url) {
+        // 签约合作者身份ID
+        String orderInfo = "partner=" + "\"" + AlipayConfig.PARTNER + "\"";
+
+        // 签约卖家支付宝账号
+        orderInfo += "&seller_id=" + "\"" + AlipayConfig.SELLER + "\"";
+
+        // 商户网站唯一订单号
+        orderInfo += "&out_trade_no=" + "\"" + outTradeNo + "\"";
+
+        // 商品名称
+        orderInfo += "&subject=" + "\"" + subject + "\"";
+
+        // 商品详情
+        orderInfo += "&body=" + "\"" + body + "\"";
+
+        // 商品金额
+        orderInfo += "&total_fee=" + "\"" + price + "\"";
+
+        // 服务器异步通知页面路径
+        orderInfo += "&notify_url=" + "\"" + notify_url
+                + "\"";
+
+        // 服务接口名称， 固定值
+        orderInfo += "&service=\"mobile.securitypay.pay\"";
+
+        // 支付类型， 固定值
+        orderInfo += "&payment_type=\"1\"";
+
+        // 参数编码， 固定值
+        orderInfo += "&_input_charset=\"utf-8\"";
+
+        // 设置未付款交易的超时时间
+        // 默认30分钟，一旦超时，该笔交易就会自动被关闭。
+        // 取值范围：1m～15d。
+        // m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点关闭）。
+        // 该参数数值不接受小数点，如1.5h，可转换为90m。
+        orderInfo += "&it_b_pay=\"30m\"";
+
+        // extern_token为经过快登授权获取到的alipay_open_id,带上此参数用户将使用授权的账户进行支付
+        // orderInfo += "&extern_token=" + "\"" + extern_token + "\"";
+
+        // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
+        orderInfo += "&return_url=\"m.alipay.com\"";
+
+        // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
+        // orderInfo += "&paymethod=\"expressGateway\"";
+
+        return orderInfo;
+    }
+
+    /**
+     * sign the order info. 对订单信息进行签名
+     *
+     * @param content
+     *            待签名订单信息
+     */
+    public static String sign(String content) {
+        return SignUtils.sign(content, AlipayConfig.RSA_PRIVATE);
+    }
+
+
+    /**
+     * 构造支付订单参数列表
+     * @param app_id
+     * @return
+     */
+    public static Map<String, String> buildOrderParamMap(String app_id, String out_trade_no,String doublePrices ) {
+        Map<String, String> keyValues = new HashMap<String, String>();
+
+        keyValues.put("app_id", app_id);
+
+        keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\""+doublePrices+"\",\"subject\":\"1\",\"body\":\"caopingyun\",\"out_trade_no\":\"" + out_trade_no +  "\"}");
+
+        keyValues.put("charset", "UTF-8");
+
+        keyValues.put("method", "alipay.trade.app.pay");
+
+        keyValues.put("sign_type", "RSA");
+
+        keyValues.put("timestamp", DateUtil.getCurrentDateTime());
+
+        keyValues.put("version", "1.0");
+
+        return keyValues;
+    }
+
+
+    /**
+     * 构造支付订单参数信息
+     *
+     * @param map
+     * 支付订单参数
+     * @return
+     */
+    public static String buildOrderParam(Map<String, String> map) {
+        List<String> keys = new ArrayList<String>(map.keySet());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < keys.size() - 1; i++) {
+            String key = keys.get(i);
+            String value = map.get(key);
+            sb.append(buildKeyValue(key, value, true));
+            sb.append("&");
+        }
+
+        String tailKey = keys.get(keys.size() - 1);
+        String tailValue = map.get(tailKey);
+        sb.append(buildKeyValue(tailKey, tailValue, true));
+
+        return sb.toString();
+    }
+    /**
+     * 拼接键值对
+     *
+     * @param key
+     * @param value
+     * @param isEncode
+     * @return
+     */
+    private static String buildKeyValue(String key, String value, boolean isEncode) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(key);
+        sb.append("=");
+        if (isEncode) {
+            try {
+                sb.append(URLEncoder.encode(value, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                sb.append(value);
+            }
+        } else {
+            sb.append(value);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 对支付参数信息进行签名
+     *
+     * @param map
+     *            待签名授权信息
+     *
+     * @return
+     */
+    public static String getSign(Map<String, String> map, String rsaKey) {
+        List<String> keys = new ArrayList<String>(map.keySet());
+        // key排序
+        Collections.sort(keys);
+
+        StringBuilder authInfo = new StringBuilder();
+        for (int i = 0; i < keys.size() - 1; i++) {
+            String key = keys.get(i);
+            String value = map.get(key);
+            authInfo.append(buildKeyValue(key, value, false));
+            authInfo.append("&");
+        }
+
+        String tailKey = keys.get(keys.size() - 1);
+        String tailValue = map.get(tailKey);
+        authInfo.append(buildKeyValue(tailKey, tailValue, false));
+
+        String oriSign = SignUtils.sign(authInfo.toString(), rsaKey);
+        String encodedSign = "";
+
+        try {
+            encodedSign = URLEncoder.encode(oriSign, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "sign=" + encodedSign;
+    }
+
+    /**
+     * 要求外部订单号必须唯一。
+     * @return
+     */
+    public static String getOutTradeNo() {
+        SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
+        Date date = new Date();
+        String key = format.format(date);
+
+        Random r = new Random();
+        key = key + r.nextInt();
+        key = key.substring(0, 15);
+        return key;
+    }
 }

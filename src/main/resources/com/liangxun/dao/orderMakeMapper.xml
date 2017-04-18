@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.AppOrderMakeDao">
+    <resultMap id="order" type="com.liangxunwang.unimanager.model.Order">
+        <id column="order_no" property="order_no"/>
+        <result column="empid" property="empid"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="out_trade_no" property="out_trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="is_dxk_order" property="is_dxk_order"/>
+        <result column="order_cont" property="order_cont"/>
+    </resultMap>
+
+    <resultMap id="order_trade" type="com.liangxunwang.unimanager.model.ShoppingTrade">
+        <id column="out_trade_no" property="out_trade_no"/>
+        <result column="trade_prices" property="trade_prices"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="dateline" property="dateline"/>
+    </resultMap>
+
+    <insert id="saveTrade" parameterType="com.liangxunwang.unimanager.model.ShoppingTrade">
+        INSERT INTO PAOPAO_SHOPPINGTRADE(out_trade_no, trade_prices, pay_status, dateline)
+        VALUES (#{out_trade_no},#{trade_prices},#{pay_status},#{dateline})
+    </insert>
+
+    <insert id="saveList" parameterType="com.liangxunwang.unimanager.model.Order">
+        insert into PAOPAO_SHOPPING_ORDER (order_no, empid, payable_amount,create_time,pay_time,status,pay_status,trade_no,out_trade_no,trade_type,is_dxk_order,order_cont)
+        VALUES(#{order_no,jdbcType=VARCHAR},
+            #{empid,jdbcType=VARCHAR},
+            #{payable_amount,jdbcType=VARCHAR},
+            #{create_time,jdbcType=VARCHAR},
+            #{pay_time,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{pay_status,jdbcType=VARCHAR},
+            #{trade_no,jdbcType=VARCHAR},
+            #{out_trade_no,jdbcType=VARCHAR},
+            #{trade_type,jdbcType=VARCHAR},
+            #{is_dxk_order,jdbcType=VARCHAR},
+            #{order_cont,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <update id="updateOrderByTradeId" parameterType="com.liangxunwang.unimanager.model.Order">
+        UPDATE  PAOPAO_SHOPPING_ORDER SET pay_time=#{pay_time}, status='5', pay_status='1' WHERE out_trade_no=#{out_trade_no}
+    </update>
+
+    <update id="updateOrderById" parameterType="com.liangxunwang.unimanager.model.Order">
+        UPDATE  PAOPAO_SHOPPING_ORDER SET pay_time=#{pay_time}, status='2', pay_status='1' WHERE out_trade_no=#{out_trade_no}
+    </update>
+
+    <update id="updateTradeById" parameterType="String">
+        UPDATE  PAOPAO_SHOPPINGTRADE SET pay_status='1' WHERE out_trade_no=#{out_trade_no}
+    </update>
+
+    <update id="cancelOrderById" parameterType="String">
+        UPDATE  PAOPAO_SHOPPING_ORDER SET  status='3'  WHERE order_no=#{order_no}
+    </update>
+
+    <select id="findOrderByTradeNo" resultMap="order">
+       SELECT  * from  PAOPAO_SHOPPING_ORDER  WHERE  out_trade_no = #{out_trade_no}
+    </select>
+
+    <select id="findOrderByOrderNo" resultMap="order">
+       SELECT ord.*
+        from PAOPAO_SHOPPING_ORDER ord WHERE ord.order_no = #{order_no}
+    </select>
+
+    <update id="sureOrder" parameterType="com.liangxunwang.unimanager.model.Order">
+        UPDATE  PAOPAO_SHOPPING_ORDER SET  status='5'  WHERE order_no=#{order_no}
+    </update>
+
+
+    <update id="updateOrderBySingle" parameterType="String">
+        UPDATE PAOPAO_SHOPPING_ORDER SET pay_time=#{pay_time}, status='2', pay_status='1' WHERE order_no=#{order_no}
+    </update>
+
+
+    <select id="selectOrderNumByDay" resultType="long">
+        SELECT COUNT(*) from PAOPAO_SHOPPING_ORDER WHERE 1='1'
+        <if test="start != null and start != ''">
+            AND PAY_TIME &gt;= #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND PAY_TIME &lt;= #{end}
+        </if>
+    </select>
+
+    <select id="selectSum" resultType="String">
+        SELECT sum(PAYABLE_AMOUNT) from PAOPAO_SHOPPING_ORDER WHERE 1='1'
+        <if test="start != null and start != ''">
+            AND PAY_TIME &gt;= #{start}
+        </if>
+        <if test="end != null and end != ''">
+            AND PAY_TIME &lt;= #{end}
+        </if>
+        AND PAY_STATUS = '1'
+    </select>
+
+
+    <update id="deleteOrderById" parameterType="String">
+        UPDATE  PAOPAO_SHOPPING_ORDER SET  status='4'  WHERE order_no=#{order_no}
+    </update>
+
+    <select id="findIsExist" resultMap="order">
+        SELECT * from PAOPAO_SHOPPING_ORDER
+        WHERE is_dxk_order = '1' AND create_time &gt; #{startTime} AND create_time &lt; #{endTime}
+        <if test="emp_id != null and emp_id != ''">
+            AND emp_id = #{emp_id}
+        </if>
+        <if test="seller_emp_id != null and seller_emp_id != ''">
+            AND seller_emp_id = #{seller_emp_id}
+        </if>
+    </select>
+
+
+    <update id="updateOrderByOrderNo" parameterType="com.liangxunwang.unimanager.model.Order">
+        UPDATE PAOPAO_SHOPPING_ORDER SET status= #{status}  WHERE order_no= #{order_no}
+    </update>
+
+</mapper>

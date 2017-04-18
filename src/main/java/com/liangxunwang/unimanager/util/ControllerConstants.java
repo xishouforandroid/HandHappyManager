@@ -33,8 +33,7 @@ public class ControllerConstants {
 
     private static final Gson JSON_HELPER = new Gson();
 
-    public String toJSONString(Object object) {
-
+    public static String toJSONString(Object object) {
         return JSON_HELPER.toJson(object);
     }
 

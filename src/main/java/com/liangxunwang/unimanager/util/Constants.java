@@ -44,37 +44,25 @@ public class Constants {
 
         public static final Long DAY_MILLISECOND = 86400000L;
 
-        //商户PID
-        public static final String PARTNER = "2088421398530212";
-        //商户收款账号
-        public static final String SELLER = "shandongyoubang@126.com";
-        //商户私钥，pkcs8格式
-        public static final String RSA_PRIVATE = "\n" +
-                "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALfaqiOS8fV3U8l3" +
-                "HX3cOy3cRjuLFpIMBQOcNeF3XmJ75XDBXajdKdxYTJ/23j7UKBUTeJyUMgFdehwK" +
-                "PyyuDCOfggOszqdd8LC15nj+yXzatwXQ8E3aA77NWaNxGKw23JN7Q8XVIhXWuHKi" +
-                "guTM4HdsJ3RSHhSfaQpbZQVxVpgBAgMBAAECgYAFp9RUA9Etm94X9HITzRKE9qGy" +
-                "czTeiUAePE/r/6AHp4gHT+txplwDSzQQN6fehug0vcSYDHb9U8LN2gLXfQMih/9g" +
-                "R714MgY0CYocfGw/JQkqa60YsAzVMfqFUQv+QNxe5CYMHSz62YVbzqFE5/4+u2dc" +
-                "kzwgsnwS+Wtjk+OAAQJBAOzvjqtqe7ju5WDJZCiCc95tlBfY9Ve8nIqP8m5V5rf4" +
-                "h54SyV2zWhI9ieUUixZyBTwMVFfZ+aVMwyEFwMGJzaECQQDGpbkuYB18k09tusrd" +
-                "S6lUoODarSQLvE8cOILX7YbpOWlCJstLnHHMlKUvlIEr316tTOfGXgTN0nEyc/eS" +
-                "dO5hAkEAq/GNT8iO0L5Np9d+4AcLnzdWaZgBNBKkZ8ne3UNpk8jAYm6vw1gM3X/b" +
-                "OmuWJEvKkLFB5B9DlDoIwUYzhEBFAQJAeyohiQl6/tRvOP/J7C+PS7N79tnHMaeN" +
-                "/VdkePEC5vP7uVJIVhcnz8qSKNAQztzt3NGEG1AL9nl2SevxIlNxwQJBAN6kNRO9" +
-                "uoD6yZjb7CSVyrV7Os/V6I792jI6vHGwuFifSHGiRL7JWGdloH2N7iQhm0nPliSD" +
-                "iqfFZ83jNeETt7w=";
-        //支付宝公钥
-        public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC32qojkvH1d1PJdx193Dst3EY7ixaSDAUDnDXhd15ie+VwwV2o3SncWEyf9t4+1CgVE3iclDIBXXocCj8srgwjn4IDrM6nXfCwteZ4/sl82rcF0PBN2gO+zVmjcRisNtyTe0PF1SIV1rhyooLkzOB3bCd0Uh4Un2kKW2UFcVaYAQIDAQAB";
+
+        //微信支付回调--会员认证
+        public static final String WEIXIN_NOTIFY_URL_HY = URL + "payWxHyNotifyAction.do";
+        //微信支付回调--诚信认证
+        public static final String WEIXIN_NOTIFY_URL_CX = URL + "payWxCxNotifyAction.do";
 
 
-        //微信统一下单notify_url
-        public static final String WEIXIN_NOTIFY_URL = URL + "orderSaveWxFk.do";
+        //微信支付回调--会员认证
+        public static final String ZFB_NOTIFY_URL_HY = URL + "payZfbHyNotifyAction.do";
+        //微信支付回调--诚信认证
+        public static final String ZFB_NOTIFY_URL_CX = URL + "payZfbCxNotifyAction.do";
+
 
         //appid
-        public static final String WX_APP_ID = "wxe48c235e104c5332";//yum
+        public static final String WX_APP_ID = "wx6ce53935b8d58010";//yum
         //商户号
-        public static final String WX_MCH_ID = "1368485802";//yum
+        public static final String WX_MCH_ID = "1423178402";//yum
         //  API密钥，在商户平台设置
-        public static final  String WX_API_KEY="cd46a2cae4981a4fab91b2c3271052aa";//yum
+        public static final  String WX_API_KEY="85977cd5719d1aebb5dd6ccaa4fe5bfe";//yum
+
+        public static final  String WX_APP_SECRET="611fcae2cb0a43381be9ee527de1c406";//yum
 }

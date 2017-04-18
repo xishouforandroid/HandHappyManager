@@ -38,4 +38,7 @@ public interface EmpDao {
 
     void updateCard(@Param(value = "empid") String empid, @Param(value = "cardpic") String password);
 
+    void updateRzstate2(@Param(value = "empid") String empid, @Param(value = "rzstate2") String password);
+    void updateRzstate3(@Param(value = "empid") String empid, @Param(value = "rzstate3") String password);
+
 }

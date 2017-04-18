@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.HyrzDao">
+    <resultMap id="hyrz" type="com.liangxunwang.unimanager.model.HappyHandHyrz">
+        <id column="hyrzid" property="hyrzid"/>
+        <result column="empid" property="empid"/>
+        <result column="starttime" property="starttime"/>
+        <result column="endtime" property="endtime"/>
+        <result column="is_use" property="is_use"/>
+    </resultMap>
+
+    <select id="lists" resultMap="hyrz">
+        SELECT * from happy_hand_hyrz WHERE empid=#{empid}
+    </select>
+
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandHyrz">
+        INSERT INTO happy_hand_hyrz(hyrzid, empid,starttime,endtime,is_use)
+        VALUES (#{hyrzid}, #{empid}, #{starttime}, #{endtime}, #{is_use})
+    </insert>
+
+    <update id="update" parameterType="com.liangxunwang.unimanager.model.HappyHandHyrz">
+        UPDATE happy_hand_hyrz SET endtime=#{endtime}, is_use=#{is_use}  WHERE hyrzid=#{hyrzid}
+    </update>
+
+</mapper>

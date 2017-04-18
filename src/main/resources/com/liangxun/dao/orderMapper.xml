@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liangxunwang.unimanager.dao.OrderDao">
+    <resultMap id="order" type="com.liangxunwang.unimanager.model.Order">
+        <id column="order_no" property="order_no"/>
+        <result column="empid" property="empid"/>
+        <result column="payable_amount" property="payable_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="pay_time" property="pay_time"/>
+        <result column="status" property="status"/>
+        <result column="pay_status" property="pay_status"/>
+        <result column="trade_no" property="trade_no"/>
+        <result column="out_trade_no" property="out_trade_no"/>
+        <result column="trade_type" property="trade_type"/>
+        <result column="is_dxk_order" property="is_dxk_order"/>
+        <result column="order_cont" property="order_cont"/>
+    </resultMap>
+
+    <resultMap id="settlement" type="com.liangxunwang.unimanager.model.Settlement">
+        <result column="date" property="date"/>
+        <result column="rate" property="rate"/>
+        <result column="income" property="income"/>
+        <result column="isAccount" property="isAccount"/>
+    </resultMap>
+
+    <select id="findById" resultMap="order" parameterType="String">
+         SELECT ord.*
+        from PAOPAO_SHOPPING_ORDER ord
+        WHERE ord.ORDER_NO=#{id}
+    </select>
+
+    <select id="income" resultType="Float">
+        SELECT sum(pso.PAYABLE_AMOUNT) FROM PAOPAO_SHOPPING_ORDER pso
+        LEFT JOIN LX_EMP lp ON pso.SELLER_EMP_ID=lp.EMP_ID
+        WHERE '1'='1'
+        <if test="status != null and status != ''">
+            AND pso.STATUS=#{status}
+        </if>
+    </select>
+
+    <select id="settlement" resultMap="settlement">
+        SELECT sum(pso.PAYABLE_AMOUNT) as income, sum(pso.isAccount) as isAccount FROM PAOPAO_SHOPPING_ORDER pso
+        WHERE pso.STATUS='5' AND pso.pay_time &gt; #{startTime} AND pso.pay_time &lt; #{endTime}
+        AND pso.PAY_STATUS='1'
+    </select>
+
+
+    <update id="updateOrderAccount">
+        UPDATE PAOPAO_SHOPPING_ORDER SET ISACCOUNT='1' WHERE 1=1
+        AND STATUS='5' AND PAY_STATUS='1'
+        AND pay_time &gt; #{startTime}
+        AND pay_time &lt; #{endTime}
+    </update>
+
+    <select id="countDay" resultType="Long">
+        SELECT count(ord.ORDER_NO) FROM PAOPAO_SHOPPING_ORDER ord
+        WHERE '1'='1'
+        AND ord.create_time &gt; #{startTime}
+        AND ord.create_time &lt; #{endTime}
+    </select>
+
+    <select id="countOrderSum" resultType="String">
+        SELECT sum(payable_amount) FROM PAOPAO_SHOPPING_ORDER ord
+        WHERE '1'='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND ord.emp_id=#{emp_id}
+        </if>
+
+    </select>
+
+    <select id="countGoodsSum" resultType="String">
+        SELECT sum(goods_count) FROM PAOPAO_SHOPPING_ORDER ord
+        WHERE '1'='1'
+        <if test="emp_id != null and emp_id != ''">
+            AND ord.emp_id=#{emp_id}
+        </if>
+
+    </select>
+
+</mapper>
