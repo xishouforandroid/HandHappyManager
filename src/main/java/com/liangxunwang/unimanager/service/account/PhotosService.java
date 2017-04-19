@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by zhl on 2015/3/3.
  */
 @Service("photosService")
-public class PhotosService implements ListService,SaveService,DeleteService,ExecuteService,UpdateService {
+public class PhotosService implements ListService,SaveService,DeleteService,ExecuteService,UpdateService,FindService {
     @Autowired
     @Qualifier("photosDao")
     private PhotosDao photosDao;
@@ -47,11 +47,11 @@ public class PhotosService implements ListService,SaveService,DeleteService,Exec
 
     @Override
     public Object save(Object object) throws ServiceException {
-        HappyHandPhoto level = (HappyHandPhoto) object;
-        level.setPhotoid(UUIDFactory.random());
-        level.setDateline(System.currentTimeMillis()+"");
-        photosDao.save(level);
-        return null;
+        HappyHandPhoto happyHandPhoto = (HappyHandPhoto) object;
+        happyHandPhoto.setPhotoid(UUIDFactory.random());
+        happyHandPhoto.setDateline(System.currentTimeMillis()+"");
+        photosDao.save(happyHandPhoto);
+        return 200;
     }
 
     @Override
@@ -68,9 +68,17 @@ public class PhotosService implements ListService,SaveService,DeleteService,Exec
 
     @Override
     public Object update(Object object) {
-        HappyHandPhoto happyHandLike = (HappyHandPhoto) object;
-        photosDao.update(happyHandLike);
+        HappyHandPhoto happyHandPhoto = (HappyHandPhoto) object;
+        photosDao.update(happyHandPhoto);
         return 200;
     }
 
+    @Override
+    public Object findById(Object object) throws ServiceException {
+        String empid = (String) object;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("empid", empid);
+        List<HappyHandPhoto> lists = photosDao.findByEmpid(map);
+        return lists;
+    }
 }

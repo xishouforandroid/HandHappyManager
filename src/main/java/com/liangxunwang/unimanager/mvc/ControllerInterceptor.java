@@ -51,6 +51,9 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/payZfbHyNotifyAction\\.do$)" +
                         "|(^/payZfbCxNotifyAction\\.do$)" +
 
+                        "|(^/appSaveOrUpdatePhotos\\.do$)" +
+                        "|(^/appPhotos\\.do$)" +
+
                         "|(^/uploadUnCompressImage\\.do$)"
 
         ) || account != null) {

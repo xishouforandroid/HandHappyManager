@@ -52,4 +52,24 @@
         UPDATE happy_hand_photo SET title=#{title},photos=#{photos} WHERE photoid=#{photoid}
     </update>
 
+    <select id="findByEmpid" resultMap="photos">
+        SELECT sn.*,lemp.nickname as nickname
+        from happy_hand_photo sn
+        LEFT JOIN emp lemp ON lemp.empid=sn.empid
+        WHERE 1=1
+        <if test="empid != null and empid != ''">
+            AND sn.empid = #{empid}
+        </if>
+    </select>
+
+    <select id="listsAll" resultMap="photos">
+        SELECT sn.*,lemp.nickname as nickname
+        from happy_hand_photo sn
+        LEFT JOIN emp lemp ON lemp.empid=sn.empid
+        WHERE 1=1
+        <if test="empid != null and empid != ''">
+            AND sn.empid = #{empid}
+        </if>
+    </select>
+
 </mapper>

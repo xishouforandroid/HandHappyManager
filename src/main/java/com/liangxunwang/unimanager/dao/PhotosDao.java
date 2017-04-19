@@ -31,4 +31,7 @@ public interface PhotosDao {
 
     void update(HappyHandPhoto happyHandPhoto);
 
+    List<HappyHandPhoto> findByEmpid(Map<String, Object> map);
+
+    List<HappyHandPhoto> listsAll(Map<String, Object> map);
 }
