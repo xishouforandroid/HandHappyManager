@@ -19,6 +19,7 @@
     <select id="lists" resultMap="empKu">
         SELECT sn.*
         from emp_ku sn
+        ORDER by sn.dateline DESC
         limit #{index},#{size}
     </select>
 

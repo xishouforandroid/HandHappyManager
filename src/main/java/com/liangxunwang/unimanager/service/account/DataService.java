@@ -51,10 +51,10 @@ public class DataService implements SaveService {
                         Cell cell = cellIterator.next();
                         switch (cell.getColumnIndex()) {
                             case 0:
-                                data.setNickname(cell.getStringCellValue());
+                                data.setNickname(cell.getStringCellValue().replace(" ", ""));
                                 break;
                             case 1:
-                                data.setMobile(formatter.formatCellValue(cell));
+                                data.setMobile(formatter.formatCellValue(cell).replace(" ", ""));
                                 break;
                         }
                     }

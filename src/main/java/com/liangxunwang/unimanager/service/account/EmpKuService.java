@@ -27,7 +27,6 @@ public class EmpKuService implements ListService,SaveService,DeleteService {
     @Qualifier("empKuDao")
     private EmpKuDao empKuDao;
 
-
     @Override
     public Object list(Object object) throws ServiceException {
         EmpQuery query = (EmpQuery) object;

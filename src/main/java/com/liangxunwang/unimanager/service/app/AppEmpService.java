@@ -1,14 +1,13 @@
 package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.chat.impl.EasemobIMUsers;
+import com.liangxunwang.unimanager.dao.ChooseDao;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.EmpKuDao;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.EmpKu;
-import com.liangxunwang.unimanager.service.ExecuteService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.ServiceException;
-import com.liangxunwang.unimanager.service.UpdateService;
+import com.liangxunwang.unimanager.model.HappyHandChoose;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.MD5Util;
 import com.liangxunwang.unimanager.util.StringUtil;
@@ -24,7 +23,7 @@ import java.util.Random;
 
 
 @Service("appEmpService")
-public class AppEmpService implements ExecuteService,SaveService,UpdateService {
+public class AppEmpService implements ExecuteService,SaveService,UpdateService,ListService {
 
     @Autowired
     @Qualifier("empDao")
@@ -60,6 +59,13 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService {
                 member.setCover(Constants.URL + member.getCover());
             }else {
                 member.setCover(Constants.QINIU_URL + member.getCover());
+            }
+        }
+        if(!StringUtil.isNullOrEmpty(member.getCardpic())){
+            if (member.getCardpic().startsWith("upload")) {
+                member.setCardpic(Constants.URL + member.getCardpic());
+            }else {
+                member.setCardpic(Constants.QINIU_URL + member.getCardpic());
             }
         }
         return member;
@@ -103,5 +109,23 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService {
             empDao.updateCover(emp.getEmpid(), emp.getCover());
         }
         return 200;
+    }
+
+
+    @Autowired
+    @Qualifier("chooseDao")
+    private ChooseDao chooseDao;
+
+    //查询推荐人
+    @Override
+    public Object list(Object object) throws ServiceException {
+        String empid = (String) object;//登录人的ID
+        Emp emp = empDao.findById(empid);
+        if(emp == null){
+            throw new ServiceException("EmpNull");
+        }
+        HappyHandChoose happyHandChoose = chooseDao.findByEmpid(empid);
+
+        return null;
     }
 }
