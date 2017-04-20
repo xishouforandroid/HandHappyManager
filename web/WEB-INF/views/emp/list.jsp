@@ -102,6 +102,17 @@
                     </button>
                 </form>
 
+                <form action="" class="form">
+                    <div class="form-group">
+
+                        <div class="col-md-2 col-lg-2">
+                            <button type="button" onclick="P_daoru_Select()"
+                                    class="btn w12 form-control btn-block btn-danger btn-sm">批量导入
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -308,6 +319,12 @@
             alert("请输入1-${page.pageCount}的页码数");
         }
     }
+
+
+    function P_daoru_Select() {
+        window.location.href = "#module=/data/toAddEmp";
+    }
+
 </script>
 
 

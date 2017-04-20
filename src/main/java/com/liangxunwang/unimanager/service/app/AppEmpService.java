@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.*;
 
 
 @Service("appEmpService")
@@ -119,13 +119,55 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
     //查询推荐人
     @Override
     public Object list(Object object) throws ServiceException {
-        String empid = (String) object;//登录人的ID
+        Map<String, String> map1 = (Map<String, String>) object;
+        String empid = map1.get("empid");
+        String state = map1.get("state");
+        String size = map1.get("size");
+
+        List<Emp> list = new ArrayList<Emp>();
         Emp emp = empDao.findById(empid);
         if(emp == null){
             throw new ServiceException("EmpNull");
         }
         HappyHandChoose happyHandChoose = chooseDao.findByEmpid(empid);
+        if(happyHandChoose != null){
+            String agestart = happyHandChoose.getAgestart();
+            String ageend = happyHandChoose.getAgeend();
+            String heightlstart = happyHandChoose.getHeightlstart();
+            String heightlend = happyHandChoose.getHeightlend();
+            String educationm = happyHandChoose.getEducationm();
+            String marriagem = happyHandChoose.getMarriagem();
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("index", 0);
+            map.put("size", Integer.parseInt(size));
+            map.put("agestart", agestart);
+            map.put("ageend", ageend);
+            map.put("heightlstart", heightlstart);
+            map.put("heightlend", heightlend);
+            map.put("educationm", educationm);
+            map.put("marriagem", marriagem);
+            map.put("state", state);
+            list = empDao.listsChoose(map);
+            if(list != null){
+                for(Emp member:list){
+                    if(!StringUtil.isNullOrEmpty(member.getCover())){
+                        if (member.getCover().startsWith("upload")) {
+                            member.setCover(Constants.URL + member.getCover());
+                        }else {
+                            member.setCover(Constants.QINIU_URL + member.getCover());
+                        }
+                    }
+                    if(!StringUtil.isNullOrEmpty(member.getCardpic())){
+                        if (member.getCardpic().startsWith("upload")) {
+                            member.setCardpic(Constants.URL + member.getCardpic());
+                        }else {
+                            member.setCardpic(Constants.QINIU_URL + member.getCardpic());
+                        }
+                    }
+                }
+            }
 
-        return null;
+        }
+        return list;
     }
 }

@@ -9,7 +9,7 @@
         <ol class="breadcrumb pull-left">
             <li><a href="javascript:void(0)" onclick="toPage('mainPage','')">主页</a></li>
             <li><a href="javascript:void (0);">会员管理</a></li>
-            <li><a href="javascript:void (0);">批量导入库</a></li>
+            <li><a href="javascript:void (0);">批量导入会员</a></li>
         </ol>
 
     </div>
@@ -109,7 +109,7 @@
         }
         if (confirm("确定要导入数据么？")) {
             $.ajax({
-                url: "data/resolve.do",
+                url: "data/resolveEmp.do",
                 data: {"fileName": file},
                 type: "POST",
                 success: function (_data) {

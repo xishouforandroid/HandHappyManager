@@ -1,6 +1,7 @@
 package com.liangxunwang.unimanager.dao;
 
 import com.liangxunwang.unimanager.model.Emp;
+import com.liangxunwang.unimanager.model.EmpKu;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -40,5 +41,10 @@ public interface EmpDao {
 
     void updateRzstate2(@Param(value = "empid") String empid, @Param(value = "rzstate2") String password);
     void updateRzstate3(@Param(value = "empid") String empid, @Param(value = "rzstate3") String password);
+
+    void saveList(List<Emp> list);
+
+    //选择合适的对象集合
+    List<Emp> listsChoose(Map<String, Object> map);
 
 }

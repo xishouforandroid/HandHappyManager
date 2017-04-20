@@ -150,9 +150,15 @@ public class EmpController extends ControllerConstants {
             if(lists != null){
                 String str = "";
                 for(HappyHandLike happyHandLike:lists){
-                    str = str+happyHandLike.getLikename()+",";
+                    if(happyHandLike != null){
+                        if(!StringUtil.isNullOrEmpty(happyHandLike.getLikename())){
+                            str = str+happyHandLike.getLikename()+",";
+                        }
+                    }
                 }
-                str = str.substring(0,str.length()-1);
+                if(str.length()>1){
+                    str = str.substring(0,str.length()-1);
+                }
                 map.put("listsName", str);
             }
 

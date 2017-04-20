@@ -219,4 +219,80 @@
         UPDATE emp SET rzstate3=#{rzstate3} WHERE empid=#{empid}
     </update>
 
+
+    <insert id="saveList" parameterType="java.util.List">
+        INSERT INTO emp(empid, mobile, password, nickname,cover,sign,age,sex,heightl,education,provinceid,cityid,marriage,company,likeids,state,cardpic,rzstate1,rzstate2,rzstate3,is_use,dateline)
+        VALUES
+        <foreach  collection="list" item="item" index="index" separator=",">
+            (#{item.empid},
+            #{item.mobile},
+            #{item.password},
+            #{item.nickname},
+            #{item.cover,jdbcType=VARCHAR},
+            #{item.sign,jdbcType=VARCHAR},
+            #{item.age},
+            #{item.sex},
+            #{item.heightl},
+            #{item.education},
+            #{item.provinceid},
+            #{item.cityid},
+            #{item.marriage},
+            #{item.company},
+            #{item.likeids},
+            #{item.state},
+            #{item.cardpic,jdbcType=VARCHAR},
+            #{item.rzstate1},
+            #{item.rzstate2},
+            #{item.rzstate3},
+            #{item.is_use},
+            #{item.dateline})
+        </foreach>
+    </insert>
+
+
+
+    <select id="listsChoose" resultMap="emp">
+        SELECT sn.*,
+        lcity.cityName as cityName,
+        lpro.pname as pname,
+        lchoose.chooseid as chooseid,
+        lchoose.agestart as agestart,
+        lchoose.ageend as ageend,
+        lchoose.heightlstart as heightlstart,
+        lchoose.heightlend as heightlend,
+        lchoose.educationm as educationm,
+        lchoose.marriagem as marriagem
+        from emp sn
+        LEFT JOIN province lpro ON lpro.provinceid = sn.provinceid
+        LEFT JOIN city lcity ON lcity.cityid = sn.cityid
+        LEFT JOIN happy_hand_choose lchoose ON lchoose.empid = sn.empid
+        WHERE 1=1 AND sn.rzstate1 ='1' AND  sn.is_use = '1'
+        AND sn.age &gt; #{agestart} AND sn.age &lt; #{ageend}
+        AND sn.heightl &gt; #{heightlstart} AND sn.heightl &lt; #{heightlend}
+
+        <if test="educationm == '5'">
+            AND sn.education = '5'
+        </if>
+        <if test="educationm == '4'">
+            AND (sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="educationm == '3'">
+            AND (sn.education = '3' OR sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="educationm == '2'">
+            AND (sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="educationm == '1'">
+            AND (sn.education = '1' OR sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
+        </if>
+
+        <if test="marriagem != null and marriagem != ''">
+            AND sn.marriage = #{marriagem}
+        </if>
+        <if test="state != null and state != ''">
+            AND sn.state = #{state}
+        </if>
+
+        limit #{index},#{size}
+    </select>
 </mapper>

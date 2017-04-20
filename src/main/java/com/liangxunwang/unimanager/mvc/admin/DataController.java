@@ -45,6 +45,33 @@ public class DataController extends ControllerConstants {
         }
     }
 
+
+    @Autowired
+    @Qualifier("empSaveService")
+    private SaveService empSaveServiceSave;
+
+    @RequestMapping("toAddEmp")
+    public String toAddEmp(){
+        return "data/addEmp";
+    }
+
+    @RequestMapping(value = "/resolveEmp", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String resolveEmp(String fileName, HttpServletRequest request){
+        try {
+            String path = init(request.getSession());
+            String filePath = path+fileName;
+            empSaveServiceSave.save(filePath);
+            return toJSONString(SUCCESS);
+        } catch (Exception e) {
+            String msg = e.getMessage();
+            if (msg.equals("SAVE_ERROR")){
+                return toJSONString(new ErrorTip(1, "导入失败，请检查文件！"));
+            }
+            return toJSONString(new ErrorTip(1, "导入失败，请检查文件！"));
+        }
+    }
+
     public String init(HttpSession session) throws ServletException {
         String webPath = null;
         try {
