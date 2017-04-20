@@ -14,6 +14,15 @@ public class EmpQuery {
     private String rzstate1;
     private String rzstate2;
     private String rzstate3;
+    private String empid;
+
+    public String getEmpid() {
+        return empid;
+    }
+
+    public void setEmpid(String empid) {
+        this.empid = empid;
+    }
 
     public String getSex() {
         return sex;

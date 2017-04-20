@@ -3,6 +3,7 @@ package com.liangxunwang.unimanager.mvc.app;
 import com.liangxunwang.unimanager.model.HappyHandPhoto;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
+import com.liangxunwang.unimanager.query.EmpQuery;
 import com.liangxunwang.unimanager.service.FindService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.SaveService;
@@ -69,9 +70,9 @@ public class AppPhotosController extends ControllerConstants {
 
     @RequestMapping(value = "/appPhotos", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String appPhotos(String empid){
+    public String appPhotos(EmpQuery query){
         try {
-            List<HappyHandPhoto> lists = (List<HappyHandPhoto>) appPhotosServiceList.list(empid);
+            List<HappyHandPhoto> lists = (List<HappyHandPhoto>) appPhotosServiceList.list(query);
             HappyHandPhoto happyHandPhoto = new HappyHandPhoto();
             if(lists != null && lists.size()>0){
                 happyHandPhoto = lists.get(0);

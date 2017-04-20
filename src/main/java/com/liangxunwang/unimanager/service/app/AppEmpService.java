@@ -23,7 +23,7 @@ import java.util.*;
 
 
 @Service("appEmpService")
-public class AppEmpService implements ExecuteService,SaveService,UpdateService,ListService {
+public class AppEmpService implements ExecuteService,SaveService,UpdateService,ListService,FindService {
 
     @Autowired
     @Qualifier("empDao")
@@ -169,5 +169,28 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
 
         }
         return list;
+    }
+
+    @Override
+    public Object findById(Object object) throws ServiceException {
+        String empid = (String) object;
+        Emp member = empDao.findById(empid);
+        if(member != null){
+            if(!StringUtil.isNullOrEmpty(member.getCover())){
+                if (member.getCover().startsWith("upload")) {
+                    member.setCover(Constants.URL + member.getCover());
+                }else {
+                    member.setCover(Constants.QINIU_URL + member.getCover());
+                }
+            }
+            if(!StringUtil.isNullOrEmpty(member.getCardpic())){
+                if (member.getCardpic().startsWith("upload")) {
+                    member.setCardpic(Constants.URL + member.getCardpic());
+                }else {
+                    member.setCardpic(Constants.QINIU_URL + member.getCardpic());
+                }
+            }
+        }
+        return member;
     }
 }

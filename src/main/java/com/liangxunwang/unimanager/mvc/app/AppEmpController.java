@@ -4,6 +4,7 @@ import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.service.ExecuteService;
+import com.liangxunwang.unimanager.service.FindService;
 import com.liangxunwang.unimanager.service.SaveService;
 import com.liangxunwang.unimanager.service.UpdateService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
@@ -266,6 +267,29 @@ public class AppEmpController extends ControllerConstants {
             else{
                 return toJSONString(new ErrorTip(1, "身份认证失败，请稍后重试！"));
             }
+        }
+    }
+
+
+
+    @Autowired
+    @Qualifier("appEmpService")
+    private FindService appEmpServiceFind;
+
+    //根据empid查询会员信息
+    @RequestMapping(value = "/appEmpByEmpId", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appEmpByEmpId(@RequestParam String empid){
+        if (StringUtil.isNullOrEmpty(empid)){
+            return toJSONString(new ErrorTip(1, "查询会员信息失败，请检查会员ID是否存在！"));
+        }
+        try {
+            Emp emp = (Emp) appEmpServiceFind.findById(empid);
+            DataTip tip = new DataTip();
+            tip.setData(emp);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "查询会员信息失败，请稍后重试！"));
         }
     }
 }

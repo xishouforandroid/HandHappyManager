@@ -55,6 +55,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appPhotos\\.do$)" +
 
                         "|(^/appTuijianPeoples\\.do$)" +
+                        "|(^/appEmpByEmpId\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
