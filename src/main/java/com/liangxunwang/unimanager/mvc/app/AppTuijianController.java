@@ -2,6 +2,7 @@ package com.liangxunwang.unimanager.mvc.app;
 
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.HappyHandCompany;
+import com.liangxunwang.unimanager.model.HappyHandGroup;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.service.ListService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.acl.Group;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,5 +45,20 @@ public class AppTuijianController extends ControllerConstants {
     }
 
 
+    @Autowired
+    @Qualifier("appGroupsService")
+    private ListService appGroupsServiceList;
 
+    @RequestMapping(value = "/appTuijianGroups", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appTuijianGroups(String empid){
+        try {
+            List<HappyHandGroup> lists = (List<HappyHandGroup>) appGroupsServiceList.list(empid);
+            DataTip tip = new DataTip();
+            tip.setData(lists);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
 }

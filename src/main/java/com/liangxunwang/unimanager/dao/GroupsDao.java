@@ -16,6 +16,7 @@ public interface GroupsDao {
      * 查询建议
      */
     List<HappyHandGroup> lists(Map<String, Object> map);
+
     long count(Map<String, Object> map);
 
 
@@ -35,4 +36,6 @@ public interface GroupsDao {
     void update(HappyHandGroup happyHandGroup);
 
     public HappyHandGroup findByLikeId(String likeid);
+
+    List<HappyHandGroup> listsByLikeIds(Map<String, Object> map);
 }

@@ -54,4 +54,17 @@
         SELECT * FROM happy_hand_group where likeid=#{likeid}
     </select>
 
+    <select id="listsByLikeIds" resultMap="groups">
+        SELECT sn.* from happy_hand_group sn
+        WHERE 1=1
+
+        <if test="likeids != null and likeids != ''">
+            AND sn.likeid IN
+            <foreach collection="likeids" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+
 </mapper>
