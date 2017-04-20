@@ -7,7 +7,6 @@ public class SuggestQuery {
     private int index;
     private int size;
 
-
     public int getIndex() {
         return index;
     }
