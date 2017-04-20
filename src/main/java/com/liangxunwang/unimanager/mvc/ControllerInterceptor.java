@@ -59,6 +59,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appTuijianGroups\\.do$)" +
 
                         "|(^/appGroupsById\\.do$)" +
+                        "|(^/appSaveFriends\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 

@@ -41,7 +41,8 @@ public class DateUtil {
      */
     public static long getStartDay(){
         DateTime time = new DateTime();
-        String date = time.toString("yyyy-MM-dd HH:mm");
+//        String date = time.toString("yyyy-MM-dd HH:mm");
+        String date = getDateFormat1() +" 00:00";
         DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
         time = DateTime.parse(date, format);
         long start = time.getMillis();
@@ -50,12 +51,20 @@ public class DateUtil {
 
     public static long getEndDay(){
         DateTime time = new DateTime();
-        String date = time.toString("yyyy-MM-dd HH:mm");
+//        String date = time.toString("yyyy-MM-dd HH:mm");
+        String date = getDateFormat1() +" 23:59";
         DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm");
         time = DateTime.parse(date, format);
         long start = time.getMillis();
         return start+Constants.DAY_MILLISECOND;
     }
+    public static String  getDateFormat1(){
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式
+        String hehe = dateFormat.format( now );
+        return hehe;
+    }
+
 
     /**
      *
