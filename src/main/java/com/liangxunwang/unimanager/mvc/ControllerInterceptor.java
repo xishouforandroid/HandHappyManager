@@ -63,6 +63,10 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appFriends\\.do$)" +
                         "|(^/appAcceptFriends\\.do$)" +
 
+                        "|(^/appSaveJiaowang\\.do$)" +
+                        "|(^/appJiaowangs\\.do$)" +
+                        "|(^/appAcceptJiaowang\\.do$)" +
+
                         "|(^/uploadUnCompressImage\\.do$)"
 
         ) || account != null) {

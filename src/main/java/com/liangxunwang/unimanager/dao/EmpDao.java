@@ -47,4 +47,6 @@ public interface EmpDao {
     //选择合适的对象集合
     List<Emp> listsChoose(Map<String, Object> map);
 
+    void updateState(@Param(value = "empid") String empid, @Param(value = "state") String password);
+
 }

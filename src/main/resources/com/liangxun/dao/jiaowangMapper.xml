@@ -2,15 +2,17 @@
 <!DOCTYPE mapper PUBLIC
         "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liangxunwang.unimanager.dao.FriendsDao">
-    <resultMap id="friends" type="com.liangxunwang.unimanager.model.Friends">
-        <id column="friendsid" property="friendsid"/>
+<mapper namespace="com.liangxunwang.unimanager.dao.JiaowangDao">
+    <resultMap id="jiaowang" type="com.liangxunwang.unimanager.model.HappyHandJw">
+        <id column="jwid" property="jwid"/>
         <result column="empid1" property="empid1"/>
         <result column="empid2" property="empid2"/>
-        <result column="applytitle" property="applytitle"/>
         <result column="applytime" property="applytime"/>
         <result column="accepttime" property="accepttime"/>
+        <result column="startime" property="startime"/>
+        <result column="endtime" property="endtime"/>
         <result column="is_check" property="is_check"/>
+        <result column="is_use" property="is_use"/>
 
         <result column="empid1Cover" property="empid1Cover"/>
         <result column="empid1Nickname" property="empid1Nickname"/>
@@ -19,33 +21,33 @@
     </resultMap>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandLike">
-        INSERT INTO friends(friendsid, empid1, empid2, applytitle, applytime, accepttime, is_check)
-        VALUES (#{friendsid}, #{empid1}, #{empid2}, #{applytitle}, #{applytime}, #{applytime, ,jdbcType=VARCHAR}, #{is_check})
+        INSERT INTO happy_hand_jw(jwid, empid1, empid2, applytime, accepttime, startime, is_check)
+        VALUES (#{jwid}, #{empid1}, #{empid2}, #{applytime}, #{accepttime, jdbcType=VARCHAR}, #{startime, jdbcType=VARCHAR}, #{is_check})
     </insert>
 
-    <select id="findById" parameterType="String" resultMap="friends">
+    <select id="findById" parameterType="String" resultMap="jiaowang">
         SELECT sn.*,
         lemp1.cover as empid1Cover,
         lemp1.nickname as empid1Nickname,
         lemp2.cover as empid2Cover,
         lemp2.nickname as empid2Nickname
-         FROM friends sn
+         FROM happy_hand_jw sn
          LEFT JOIN emp lemp1 ON lemp1.empid = sn.empid1
          LEFT JOIN emp lemp2 ON lemp2.empid = sn.empid2
-         where sn.friendsid=#{friendsid}
+         where sn.jwid=#{jwid}
     </select>
 
     <update id="update" parameterType="String">
-        UPDATE friends SET accepttime=#{accepttime},is_check=#{is_check} WHERE friendsid=#{friendsid}
+        UPDATE happy_hand_jw SET accepttime=#{accepttime}, startime=#{startime, jdbcType=VARCHAR}, is_check=#{is_check} WHERE jwid=#{jwid}
     </update>
 
-    <select id="lists" resultMap="friends">
+    <select id="lists" resultMap="jiaowang">
         SELECT sn.*,
         lemp1.cover as empid1Cover,
         lemp1.nickname as empid1Nickname,
         lemp2.cover as empid2Cover,
         lemp2.nickname as empid2Nickname
-        FROM friends sn
+        FROM happy_hand_jw sn
         LEFT JOIN emp lemp1 ON lemp1.empid = sn.empid1
         LEFT JOIN emp lemp2 ON lemp2.empid = sn.empid2
         where 1 = 1
@@ -59,17 +61,10 @@
             AND sn.is_check = #{is_check}
         </if>
 
-        <if test="starttime != null and starttime != ''">
-            AND sn.applytime  &gt;= #{starttime}
-        </if>
-        <if test="endtime != null and endtime != ''">
-            AND sn.applytime  &lt;= #{endtime}
-        </if>
-
     </select>
 
     <select id="count" resultType="Long">
-        SELECT count(sn.friendsid) FROM friends sn
+        SELECT count(sn.jwid) FROM happy_hand_jw sn
         WHERE 1=1
         <if test="empid1 != null and empid1 != ''">
             AND sn.empid1 = #{empid1}
@@ -77,11 +72,8 @@
         <if test="empid2 != null and empid2 != ''">
             AND sn.empid2 = #{empid2}
         </if>
-        <if test="starttime != null and starttime != ''">
-            AND sn.applytime  &gt;= #{starttime}
-        </if>
-        <if test="endtime != null and endtime != ''">
-            AND sn.applytime  &lt;= #{endtime}
+        <if test="is_check != null and is_check != ''">
+            AND sn.is_check = #{is_check}
         </if>
     </select>
 

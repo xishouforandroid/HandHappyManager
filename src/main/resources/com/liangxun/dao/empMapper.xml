@@ -295,4 +295,9 @@
 
         limit #{index},#{size}
     </select>
+
+    <update id="updateState" parameterType="String">
+        UPDATE emp SET state=#{state} WHERE empid=#{empid}
+    </update>
+
 </mapper>
