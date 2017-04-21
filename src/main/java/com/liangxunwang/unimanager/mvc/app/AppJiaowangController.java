@@ -6,6 +6,7 @@ import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.query.FriendsQuery;
 import com.liangxunwang.unimanager.query.JiaowangQuery;
+import com.liangxunwang.unimanager.service.DeleteService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.SaveService;
 import com.liangxunwang.unimanager.service.UpdateService;
@@ -34,6 +35,9 @@ public class AppJiaowangController extends ControllerConstants {
     @Qualifier("appJiaowangService")
     private UpdateService appJiaowangServiceUpdate;
 
+    @Autowired
+    @Qualifier("appJiaowangService")
+    private DeleteService appJiaowangServiceDelete;
 
     @RequestMapping(value = "/appSaveJiaowang", produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -53,6 +57,8 @@ public class AppJiaowangController extends ControllerConstants {
                 return toJSONString(new ErrorTip(1, "您已经有交往对象了，不能重复添加！"));
             }else if(msg.equals("sheHasJwdx")){
                 return toJSONString(new ErrorTip(1, "对方已经有交往对象了，不能重复添加！"));
+            }else if(msg.equals("hasApply")){
+                return toJSONString(new ErrorTip(2, "对方尚未确认，请耐心等待"));
             }
             else{
                 return toJSONString(new ErrorTip(1, "申请失败，请稍后重试！"));
@@ -97,6 +103,21 @@ public class AppJiaowangController extends ControllerConstants {
             else{
                 return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));
             }
+        }
+    }
+
+
+    @RequestMapping(value = "/appDeleteJiaowang", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appDeleteJiaowang(HappyHandJw happyHandJw){
+        try {
+            appJiaowangServiceDelete.delete(happyHandJw);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));
         }
     }
 }

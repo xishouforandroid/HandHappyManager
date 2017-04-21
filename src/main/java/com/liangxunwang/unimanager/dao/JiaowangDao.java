@@ -24,4 +24,6 @@ public interface JiaowangDao {
     List<HappyHandJw> lists(Map<String, Object> map);
 
     long count(Map<String, Object> map);
+
+    void delete(HappyHandJw happyHandJw);
 }

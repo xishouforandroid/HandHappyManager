@@ -8,10 +8,7 @@ import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.HappyHandJw;
 import com.liangxunwang.unimanager.query.FriendsQuery;
 import com.liangxunwang.unimanager.query.JiaowangQuery;
-import com.liangxunwang.unimanager.service.ListService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.ServiceException;
-import com.liangxunwang.unimanager.service.UpdateService;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.DateUtil;
 import com.liangxunwang.unimanager.util.StringUtil;
@@ -28,7 +25,7 @@ import java.util.Map;
  * Created by zhl on 2015/3/3.
  */
 @Service("appJiaowangService")
-public class AppJiaowangService implements SaveService,ListService,UpdateService {
+public class AppJiaowangService implements SaveService,ListService,UpdateService,DeleteService {
     @Autowired
     @Qualifier("jiaowangDao")
     private JiaowangDao jiaowangDao;
@@ -46,13 +43,14 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         if(StringUtil.isNullOrEmpty(happyHandJw.getEmpid2())){
             throw new ServiceException("empId2Null");
         }
-        //先判断是否已经有交往对象了
+        //先判断是否已经有两个人的交往申请了
         Map<String, Object> map = new HashMap<>();
         map.put("empid1", happyHandJw.getEmpid1() );
-        map.put("is_check", "1" );
+        map.put("empid2", happyHandJw.getEmpid2() );
+        map.put("is_check", "0" );
         List<HappyHandJw> list1 = jiaowangDao.lists(map);
         if(list1 != null && list1.size() > 0){
-            throw new ServiceException("youHasJwdx");//您已经有交往对象了
+            throw new ServiceException("hasApply");//对方尚未确认，请耐心等待
         }
         //第二层判断
         Emp emp1 = empDao.findById(happyHandJw.getEmpid1());
@@ -63,6 +61,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         if(emp2 != null && "2".equals(emp2.getState())){
             throw new ServiceException("sheHasJwdx");//对方已经有交往对象了
         }
+
         happyHandJw.setApplytime(System.currentTimeMillis() + "");
         happyHandJw.setIs_check("0");
         happyHandJw.setJwid(UUIDFactory.random());
@@ -127,9 +126,10 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             if(emp2 != null && "2".equals(emp2.getState())){
                 throw new ServiceException("youHasJwdx");//您已经有交往对象了
             }
-
+            happyHandJw.setStartime(System.currentTimeMillis()+"");
         }
         happyHandJw.setAccepttime(System.currentTimeMillis()+"");//处理时间
+
         jiaowangDao.update(happyHandJw);
 
         if("1".equals(happyHandJw.getIs_check())){
@@ -149,4 +149,10 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         return 200;
     }
 
+    @Override
+    public Object delete(Object object) throws ServiceException {
+        HappyHandJw happyHandJw = (HappyHandJw) object;
+        jiaowangDao.delete(happyHandJw);
+        return 200;
+    }
 }

@@ -20,7 +20,7 @@
         <result column="empid2Nickname" property="empid2Nickname"/>
     </resultMap>
 
-    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandLike">
+    <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandJw">
         INSERT INTO happy_hand_jw(jwid, empid1, empid2, applytime, accepttime, startime, is_check)
         VALUES (#{jwid}, #{empid1}, #{empid2}, #{applytime}, #{accepttime, jdbcType=VARCHAR}, #{startime, jdbcType=VARCHAR}, #{is_check})
     </insert>
@@ -38,7 +38,7 @@
     </select>
 
     <update id="update" parameterType="String">
-        UPDATE happy_hand_jw SET accepttime=#{accepttime}, startime=#{startime, jdbcType=VARCHAR}, is_check=#{is_check} WHERE jwid=#{jwid}
+        UPDATE happy_hand_jw SET accepttime=#{accepttime, jdbcType=VARCHAR}, startime=#{startime, jdbcType=VARCHAR}, is_check=#{is_check} WHERE jwid=#{jwid}
     </update>
 
     <select id="lists" resultMap="jiaowang">
@@ -77,5 +77,8 @@
         </if>
     </select>
 
+    <delete id="delete" parameterType="com.liangxunwang.unimanager.model.HappyHandJw">
+        DELETE FROM happy_hand_jw where empid1 = #{empid1} AND empid2 = #{empid2}
+    </delete>
 
 </mapper>

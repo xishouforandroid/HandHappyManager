@@ -20,7 +20,7 @@
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandLike">
         INSERT INTO friends(friendsid, empid1, empid2, applytitle, applytime, accepttime, is_check)
-        VALUES (#{friendsid}, #{empid1}, #{empid2}, #{applytitle}, #{applytime}, #{applytime, ,jdbcType=VARCHAR}, #{is_check})
+        VALUES (#{friendsid}, #{empid1}, #{empid2}, #{applytitle,jdbcType=VARCHAR}, #{applytime,jdbcType=VARCHAR}, #{applytime,jdbcType=VARCHAR}, #{is_check})
     </insert>
 
     <select id="findById" parameterType="String" resultMap="friends">
