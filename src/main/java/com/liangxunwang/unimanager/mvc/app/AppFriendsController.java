@@ -1,15 +1,21 @@
 package com.liangxunwang.unimanager.mvc.app;
 
 import com.liangxunwang.unimanager.model.Friends;
+import com.liangxunwang.unimanager.model.HappyHandLike;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
+import com.liangxunwang.unimanager.query.FriendsQuery;
+import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.SaveService;
+import com.liangxunwang.unimanager.service.UpdateService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 
 @Controller
@@ -18,6 +24,15 @@ public class AppFriendsController extends ControllerConstants {
     @Autowired
     @Qualifier("appFriendsService")
     private SaveService appFriendsServiceSave;
+
+    @Autowired
+    @Qualifier("appFriendsService")
+    private ListService appFriendsServiceList;
+
+    @Autowired
+    @Qualifier("appFriendsService")
+    private UpdateService appFriendsServiceUpdate;
+
 
     @RequestMapping(value = "/appSaveFriends", produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -38,7 +53,7 @@ public class AppFriendsController extends ControllerConstants {
             }else if(msg.equals("hasApply")){
                 return toJSONString(new ErrorTip(1, "今天已经申请过了！"));
             }else if(msg.equals("applyTooMuch")){
-                return toJSONString(new ErrorTip(1, "对该会员的申请次数超过三次了！"));
+                return toJSONString(new ErrorTip(1, "对该会员的申请次数超出限制！最多三次！"));
             }
             else{
                 return toJSONString(new ErrorTip(1, "申请失败，请稍后重试！"));
@@ -46,6 +61,40 @@ public class AppFriendsController extends ControllerConstants {
         }
     }
 
+    @RequestMapping(value = "/appFriends", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appFriends(FriendsQuery query){
+        try {
+            List<Friends> lists = (List<Friends>) appFriendsServiceList.list(query);
+            DataTip tip = new DataTip();
+            tip.setData(lists);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
 
 
+
+    //接受好友申请
+    @RequestMapping(value = "/appAcceptFriends", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appAcceptFriends(Friends friends){
+        try {
+            appFriendsServiceUpdate.update(friends);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            if (msg.equals("friendsidnull")){
+                return toJSONString(new ErrorTip(1, "请检查该申请ID是否存在！"));
+            }else if(msg.equals("ischecknull")){
+                return toJSONString(new ErrorTip(1, "请确认是否传值正确！"));
+            }
+            else{
+                return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));
+            }
+        }
+    }
 }

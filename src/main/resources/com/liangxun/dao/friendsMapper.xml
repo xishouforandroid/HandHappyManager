@@ -11,6 +11,11 @@
         <result column="applytime" property="applytime"/>
         <result column="accepttime" property="accepttime"/>
         <result column="is_check" property="is_check"/>
+
+        <result column="empid1Cover" property="empid1Cover"/>
+        <result column="empid1Nickname" property="empid1Nickname"/>
+        <result column="empid2Cover" property="empid2Cover"/>
+        <result column="empid2Nickname" property="empid2Nickname"/>
     </resultMap>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandLike">
@@ -19,7 +24,15 @@
     </insert>
 
     <select id="findById" parameterType="String" resultMap="friends">
-        SELECT * FROM friends where friendsid=#{friendsid}
+        SELECT sn.*,
+        lemp1.cover as empid1Cover,
+        lemp1.nickname as empid1Nickname,
+        lemp2.cover as empid2Cover,
+        lemp2.nickname as empid2Nickname
+         FROM friends sn
+         LEFT JOIN emp lemp1 ON lemp1.empid = sn.empid1
+         LEFT JOIN emp lemp2 ON lemp2.empid = sn.empid2
+         where sn.friendsid=#{friendsid}
     </select>
 
     <update id="update" parameterType="String">
@@ -27,7 +40,15 @@
     </update>
 
     <select id="lists" resultMap="friends">
-        SELECT sn.* from friends sn where 1 = 1
+        SELECT sn.*,
+        lemp1.cover as empid1Cover,
+        lemp1.nickname as empid1Nickname,
+        lemp2.cover as empid2Cover,
+        lemp2.nickname as empid2Nickname
+        FROM friends sn
+        LEFT JOIN emp lemp1 ON lemp1.empid = sn.empid1
+        LEFT JOIN emp lemp2 ON lemp2.empid = sn.empid2
+        where 1 = 1
         <if test="empid1 != null and empid1 != ''">
             AND sn.empid1 = #{empid1}
         </if>

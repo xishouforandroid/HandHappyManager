@@ -60,6 +60,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
 
                         "|(^/appGroupsById\\.do$)" +
                         "|(^/appSaveFriends\\.do$)" +
+                        "|(^/appFriends\\.do$)" +
+                        "|(^/appAcceptFriends\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
