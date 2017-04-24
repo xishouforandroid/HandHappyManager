@@ -4,8 +4,10 @@ package com.liangxunwang.unimanager.service.app;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.JiaowangDao;
 
+import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.HappyHandJw;
+import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.query.FriendsQuery;
 import com.liangxunwang.unimanager.query.JiaowangQuery;
 import com.liangxunwang.unimanager.service.*;
@@ -33,6 +35,10 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
     @Autowired
     @Qualifier("empDao")
     private EmpDao empDao;
+
+    @Autowired
+    @Qualifier("messagesDao")
+    private MessagesDao messagesDao;
 
     @Override
     public Object save(Object object) throws ServiceException {
@@ -105,7 +111,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
     }
 
 
-    //接受交往申请
+    //处理交往申请
     @Override
     public Object update(Object object) {
         HappyHandJw happyHandJw = (HappyHandJw) object;
@@ -145,6 +151,34 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             //更新会员表 申请人和被申请人都要处理
             empDao.updateState(happyHandJw.getEmpid1(), "2");
             empDao.updateState(happyHandJw.getEmpid2(), "2");
+            //保存系统消息
+            //todo
+            Emp emp1 = empDao.findById(happyHandJw.getEmpid1());
+            Emp emp2= empDao.findById(happyHandJw.getEmpid2());
+
+            HappyHandMessage happyHandMessage1 = new HappyHandMessage();
+            happyHandMessage1.setMsgid(UUIDFactory.random());
+            happyHandMessage1.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage1.setTitle("恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！");
+            happyHandMessage1.setEmpid(happyHandJw.getEmpid1());
+            messagesDao.save(happyHandMessage1);
+
+            HappyHandMessage happyHandMessage2 = new HappyHandMessage();
+            happyHandMessage2.setMsgid(UUIDFactory.random());
+            happyHandMessage2.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage2.setTitle("恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！");
+            happyHandMessage2.setEmpid(happyHandJw.getEmpid2());
+            messagesDao.save(happyHandMessage2);
+        }else{
+            //拒绝请求 要通知对方
+            //todo
+            Emp emp2= empDao.findById(happyHandJw.getEmpid2());
+            HappyHandMessage happyHandMessage = new HappyHandMessage();
+            happyHandMessage.setMsgid(UUIDFactory.random());
+            happyHandMessage.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage.setTitle(emp2.getNickname()+"拒绝与你交往，继续努力哦，祝你早日找到幸福！");
+            happyHandMessage.setEmpid(happyHandJw.getEmpid1());
+            messagesDao.save(happyHandMessage);
         }
         return 200;
     }

@@ -2,11 +2,14 @@ package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.EmpKuDao;
+import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.EmpKu;
+import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.service.UpdateService;
 import com.liangxunwang.unimanager.util.MD5Util;
+import com.liangxunwang.unimanager.util.UUIDFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,10 @@ public class AppEmpUpdateCard implements UpdateService {
     @Autowired
     @Qualifier("empKuDao")
     private EmpKuDao empKuDao;
+
+    @Autowired
+    @Qualifier("messagesDao")
+    private MessagesDao messagesDao;
 
     @Override
     public Object update(Object object) {
@@ -44,6 +51,16 @@ public class AppEmpUpdateCard implements UpdateService {
             throw new ServiceException("null");
         }
         empDao.updateCard(emp.getEmpid(), emp.getCardpic());
+
+        //身份认证成功之后，发送系统消息
+        //todo
+        HappyHandMessage happyHandMessage = new HappyHandMessage();
+        happyHandMessage.setMsgid(UUIDFactory.random());
+        happyHandMessage.setDateline(System.currentTimeMillis() + "");
+        happyHandMessage.setTitle("恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!");
+        happyHandMessage.setEmpid(emp.getEmpid());
+        messagesDao.save(happyHandMessage);
+
         return 200;
     }
 }

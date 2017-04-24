@@ -4,9 +4,11 @@ import com.liangxunwang.unimanager.chat.impl.EasemobIMUsers;
 import com.liangxunwang.unimanager.dao.ChooseDao;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.EmpKuDao;
+import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.EmpKu;
 import com.liangxunwang.unimanager.model.HappyHandChoose;
+import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.MD5Util;
@@ -34,6 +36,10 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
     private EmpKuDao empKuDao;
 
     private EasemobIMUsers easemobIMUsers = new EasemobIMUsers();
+
+    @Autowired
+    @Qualifier("messagesDao")
+    private MessagesDao messagesDao;
 
     @Override
     public Object execute(Object object) throws ServiceException {
@@ -92,12 +98,27 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
         }
         empDao.save(emp);
         //同步在环信注册该用户
-
         RegisterUsers users = new RegisterUsers();
         User user = new User().username(emp.getEmpid() + new Random().nextInt(500)).password("123456");
         users.add(user);
         Object result = easemobIMUsers.createNewIMUserSingle(users);
         Assert.assertNotNull(result);
+        //注册成功之后 系统通知
+        //todo
+        HappyHandMessage happyHandMessage = new HappyHandMessage();
+        happyHandMessage.setMsgid(UUIDFactory.random());
+        happyHandMessage.setDateline(System.currentTimeMillis() + "");
+        happyHandMessage.setTitle("欢迎使用幸福牵手吧APP!\n温馨提示：幸福牵手吧是一个真实的婚恋交友平台，请您真诚交友，祝你早日找到幸福!");
+        happyHandMessage.setEmpid(emp.getEmpid());
+        messagesDao.save(happyHandMessage);
+
+        HappyHandMessage happyHandMessage1 = new HappyHandMessage();
+        happyHandMessage1.setMsgid(UUIDFactory.random());
+        happyHandMessage1.setDateline(System.currentTimeMillis() + "");
+        happyHandMessage1.setTitle("请使用搜索按钮，查找和添加会员，浏览会员信息!");
+        happyHandMessage1.setEmpid(emp.getEmpid());
+        messagesDao.save(happyHandMessage1);
+
         return emp.getEmpid();
     }
 
