@@ -11,9 +11,9 @@
         <result column="is_read" property="is_read"/>
     </resultMap>
 
-    <select id="lists" resultMap="notice">
+    <select id="lists" resultMap="messages">
         SELECT * from happy_hand_message
-        ORDER BY dateline DESC limit #{index},#{size}
+        ORDER BY dateline DESC
     </select>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandMessage">
