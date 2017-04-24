@@ -167,7 +167,7 @@ public class AppFriendsService implements SaveService,ListService,UpdateService 
             messagesDao.save(happyHandMessage);
 
             if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "好友请求", emp2.getNickname()+"已经同意你的好友请求", "1", emp1.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", emp2.getNickname()+"已经同意你的好友请求", "1", emp1.getChannelId());
             }
         }else{
             //说明拒绝了
@@ -182,7 +182,7 @@ public class AppFriendsService implements SaveService,ListService,UpdateService 
             messagesDao.save(happyHandMessage);
 
             if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "好友请求", emp2.getNickname()+"已经拒绝你的好友请求", "1", emp1.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", emp2.getNickname()+"已经拒绝你的好友请求", "1", emp1.getChannelId());
             }
         }
         return 200;
