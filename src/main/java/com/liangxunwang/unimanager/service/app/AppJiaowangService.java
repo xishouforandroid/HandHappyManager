@@ -3,16 +3,14 @@ package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.JiaowangDao;
-
 import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.HappyHandJw;
 import com.liangxunwang.unimanager.model.HappyHandMessage;
-import com.liangxunwang.unimanager.query.FriendsQuery;
 import com.liangxunwang.unimanager.query.JiaowangQuery;
 import com.liangxunwang.unimanager.service.*;
+import com.liangxunwang.unimanager.util.BaiduPush;
 import com.liangxunwang.unimanager.util.Constants;
-import com.liangxunwang.unimanager.util.DateUtil;
 import com.liangxunwang.unimanager.util.StringUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +160,9 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage1.setTitle("恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！");
             happyHandMessage1.setEmpid(happyHandJw.getEmpid1());
             messagesDao.save(happyHandMessage1);
+            if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "交往消息", "恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！", "2", emp1.getChannelId());
+            }
 
             HappyHandMessage happyHandMessage2 = new HappyHandMessage();
             happyHandMessage2.setMsgid(UUIDFactory.random());
@@ -169,6 +170,9 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage2.setTitle("恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！");
             happyHandMessage2.setEmpid(happyHandJw.getEmpid2());
             messagesDao.save(happyHandMessage2);
+            if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", "恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！", "2", emp2.getChannelId());
+            }
         }else{
             //拒绝请求 要通知对方
             //todo
@@ -179,6 +183,9 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage.setTitle(emp2.getNickname()+"拒绝与你交往，继续努力哦，祝你早日找到幸福！");
             happyHandMessage.setEmpid(happyHandJw.getEmpid1());
             messagesDao.save(happyHandMessage);
+            if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", emp2.getNickname()+"拒绝与你交往，继续努力哦，祝你早日找到幸福！", "2", emp2.getChannelId());
+            }
         }
         return 200;
     }
@@ -189,4 +196,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         jiaowangDao.delete(happyHandJw);
         return 200;
     }
+
+
+
 }

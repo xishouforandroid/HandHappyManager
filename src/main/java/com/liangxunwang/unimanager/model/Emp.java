@@ -28,6 +28,9 @@ public class Emp
     private String rzstate3;
     private String is_use;
     private String dateline;
+    private String userId;
+    private String channelId;
+    private String deviceType;
 
     //择偶要求
     private String chooseid;
@@ -41,6 +44,30 @@ public class Emp
     //城市
     private String pname;
     private String cityName;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
 
     public String getChooseid() {
         return chooseid;

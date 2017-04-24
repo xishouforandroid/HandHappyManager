@@ -74,6 +74,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appNewsById\\.do$)" +
                         "|(^/appMessages\\.do$)" +
                         "|(^/appMessagesById\\.do$)" +
+                        "|(^/updatePushId\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 

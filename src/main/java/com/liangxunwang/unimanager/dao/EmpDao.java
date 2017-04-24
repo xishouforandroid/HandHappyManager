@@ -49,4 +49,11 @@ public interface EmpDao {
 
     void updateState(@Param(value = "empid") String empid, @Param(value = "state") String password);
 
+    /**
+     * 根据ID更新pushId
+     * {id, userId, channelId, type}
+     */
+    void updatePushId(@Param(value = "empid") String id, @Param(value = "userId") String userId, @Param(value = "channelId") String channelId, @Param(value = "deviceType")String deviceType);
+
+
 }

@@ -8,7 +8,9 @@ import com.liangxunwang.unimanager.model.EmpKu;
 import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.service.UpdateService;
+import com.liangxunwang.unimanager.util.BaiduPush;
 import com.liangxunwang.unimanager.util.MD5Util;
+import com.liangxunwang.unimanager.util.StringUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,6 +62,10 @@ public class AppEmpUpdateCard implements UpdateService {
         happyHandMessage.setTitle("恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!");
         happyHandMessage.setEmpid(emp.getEmpid());
         messagesDao.save(happyHandMessage);
+
+        if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!", "2", emp1.getChannelId());
+        }
 
         return 200;
     }

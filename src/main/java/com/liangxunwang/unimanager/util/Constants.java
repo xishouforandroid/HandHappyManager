@@ -13,10 +13,13 @@ public class Constants {
         public static final String QINIU_SPACE = "meetlove-pic";
         public static final String COVER_DEFAULT = "default_avatar.png";
 
-        public static final String API_KEY = "HGGcyEBPPlfjIieCVnWSlMD6";
-        public static final String SECRET_KEY = "vFypyImE4aFxWspAHTCbpsm4Nh2P2pPN";
+        public static final String API_KEY = "pO8Xhn7xPciq4I4qOtwr8GiG";
+        public static final String SECRET_KEY = "rMoIeSB2RjO2YOVswzx3KxmVhs8kh6E0";
+
         public static final String IOS_API_KEY = "W38xecAXVYDY955Shv0GGc8f";
         public static final String IOS_SECRET_KEY = "ZrhZicrOHvexKhRoKWFIdyaEsCTrUeom";
+
+        public static final int IOS_TYPE = 1;
 
         public static final String SAVE_ERROR = "save_error";
         public static final String DEFAULT_SERVICE_TOP_BG = "img/user_bg.jpg";//默认背景图--顶部的

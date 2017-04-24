@@ -10,10 +10,7 @@ import com.liangxunwang.unimanager.model.EmpKu;
 import com.liangxunwang.unimanager.model.HappyHandChoose;
 import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.service.*;
-import com.liangxunwang.unimanager.util.Constants;
-import com.liangxunwang.unimanager.util.MD5Util;
-import com.liangxunwang.unimanager.util.StringUtil;
-import com.liangxunwang.unimanager.util.UUIDFactory;
+import com.liangxunwang.unimanager.util.*;
 import io.swagger.client.model.RegisterUsers;
 import io.swagger.client.model.User;
 import org.junit.Assert;
@@ -119,6 +116,8 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
         happyHandMessage1.setEmpid(emp.getEmpid());
         messagesDao.save(happyHandMessage1);
 
+
+//
         return emp.getEmpid();
     }
 

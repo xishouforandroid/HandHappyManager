@@ -7,6 +7,7 @@ import com.liangxunwang.unimanager.service.ExecuteService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.SaveService;
 import com.liangxunwang.unimanager.service.ServiceException;
+import com.liangxunwang.unimanager.util.BaiduPush;
 import com.liangxunwang.unimanager.util.DateUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class NewsService implements ListService,SaveService, ExecuteService {
         notice.setDateline(DateUtil.getDateAndTime());
         newsDao.save(notice);
         //发通告
-//        BaiduPush.PushMsgToAll(notice);
+        BaiduPush.PushMsgToAll(3, notice.getTitle(), notice.getContent(), "2");
+        BaiduPush.PushMsgToAll(4, notice.getTitle(), notice.getContent(), "2");
         return null;
     }
 

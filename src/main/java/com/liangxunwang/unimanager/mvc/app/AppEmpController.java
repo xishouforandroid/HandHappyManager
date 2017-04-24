@@ -3,10 +3,7 @@ package com.liangxunwang.unimanager.mvc.app;
 import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
-import com.liangxunwang.unimanager.service.ExecuteService;
-import com.liangxunwang.unimanager.service.FindService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.UpdateService;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import com.liangxunwang.unimanager.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -292,4 +289,28 @@ public class AppEmpController extends ControllerConstants {
             return toJSONString(new ErrorTip(1, "查询会员信息失败，请稍后重试！"));
         }
     }
+
+
+
+    @Autowired
+    @Qualifier("appEmpBaiduService")
+    private UpdateService appEmpBaiduService;
+
+    @RequestMapping("/updatePushId")
+    @ResponseBody
+    public String updatePushId(@RequestParam String id, @RequestParam String userId, @RequestParam String channelId, @RequestParam String type){
+        if (StringUtil.isNullOrEmpty(id) || StringUtil.isNullOrEmpty(userId) || StringUtil.isNullOrEmpty(channelId)|| StringUtil.isNullOrEmpty(type)){
+            return toJSONString(new ErrorTip(1, "绑定百度云推送失败！请检查会员设备"));
+        }
+        Object[] params = new Object[]{id, userId, channelId, type};
+        try {
+            appEmpBaiduService.update(params);
+            return toJSONString(SUCCESS);
+        }catch (ServiceException e){
+            return toJSONString(new ErrorTip(1, "绑定百度云推送失败！请检查会员设备"));
+
+        }
+    }
+
+
 }

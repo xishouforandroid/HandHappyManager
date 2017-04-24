@@ -27,6 +27,9 @@
         <result column="rzstate3" property="rzstate3"/>
         <result column="is_use" property="is_use"/>
         <result column="dateline" property="dateline"/>
+        <result column="userId" property="userId"/>
+        <result column="channelId" property="channelId"/>
+        <result column="deviceType" property="deviceType"/>
 
         <result column="chooseid" property="chooseid"/>
         <result column="agestart" property="agestart"/>
@@ -298,6 +301,10 @@
 
     <update id="updateState" parameterType="String">
         UPDATE emp SET state=#{state} WHERE empid=#{empid}
+    </update>
+
+    <update id="updatePushId" parameterType="String">
+        UPDATE emp set userId=#{userId}, channelId=#{channelId}, deviceType=#{deviceType} WHERE empid=#{empid}
     </update>
 
 </mapper>
