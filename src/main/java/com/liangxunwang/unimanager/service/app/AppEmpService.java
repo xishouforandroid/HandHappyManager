@@ -143,6 +143,7 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
         String empid = map1.get("empid");
         String state = map1.get("state");
         String size = map1.get("size");
+        String sex = map1.get("sex");
 
         List<Emp> list = new ArrayList<Emp>();
         Emp emp = empDao.findById(empid);
@@ -167,6 +168,9 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
             map.put("educationm", educationm);
             map.put("marriagem", marriagem);
             map.put("state", state);
+            if(!StringUtil.isNullOrEmpty(sex)){
+                map.put("sex", sex);
+            }
             list = empDao.listsChoose(map);
             if(list != null){
                 for(Emp member:list){

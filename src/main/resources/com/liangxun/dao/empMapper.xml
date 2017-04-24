@@ -295,7 +295,9 @@
         <if test="state != null and state != ''">
             AND sn.state = #{state}
         </if>
-
+        <if test="sex != null and sex != ''">
+            AND sn.sex = #{sex}
+        </if>
         limit #{index},#{size}
     </select>
 

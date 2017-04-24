@@ -1,8 +1,12 @@
 package com.liangxunwang.unimanager.service.app;
 
+import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.FriendsDao;
+import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.dao.PhotosDao;
+import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.Friends;
+import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.model.HappyHandPhoto;
 import com.liangxunwang.unimanager.query.EmpQuery;
 import com.liangxunwang.unimanager.query.FriendsQuery;
@@ -27,6 +31,14 @@ public class AppFriendsService implements SaveService,ListService,UpdateService 
     @Autowired
     @Qualifier("friendsDao")
     private FriendsDao friendsDao;
+
+    @Autowired
+    @Qualifier("empDao")
+    private EmpDao empDao;
+
+    @Autowired
+    @Qualifier("messagesDao")
+    private MessagesDao messagesDao;
 
 
     @Override
@@ -74,6 +86,12 @@ public class AppFriendsService implements SaveService,ListService,UpdateService 
         friends.setIs_check("0");
         friends.setFriendsid(UUIDFactory.random());
         friendsDao.save(friends);
+
+        Emp emp2= empDao.findById(friends.getEmpid2());
+        if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "好友请求", "有新的好友请求，点此查看", "5", emp2.getChannelId());
+        }
+
         return null;
     }
 
@@ -136,6 +154,36 @@ public class AppFriendsService implements SaveService,ListService,UpdateService 
             friends1.setEmpid1(friends.getEmpid2());
             friends1.setEmpid2(friends.getEmpid1());
             friendsDao.save(friends1);
+
+            //添加系统消息
+            Emp emp1= empDao.findById(friends.getEmpid1());
+            Emp emp2= empDao.findById(friends.getEmpid2());
+
+            HappyHandMessage happyHandMessage = new HappyHandMessage();
+            happyHandMessage.setMsgid(UUIDFactory.random());
+            happyHandMessage.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage.setTitle(emp2.getNickname()+"已经同意你的好友请求");
+            happyHandMessage.setEmpid(emp1.getEmpid());
+            messagesDao.save(happyHandMessage);
+
+            if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "好友请求", emp2.getNickname()+"已经同意你的好友请求", "1", emp1.getChannelId());
+            }
+        }else{
+            //说明拒绝了
+            Emp emp1= empDao.findById(friends.getEmpid1());
+            Emp emp2= empDao.findById(friends.getEmpid2());
+
+            HappyHandMessage happyHandMessage = new HappyHandMessage();
+            happyHandMessage.setMsgid(UUIDFactory.random());
+            happyHandMessage.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage.setTitle(emp2.getNickname()+"已经拒绝你的好友请求");
+            happyHandMessage.setEmpid(emp1.getEmpid());
+            messagesDao.save(happyHandMessage);
+
+            if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "好友请求", emp2.getNickname()+"已经拒绝你的好友请求", "1", emp1.getChannelId());
+            }
         }
         return 200;
     }

@@ -12,7 +12,7 @@ import com.liangxunwang.unimanager.baiduyun.log.YunLogHandler;
  * Created by Administrator on 2016/3/26 0026.
  */
 public class BaiduPush {
-    //msgtypeid  :1系统通知 2系统资讯 3活动公告  4交往消息
+    //msgtypeid  :1系统消息 2系统资讯 3活动公告  4交往消息 5加好友请求
     public static void PushMsgToAll (int deveiceType, String title, String content, String msgtypeid) {
         /*1. 创建PushKeyPair
          *用于app的合法身份认证

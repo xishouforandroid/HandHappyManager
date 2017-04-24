@@ -29,11 +29,18 @@ public class AppTuijianController extends ControllerConstants {
 
     @RequestMapping(value = "/appTuijianPeoples", produces = "text/plain;charset=UTF-8")
     @ResponseBody
-    public String appTuijianPeoples(String empid, String state, String size){
+    public String appTuijianPeoples(String empid, String state, String size, String sex){
         Map<String,String> map = new HashMap<String, String>();
         map.put("empid", empid);
         map.put("state", state);
         map.put("size", size);
+        if("0".equals(sex)){
+            map.put("sex", "1");
+        }
+        if("1".equals(sex)){
+            map.put("sex", "0");
+        }
+
         try {
             List<Emp> lists = (List<Emp>) appEmpServiceList.list(map);
             DataTip tip = new DataTip();
