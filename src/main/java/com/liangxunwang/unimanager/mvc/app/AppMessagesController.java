@@ -1,9 +1,11 @@
 package com.liangxunwang.unimanager.mvc.app;
 
 import com.liangxunwang.unimanager.model.HappyHandMessage;
+import com.liangxunwang.unimanager.model.MsgCount;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.query.MessagesQuery;
+import com.liangxunwang.unimanager.service.ExecuteService;
 import com.liangxunwang.unimanager.service.FindService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
@@ -28,13 +30,10 @@ public class AppMessagesController extends ControllerConstants {
     @Qualifier("appMessagesService")
     private FindService appMessagesServiceFind;
 
-
     @RequestMapping(value = "/appMessages", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String appMessages(MessagesQuery query, Page page){
         try {
-//            query.setIndex(page.getPage() == 0 ? 1 : page.getPage());
-//            query.setSize(query.getSize() == 0 ? page.getDefaultSize() : query.getSize());
             List<HappyHandMessage> lists = (List<HappyHandMessage>) appMessagesServiceList.list(query);
             DataTip tip = new DataTip();
             tip.setData(lists);
@@ -58,4 +57,24 @@ public class AppMessagesController extends ControllerConstants {
             return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
         }
     }
+
+
+    @Autowired
+    @Qualifier("appMsgService")
+    private ListService appMsgService;
+
+    @RequestMapping(value = "/appMsgAllList", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appMsgAllList(String empid){
+        try {
+            //查询10条系统消息  10条系统资讯 10条活动公告  10条交往消息
+            MsgCount msgCount = (MsgCount) appMsgService.list(empid);
+            DataTip tip = new DataTip();
+            tip.setData(msgCount);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
+
 }

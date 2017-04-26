@@ -29,4 +29,5 @@ public interface MessagesDao {
 
     void updateRead(String msgid);
 
+
 }

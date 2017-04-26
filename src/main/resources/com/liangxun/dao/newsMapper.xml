@@ -12,7 +12,19 @@
 
     <select id="lists" resultMap="news">
         SELECT * from happy_hand_news
+        WHERE 1=1
+        <if test="starttime != null and starttime != ''">
+            AND dateline &gt; #{starttime}
+        </if>
         ORDER BY dateline DESC limit #{index},#{size}
+    </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.newsid) FROM happy_hand_news sn
+        WHERE 1=1
+        <if test="starttime != null and starttime != ''">
+            AND sn.dateline &gt; #{starttime}
+        </if>
     </select>
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandNews">
@@ -24,8 +36,6 @@
         SELECT * FROM happy_hand_news where newsid=#{newsid}
     </select>
 
-    <select id="count" resultType="Long">
-      SELECT count(sn.newsid) FROM happy_hand_news sn
-   </select>
+
 
 </mapper>
