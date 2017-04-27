@@ -17,7 +17,7 @@ public interface HyrzDao {
      * 查询
      */
     List<HappyHandHyrz> lists(Map<String, Object> map);
-
+    long count(Map<String, Object> map);
     //保存
     void save(HappyHandHyrz happyHandHyrz);
 

@@ -129,6 +129,7 @@
                         <th>身份认证</th>
                         <th>会员认证</th>
                         <th>诚信认证</th>
+                        <th>注册日期</th>
                         <th>是否使用</th>
                         <th>操作</th>
                     </tr>
@@ -174,6 +175,7 @@
                                 <c:if test="${e.rzstate3=='0'}">否</c:if>
                                 <c:if test="${e.rzstate3=='1'}">是</c:if>
                             </td>
+                            <td>${um:format(e.dateline, 'yy-MM-dd HH:mm')}</td>
                             <td>
                                 <c:if test="${e.is_use=='0'}">禁用</c:if>
                                 <c:if test="${e.is_use=='1'}">使用</c:if>

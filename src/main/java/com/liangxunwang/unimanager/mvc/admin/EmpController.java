@@ -29,7 +29,6 @@ public class EmpController extends ControllerConstants {
     @Qualifier("empService")
     private ListService empServiceList;
 
-
     @RequestMapping("/emp/toAdd")
     public String toAdd(){
         return "/emp/add";
@@ -52,7 +51,6 @@ public class EmpController extends ControllerConstants {
     @Autowired
     @Qualifier("empKuService")
     private SaveService empKuServiceSave;
-
 
     @RequestMapping(value = "/emp/add", produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -181,4 +179,43 @@ public class EmpController extends ControllerConstants {
             return toJSONString(new ErrorTip(1, "修改会员信息失败，请稍后重试！"));
         }
     }
+
+
+    @Autowired
+    @Qualifier("empHyrzService")
+    private ListService empHyrzServiceList;
+
+    @RequestMapping("/emp/listhy")
+    public String listhy(HttpSession session,ModelMap map, EmpQuery query, Page page){
+        query.setIndex(page.getPage() == 0 ? 1 : page.getPage());
+        query.setSize(query.getSize() == 0 ? page.getDefaultSize() : query.getSize());
+        Object[] results = (Object[]) empHyrzServiceList.list(query);
+        map.put("list", results[0]);
+        long count = (Long) results[1];
+        page.setCount(count);
+        page.setPageCount(calculatePageCount(query.getSize(), count));
+        map.addAttribute("page", page);
+        map.addAttribute("query", query);
+        return "/emp/listhy";
+    }
+
+    @Autowired
+    @Qualifier("empCxrzService")
+    private ListService empCxrzServiceList;
+
+    @RequestMapping("/emp/listcx")
+    public String listcx(HttpSession session,ModelMap map, EmpQuery query, Page page){
+        query.setIndex(page.getPage() == 0 ? 1 : page.getPage());
+        query.setSize(query.getSize() == 0 ? page.getDefaultSize() : query.getSize());
+        Object[] results = (Object[]) empCxrzServiceList.list(query);
+        map.put("list", results[0]);
+        long count = (Long) results[1];
+        page.setCount(count);
+        page.setPageCount(calculatePageCount(query.getSize(), count));
+        map.addAttribute("page", page);
+        map.addAttribute("query", query);
+        return "emp/listcx";
+    }
+
+
 }

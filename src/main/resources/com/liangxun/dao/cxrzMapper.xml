@@ -8,11 +8,31 @@
         <result column="empid" property="empid"/>
         <result column="starttime" property="starttime"/>
         <result column="is_use" property="is_use"/>
+
+        <result column="nickname" property="nickname"/>
+        <result column="mobile" property="mobile"/>
     </resultMap>
 
+
     <select id="lists" resultMap="cxrz">
-        SELECT * from happy_hand_cxrz WHERE empid=#{empid}
+        SELECT sn.* ,lemp.nickname as nickname,lemp.mobile as mobile
+        from happy_hand_cxrz sn
+        LEFT JOIN emp lemp ON lemp.empid = sn.empid
+        WHERE 1=1
+        <if test="empid != null and empid != ''">
+            AND sn.empid = #{empid}
+        </if>
+        limit #{index},#{size}
     </select>
+
+    <select id="count" resultType="Long">
+        SELECT count(sn.cxrzid) FROM happy_hand_cxrz sn
+        WHERE 1=1
+        <if test="empid != null and empid != ''">
+            AND sn.empid = #{empid}
+        </if>
+    </select>
+
 
     <insert id="save" parameterType="com.liangxunwang.unimanager.model.HappyHandCxrz">
         INSERT INTO happy_hand_cxrz(cxrzid, empid, starttime, is_use)

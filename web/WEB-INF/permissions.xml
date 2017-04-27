@@ -10,6 +10,8 @@
     <group id="EMPLOYEE_MANAGE" name="会员管理">
         <permission id="LIST_EMPLOYEE_EMP" name="会员管理"/>
         <permission id="LIST_EMPLOYEE_JY" name="会员库管理"/>
+        <permission id="LIST_EMPLOYEE_RENZHENG" name="认证会员"/>
+        <permission id="LIST_EMPLOYEE_CHENGXIN" name="诚信会员"/>
     </group>
 
     <group id="PHOTO_LIST_MANAGER" name="客服管理">
