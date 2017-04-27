@@ -42,7 +42,7 @@
                         <select class="form-control" id="status">
                             <option value="">--选择订单状态--</option>
                             <option value="0" ${query.status=='0'?'selected':''}>未支付</option>
-                            <option value="1" ${query.status=='1'?'selected':''}>已支付</option>
+                            <option value="2" ${query.status=='2'?'selected':''}>已支付</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -89,7 +89,7 @@
                             <td>${e.mobile}</td>
                             <td>
                                 <c:if test="${e.status=='0'}">未支付</c:if>
-                                <c:if test="${e.status=='1'}">已支付</c:if>
+                                <c:if test="${e.status=='2'}">已支付</c:if>
                             </td>
                             <td>
                                 <c:if test="${e.trade_type=='0'}">支付宝</c:if>

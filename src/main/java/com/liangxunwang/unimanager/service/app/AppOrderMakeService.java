@@ -3,10 +3,8 @@ package com.liangxunwang.unimanager.service.app;
 import com.liangxunwang.unimanager.dao.AppOrderMakeDao;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.HyrzDao;
-import com.liangxunwang.unimanager.model.HappyHandHyrz;
-import com.liangxunwang.unimanager.model.Order;
-import com.liangxunwang.unimanager.model.OrderInfoAndSign;
-import com.liangxunwang.unimanager.model.ShoppingTrade;
+import com.liangxunwang.unimanager.dao.MessagesDao;
+import com.liangxunwang.unimanager.model.*;
 import com.liangxunwang.unimanager.service.FindService;
 import com.liangxunwang.unimanager.service.SaveService;
 import com.liangxunwang.unimanager.service.ServiceException;
@@ -32,11 +30,9 @@ public class AppOrderMakeService implements SaveService,UpdateService,FindServic
     @Qualifier("appOrderMakeDao")
     private AppOrderMakeDao appOrderMakeSaveDao;
 
-
     @Autowired
     @Qualifier("empDao")
     private EmpDao empDao;
-
 
     //保存订单
     @Override
@@ -87,6 +83,10 @@ public class AppOrderMakeService implements SaveService,UpdateService,FindServic
     @Qualifier("hyrzDao")
     private HyrzDao hyrzDao;
 
+    @Autowired
+    @Qualifier("messagesDao")
+    private MessagesDao messagesDao;
+
     //更新订单状态
     @Override
     public Object update(Object object) {
@@ -133,6 +133,21 @@ public class AppOrderMakeService implements SaveService,UpdateService,FindServic
                             happyHandHyrz.setEmpid(order1.getEmpid());
                             happyHandHyrz.setHyrzid(UUIDFactory.random());
                             hyrzDao.save(happyHandHyrz);
+                        }
+                        //会员认证成功之后，发送系统消息
+                        //todo
+                        Emp emp = empDao.findById(order1.getEmpid());
+                        if(emp != null){
+                            HappyHandMessage happyHandMessage = new HappyHandMessage();
+                            happyHandMessage.setMsgid(UUIDFactory.random());
+                            happyHandMessage.setDateline(System.currentTimeMillis() + "");
+                            happyHandMessage.setTitle("恭喜你成为认证会员，快去寻找幸福吧!");
+                            happyHandMessage.setEmpid(order1.getEmpid());
+                            messagesDao.save(happyHandMessage);
+
+                            if(!StringUtil.isNullOrEmpty(emp.getChannelId())){
+                                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp.getDeviceType()), "系统消息", "恭喜你成为认证会员，快去寻找幸福吧!", "1", emp.getChannelId());
+                            }
                         }
                     }
                 }
