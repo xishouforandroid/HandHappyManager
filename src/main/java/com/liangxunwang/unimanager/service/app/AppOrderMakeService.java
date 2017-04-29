@@ -1,5 +1,7 @@
 package com.liangxunwang.unimanager.service.app;
 
+import com.liangxunwang.unimanager.alipay.AlipayConfig;
+import com.liangxunwang.unimanager.alipay.OrderInfoUtil2_0;
 import com.liangxunwang.unimanager.dao.AppOrderMakeDao;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.HyrzDao;
@@ -65,9 +67,13 @@ public class AppOrderMakeService implements SaveService,UpdateService,FindServic
             notify_url =  Constants.ZFB_NOTIFY_URL_CX;
         }
 
-        String orderInfo = StringUtil.getOrderInfo(out_trade_no, "meetLove", "meetLove_pay", order.getPayable_amount(), notify_url);
-        // 对订单做RSA 签名
-        String sign = StringUtil.sign(orderInfo);
+        boolean rsa2 = (AlipayConfig.RSA2_PRIVATE.length() > 0);
+        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(AlipayConfig.APPID, rsa2, order.getPayable_amount(), out_trade_no , notify_url);
+        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
+
+        String privateKey = rsa2 ? AlipayConfig.RSA2_PRIVATE : AlipayConfig.RSA_PRIVATE;
+        String sign = OrderInfoUtil2_0.getSign(params, privateKey, rsa2);
+        final String orderInfo = orderParam + "&" + sign;
 
         try {
             // 仅需对sign 做URL编码
@@ -108,6 +114,8 @@ public class AppOrderMakeService implements SaveService,UpdateService,FindServic
 
                         Map<String, Object> maphyrz = new HashMap<>();
                         maphyrz.put("empid", order1.getEmpid());
+                        maphyrz.put("index", 0);
+                        maphyrz.put("size", 10);
                         List<HappyHandHyrz> lists = hyrzDao.lists(maphyrz);
                         if(lists != null && lists.size()>0)
                         {

@@ -60,6 +60,8 @@ public class OrderUpdateWxService implements UpdateService {
 
                         Map<String, Object> maphyrz = new HashMap<>();
                         maphyrz.put("empid", order1.getEmpid());
+                        maphyrz.put("index", 0);
+                        maphyrz.put("size", 10);
                         List<HappyHandCxrz> lists = cxrzDao.lists(maphyrz);
                         if(lists != null && lists.size()>0)
                         {
