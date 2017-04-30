@@ -96,7 +96,8 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
         empDao.save(emp);
         //同步在环信注册该用户
         RegisterUsers users = new RegisterUsers();
-        User user = new User().username(emp.getEmpid() + new Random().nextInt(500)).password("123456");
+//        User user = new User().username(emp.getEmpid() + new Random().nextInt(500)).password("123456");
+        User user = new User().username(emp.getEmpid()).password("123456");
         users.add(user);
         Object result = easemobIMUsers.createNewIMUserSingle(users);
         Assert.assertNotNull(result);
