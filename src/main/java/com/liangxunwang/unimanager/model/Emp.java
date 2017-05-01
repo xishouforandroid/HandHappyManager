@@ -10,26 +10,31 @@ public class Emp
     private String password;
     private String nickname;
     private String cover;
+
     private String sign;
     private String age;
     private String sex;
     private String heightl;
     private String education;
+
     private String provinceid;
     private String cityid;
     private String areaid;
     private String marriage;
     private String company;
+
     private String likeids;
     private String state;
     private String cardpic;
     private String rzstate1;
     private String rzstate2;
+
     private String rzstate3;
     private String is_use;
     private String dateline;
     private String userId;
     private String channelId;
+
     private String deviceType;
 
     //择偶要求
@@ -38,6 +43,7 @@ public class Emp
     private String ageend;
     private String heightlstart;
     private String heightlend;
+
     private String educationm;
     private String marriagem;
 

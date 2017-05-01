@@ -8,6 +8,7 @@
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="dateline" property="dateline"/>
+        <result column="is_read" property="is_read"/>
     </resultMap>
 
     <select id="lists" resultMap="notice">

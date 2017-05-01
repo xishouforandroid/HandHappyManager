@@ -8,6 +8,15 @@ public class HappyHandNotice {
     private String title;
     private String content;
     private String dateline;
+    private String is_read;
+
+    public String getIs_read() {
+        return is_read;
+    }
+
+    public void setIs_read(String is_read) {
+        this.is_read = is_read;
+    }
 
     public String getNoticeid() {
         return noticeid;
