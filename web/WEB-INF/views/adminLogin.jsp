@@ -41,7 +41,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="loginAuto()">
 <div class="container-fluid">
     <div id="page-login" class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
@@ -103,6 +103,8 @@
             success: function (_data) {
                 var data = $.parseJSON(_data);
                 if (data.success) {
+                    addCookie("loginName_mrmb", username, 36);
+                    addCookie("loginPassword_mrmb", password, 36);
                     window.location.href = "/main.do";
                 } else {
                     alert(data.message)
@@ -110,6 +112,19 @@
             }
         });
     }
+
+    function loginAuto() {
+        var username = getCookie("loginName_mrmb");
+        var password = getCookie("loginPassword_mrmb");
+        if(username != 0 && username !='0'){
+            document.getElementById("username").value = username
+        }
+        if(password != 0 && password !='0'){
+            document.getElementById("password").value = password
+        }
+    }
+
+
 </script>
 </body>
 </html>

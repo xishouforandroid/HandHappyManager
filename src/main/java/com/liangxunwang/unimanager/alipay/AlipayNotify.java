@@ -23,18 +23,18 @@ public class AlipayNotify {
      * @param sign 比对的签名结果
      * @return 生成的签名结果
      */
-    public static boolean getSignVeryfy(Map<String, String> Params, String sign) {
-        //过滤空值、sign与sign_type参数
-        Map<String, String> sParaNew = AlipayCore.paraFilter(Params);
-        //获取待签名字符串
-        String preSignStr = AlipayCore.createLinkString(sParaNew);
-        //获得签名验证结果
-        boolean isSign = false;
-        if(AlipayConfig.sign_type.equals("RSA")){
-            isSign = RSA.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
-        }
-        return isSign;
-    }
+//    public static boolean getSignVeryfy(Map<String, String> Params, String sign) {
+//        //过滤空值、sign与sign_type参数
+//        Map<String, String> sParaNew = AlipayCore.paraFilter(Params);
+//        //获取待签名字符串
+//        String preSignStr = AlipayCore.createLinkString(sParaNew);
+//        //获得签名验证结果
+//        boolean isSign = false;
+//        if(AlipayConfig.sign_type.equals("RSA")){
+//            isSign = RSA.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
+//        }
+//        return isSign;
+//    }
 
 
     /**

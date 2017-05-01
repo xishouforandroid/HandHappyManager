@@ -17,6 +17,7 @@ public interface CxrzDao {
      * 查询
      */
     List<HappyHandCxrz> lists(Map<String, Object> map);
+    long count(Map<String, Object> map);
 
     //保存
     void save(HappyHandCxrz happyHandCxrz);

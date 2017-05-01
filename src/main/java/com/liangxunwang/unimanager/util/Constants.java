@@ -11,8 +11,8 @@ public class Constants {
         public static final String QINIU_URL = "http://oo4c4r583.bkt.clouddn.com/";
 
         public static final String QINIU_SPACE = "meetlove-pic";
-        public static final String COVER_DEFAULT = "default_avatar.png";
 
+        //百度推送
         public static final String API_KEY = "pO8Xhn7xPciq4I4qOtwr8GiG";
         public static final String SECRET_KEY = "rMoIeSB2RjO2YOVswzx3KxmVhs8kh6E0";
 
@@ -20,28 +20,6 @@ public class Constants {
         public static final String IOS_SECRET_KEY = "ZrhZicrOHvexKhRoKWFIdyaEsCTrUeom";
 
         public static final int IOS_TYPE = 1;
-
-        public static final String SAVE_ERROR = "save_error";
-        public static final String DEFAULT_SERVICE_TOP_BG = "img/user_bg.jpg";//默认背景图--顶部的
-        public static final String DEFAULT_DOWNLOAD_URL = "html/download.html";//默认下载地址
-
-        public static final String HAS_ZAN = "has_zan";
-
-        public static final String HAS_CODE = "has_code";
-
-        public static final String NO_SEND_CODE = "no_send_code";
-
-        public static final String SEND_SMS_ERROR = "send_sms_error";
-
-        public static final String HAS_EXISTS = "has_exists";
-
-        public static final String TOO_MANY_CODE = "too_many_code";
-
-        public static final String CODE_NOT_EQUAL = "code_not_equal";
-
-        public static final String PHONE_ERROR = "phone_error";
-
-        public static final String HX_ERROR = "hx_error";
 
         public static final String SMS_MESSAGE_URL = "http://60.209.7.78:8080/smsServer/submit";
 
@@ -61,11 +39,11 @@ public class Constants {
 
 
         //appid
-        public static final String WX_APP_ID = "wx6ce53935b8d58010";//yum
+        public static final String WX_APP_ID = "wx2993024b83997eba";//yum
         //商户号
-        public static final String WX_MCH_ID = "1423178402";//yum
+        public static final String WX_MCH_ID = "1463150202";//yum
         //  API密钥，在商户平台设置
-        public static final  String WX_API_KEY="85977cd5719d1aebb5dd6ccaa4fe5bfe";//yum
+        public static final  String WX_API_KEY="611fcae2cb0a43381be9ee527de1c406";//yum
 
-        public static final  String WX_APP_SECRET="611fcae2cb0a43381be9ee527de1c406";//yum
+        public static final  String WX_APP_SECRET="ed8a4eeb61fc631ea0c786e175b5e1fe";//yum
 }

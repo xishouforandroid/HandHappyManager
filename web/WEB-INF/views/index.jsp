@@ -134,7 +134,7 @@
                     </li>
                 </c:if>
 
-                <c:if test="${um:permission('LIST_EMPLOYEE_JY', sessionScope.powers)||um:permission('LIST_EMPLOYEE_EMP', sessionScope.powers)}">
+                <c:if test="${um:permission('LIST_EMPLOYEE_JY', sessionScope.powers)||um:permission('LIST_EMPLOYEE_EMP', sessionScope.powers)||um:permission('LIST_EMPLOYEE_CHENGXIN', sessionScope.powers)||um:permission('LIST_EMPLOYEE_RENZHENG', sessionScope.powers)}">
                     <li class="dropdown">
                         <a href="javascript:void (0);" class="dropdown-toggle">
                             <i class="fa fa-group"></i>
@@ -146,6 +146,14 @@
                             </c:if>
                             <c:if test="${um:permission('LIST_EMPLOYEE_JY', sessionScope.powers)}">
                                 <li><a href="javascript:void(0);" onclick="toPage('/emp/listku','1')">会员库管理</a></li>
+                            </c:if>
+
+                            <c:if test="${um:permission('LIST_EMPLOYEE_RENZHENG', sessionScope.powers)}">
+                                <li><a href="javascript:void(0);" onclick="toPage('/emp/listhy','1')">认证会员</a></li>
+                            </c:if>
+
+                            <c:if test="${um:permission('LIST_EMPLOYEE_CHENGXIN', sessionScope.powers)}">
+                                <li><a href="javascript:void(0);" onclick="toPage('/emp/listcx','1')">诚信会员</a></li>
                             </c:if>
                         </ul>
                     </li>

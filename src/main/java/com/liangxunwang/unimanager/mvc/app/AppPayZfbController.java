@@ -4,11 +4,7 @@ import com.liangxunwang.unimanager.alipay.AlipayNotify;
 import com.liangxunwang.unimanager.model.Order;
 import com.liangxunwang.unimanager.service.UpdateService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
-import com.liangxunwang.unimanager.util.StringUtil;
-import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -19,10 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,8 +67,8 @@ public class AppPayZfbController extends ControllerConstants {
         if(notify_id!=""&&notify_id!=null){
             if(AlipayNotify.verifyResponse(notify_id).equals("true"))//判断成功之后使用getResponse方法判断是否是支付宝发来的异步通知。
             {
-                if(AlipayNotify.getSignVeryfy(params, sign))//使用支付宝公钥验签
-                {
+//                if(AlipayNotify.getSignVeryfy(params, sign))//使用支付宝公钥验签
+//                {
                     if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
                         synchronized (this){
                             updateOrder(out_trade_no);
@@ -82,11 +76,11 @@ public class AppPayZfbController extends ControllerConstants {
                     }
 
                     return "success" ;
-                }
-                else//验证签名失败
-                {
-                    return "sign fail" ;
-                }
+//                }
+//                else//验证签名失败
+//                {
+//                    return "sign fail" ;
+//                }
             }
             else//验证是否来自支付宝的通知失败
             {
@@ -152,8 +146,8 @@ public class AppPayZfbController extends ControllerConstants {
         if(notify_id!=""&&notify_id!=null){
             if(AlipayNotify.verifyResponse(notify_id).equals("true"))//判断成功之后使用getResponse方法判断是否是支付宝发来的异步通知。
             {
-                if(AlipayNotify.getSignVeryfy(params, sign))//使用支付宝公钥验签
-                {
+//                if(AlipayNotify.getSignVeryfy(params, sign))//使用支付宝公钥验签
+//                {
                     if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
                         synchronized (this){
                             updateOrderCx(out_trade_no);
@@ -161,11 +155,11 @@ public class AppPayZfbController extends ControllerConstants {
                     }
 
                     return "success" ;
-                }
-                else//验证签名失败
-                {
-                    return "sign fail" ;
-                }
+//                }
+//                else//验证签名失败
+//                {
+//                    return "sign fail" ;
+//                }
             }
             else//验证是否来自支付宝的通知失败
             {

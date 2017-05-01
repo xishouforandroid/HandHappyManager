@@ -119,7 +119,7 @@ public class AppPayWxController extends ControllerConstants {
 
 
     /**
-     * 微信支付回调-会员认证
+     * 微信支付回调-诚信认证
      * @return
      */
     @RequestMapping(value = "/payWxCxNotifyAction",   produces = "text/html;charset=UTF-8", method={RequestMethod.POST})

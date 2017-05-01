@@ -70,6 +70,11 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         happyHandJw.setIs_check("0");
         happyHandJw.setJwid(UUIDFactory.random());
         jiaowangDao.save(happyHandJw);
+        //通知对方 有人想与您交往
+
+        if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", emp1.getNickname()+"请求与您交往", "4", emp2.getChannelId());
+        }
         return null;
     }
 
@@ -161,7 +166,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage1.setEmpid(happyHandJw.getEmpid1());
             messagesDao.save(happyHandMessage1);
             if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "交往消息", "恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！", "2", emp1.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "交往消息", "恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！", "4", emp1.getChannelId());
             }
 
             HappyHandMessage happyHandMessage2 = new HappyHandMessage();
@@ -171,7 +176,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage2.setEmpid(happyHandJw.getEmpid2());
             messagesDao.save(happyHandMessage2);
             if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", "恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！", "2", emp2.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", "恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！", "4", emp2.getChannelId());
             }
         }else{
             //拒绝请求 要通知对方
@@ -184,7 +189,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage.setEmpid(happyHandJw.getEmpid1());
             messagesDao.save(happyHandMessage);
             if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", emp2.getNickname()+"拒绝与你交往，继续努力哦，祝你早日找到幸福！", "2", emp2.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", emp2.getNickname()+"拒绝与你交往，继续努力哦，祝你早日找到幸福！", "4", emp2.getChannelId());
             }
         }
         return 200;

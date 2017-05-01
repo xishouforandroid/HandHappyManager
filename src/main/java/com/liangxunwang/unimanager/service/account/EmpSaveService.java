@@ -1,6 +1,7 @@
 package com.liangxunwang.unimanager.service.account;
 
 
+import com.liangxunwang.unimanager.chat.impl.EasemobIMUsers;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.EmpKuDao;
 import com.liangxunwang.unimanager.model.Emp;
@@ -8,11 +9,14 @@ import com.liangxunwang.unimanager.model.EmpKu;
 import com.liangxunwang.unimanager.service.SaveService;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.util.UUIDFactory;
+import io.swagger.client.model.RegisterUsers;
+import io.swagger.client.model.User;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -103,6 +107,14 @@ public class EmpSaveService implements SaveService {
                 }
             }
             empDao.saveList(dataList);
+            for(Emp emp:dataList){
+                RegisterUsers users = new RegisterUsers();
+//        User user = new User().username(emp.getEmpid() + new Random().nextInt(500)).password("123456");
+                User user = new User().username(emp.getEmpid()).password("123456");
+                users.add(user);
+                Object result = easemobIMUsers.createNewIMUserSingle(users);
+                Assert.assertNotNull(result);
+            }
             File file = new File(filePath);
             file.delete();
         } catch (Exception e) {
@@ -110,5 +122,7 @@ public class EmpSaveService implements SaveService {
         }
         return null;
     }
+
+    private EasemobIMUsers easemobIMUsers = new EasemobIMUsers();
 
 }

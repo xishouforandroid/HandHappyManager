@@ -50,17 +50,17 @@
 
     <insert id="saveList" parameterType="com.liangxunwang.unimanager.model.Order">
         insert into PAOPAO_SHOPPING_ORDER (order_no, empid, payable_amount,create_time,pay_time,status,pay_status,trade_no,out_trade_no,trade_type,is_dxk_order,order_cont)
-        VALUES(#{order_no,jdbcType=VARCHAR},
-            #{empid,jdbcType=VARCHAR},
-            #{payable_amount,jdbcType=VARCHAR},
-            #{create_time,jdbcType=VARCHAR},
+        VALUES(#{order_no},
+            #{empid},
+            #{payable_amount},
+            #{create_time},
             #{pay_time,jdbcType=VARCHAR},
-            #{status,jdbcType=VARCHAR},
+            #{status},
             #{pay_status,jdbcType=VARCHAR},
             #{trade_no,jdbcType=VARCHAR},
-            #{out_trade_no,jdbcType=VARCHAR},
-            #{trade_type,jdbcType=VARCHAR},
-            #{is_dxk_order,jdbcType=VARCHAR},
+            #{out_trade_no},
+            #{trade_type},
+            #{is_dxk_order},
             #{order_cont,jdbcType=VARCHAR}
             )
     </insert>

@@ -64,9 +64,19 @@ public class AppEmpUpdateCard implements UpdateService {
         messagesDao.save(happyHandMessage);
 
         if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!", "2", emp1.getChannelId());
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!", "1", emp1.getChannelId());
         }
 
+        HappyHandMessage happyHandMessage1 = new HappyHandMessage();
+        happyHandMessage1.setMsgid(UUIDFactory.random());
+        happyHandMessage1.setDateline(System.currentTimeMillis() + "");
+        happyHandMessage1.setTitle("推荐并欢迎你加入沈阳会员交流群。!");
+        happyHandMessage1.setEmpid(emp.getEmpid());
+        messagesDao.save(happyHandMessage1);
+
+        if(!StringUtil.isNullOrEmpty(emp.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳会员交流群。!", "1", emp.getChannelId());
+        }
         return 200;
     }
 }
