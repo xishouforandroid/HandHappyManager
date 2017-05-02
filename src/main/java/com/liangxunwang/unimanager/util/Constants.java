@@ -25,6 +25,9 @@ public class Constants {
 
         public static final Long DAY_MILLISECOND = 86400000L;
 
+        //群组管理员-默认的
+        public static final String DEFAULT_GROUP_OWNER = "8f86531533e34d22923613a68c2c2c1b";
+
 
         //微信支付回调--会员认证
         public static final String WEIXIN_NOTIFY_URL_HY = URL + "payWxHyNotifyAction.do";

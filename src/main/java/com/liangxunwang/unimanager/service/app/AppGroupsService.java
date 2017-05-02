@@ -42,11 +42,13 @@ public class AppGroupsService implements ListService ,FindService{
             Emp emp = empDao.findById(empid);
             if(emp != null){
                 String likeid = emp.getLikeids();
-                Map<String, Object> map = new HashMap<String, Object>();
-                String[] likeids = likeid.split(",");
-                if (likeids != null && likeids.length != 0) {
-                    map.put("likeids", likeids);
-                    lists = groupsDao.listsByLikeIds(map);
+                if(!StringUtil.isNullOrEmpty(likeid)){
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    String[] likeids = likeid.split(",");
+                    if (likeids != null && likeids.length != 0) {
+                        map.put("likeids", likeids);
+                        lists = groupsDao.listsByLikeIds(map);
+                    }
                 }
             }
         }

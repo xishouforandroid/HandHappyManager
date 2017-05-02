@@ -2,8 +2,12 @@ package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.dao.ChooseDao;
 import com.liangxunwang.unimanager.dao.EmpDao;
+import com.liangxunwang.unimanager.dao.EmpGroupsDao;
+import com.liangxunwang.unimanager.dao.GroupsDao;
 import com.liangxunwang.unimanager.model.Emp;
+import com.liangxunwang.unimanager.model.EmpGroups;
 import com.liangxunwang.unimanager.model.HappyHandChoose;
+import com.liangxunwang.unimanager.model.HappyHandGroup;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.service.UpdateService;
 import com.liangxunwang.unimanager.util.Constants;
@@ -12,6 +16,10 @@ import com.liangxunwang.unimanager.util.UUIDFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service("appEmpSecondService")

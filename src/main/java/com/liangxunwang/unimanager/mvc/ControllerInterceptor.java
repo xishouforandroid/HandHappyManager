@@ -77,6 +77,9 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/updatePushId\\.do$)" +
 
                         "|(^/appMsgAllList\\.do$)" +
+                        "|(^/appEmpGroupsByEmpId\\.do$)" +
+                        "|(^/appEmpGroupsSave\\.do$)" +
+                        "|(^/appEmpIsExist\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
