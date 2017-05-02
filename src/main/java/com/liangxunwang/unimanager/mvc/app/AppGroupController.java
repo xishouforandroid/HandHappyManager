@@ -38,4 +38,22 @@ public class AppGroupController extends ControllerConstants {
             return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
         }
     }
+
+
+    @Autowired
+    @Qualifier("appGroupsPublicService")
+    private ListService appGroupsPublicServiceList;
+
+    @RequestMapping(value = "/appPublicGroups", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appPublicGroups(){
+        try {
+            List<HappyHandGroup> lists = (List<HappyHandGroup>) appGroupsPublicServiceList.list("");
+            DataTip tip = new DataTip();
+            tip.setData(lists);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
 }

@@ -80,6 +80,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appEmpGroupsByEmpId\\.do$)" +
                         "|(^/appEmpGroupsSave\\.do$)" +
                         "|(^/appEmpIsExist\\.do$)" +
+                        "|(^/appPublicGroups\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 

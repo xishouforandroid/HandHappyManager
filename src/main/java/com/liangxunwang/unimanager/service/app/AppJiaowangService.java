@@ -3,9 +3,11 @@ package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.EmpDao;
+import com.liangxunwang.unimanager.dao.EmpGroupsDao;
 import com.liangxunwang.unimanager.dao.JiaowangDao;
 import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.model.Emp;
+import com.liangxunwang.unimanager.model.EmpGroups;
 import com.liangxunwang.unimanager.model.HappyHandJw;
 import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.query.JiaowangQuery;
@@ -38,6 +40,10 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
     @Autowired
     @Qualifier("messagesDao")
     private MessagesDao messagesDao;
+
+    @Autowired
+    @Qualifier("empGroupsDao")
+    private EmpGroupsDao empGroupsDao;
 
     @Override
     public Object save(Object object) throws ServiceException {
@@ -183,6 +189,20 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             //加群
             easemobChatGroup.addSingleUserToChatGroup(Constants.DEFAULT_GROUP_ID2, emp1.getEmpid());
             easemobChatGroup.addSingleUserToChatGroup(Constants.DEFAULT_GROUP_ID2, emp2.getEmpid());
+
+            EmpGroups empGroups1 = new EmpGroups();
+            empGroups1.setEmpgroupsid(UUIDFactory.random());
+            empGroups1.setDateline(System.currentTimeMillis() + "");
+            empGroups1.setGroupid(Constants.DEFAULT_GROUP_ID2);
+            empGroups1.setEmpid(emp1.getEmpid());
+            empGroupsDao.save(empGroups1);
+
+            EmpGroups empGroups2 = new EmpGroups();
+            empGroups2.setEmpgroupsid(UUIDFactory.random());
+            empGroups2.setDateline(System.currentTimeMillis() + "");
+            empGroups2.setGroupid(Constants.DEFAULT_GROUP_ID2);
+            empGroups2.setEmpid(emp2.getEmpid());
+            empGroupsDao.save(empGroups2);
 
             HappyHandMessage happyHandMessage11 = new HappyHandMessage();
             happyHandMessage11.setMsgid(UUIDFactory.random());

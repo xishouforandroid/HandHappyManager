@@ -12,10 +12,8 @@ import java.util.Map;
 @Repository("groupsDao")
 public interface GroupsDao {
 
-    /**
-     * 查询建议
-     */
     List<HappyHandGroup> lists(Map<String, Object> map);
+
 
     long count(Map<String, Object> map);
 
@@ -38,4 +36,6 @@ public interface GroupsDao {
     public HappyHandGroup findByLikeId(String likeid);
 
     List<HappyHandGroup> listsByLikeIds(Map<String, Object> map);
+
+    List<HappyHandGroup> listsPublic(Map<String, Object> map);
 }

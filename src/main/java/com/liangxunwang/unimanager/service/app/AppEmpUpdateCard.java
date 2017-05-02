@@ -2,9 +2,11 @@ package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.EmpDao;
+import com.liangxunwang.unimanager.dao.EmpGroupsDao;
 import com.liangxunwang.unimanager.dao.EmpKuDao;
 import com.liangxunwang.unimanager.dao.MessagesDao;
 import com.liangxunwang.unimanager.model.Emp;
+import com.liangxunwang.unimanager.model.EmpGroups;
 import com.liangxunwang.unimanager.model.EmpKu;
 import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.service.ServiceException;
@@ -29,6 +31,10 @@ public class AppEmpUpdateCard implements UpdateService {
     @Autowired
     @Qualifier("messagesDao")
     private MessagesDao messagesDao;
+
+    @Autowired
+    @Qualifier("empGroupsDao")
+    private EmpGroupsDao empGroupsDao;
 
     private EasemobChatGroup easemobChatGroup = new EasemobChatGroup();
 
@@ -69,6 +75,13 @@ public class AppEmpUpdateCard implements UpdateService {
 
         //加群
         easemobChatGroup.addSingleUserToChatGroup(Constants.DEFAULT_GROUP_ID1, emp.getEmpid());
+        EmpGroups empGroups = new EmpGroups();
+        empGroups.setEmpgroupsid(UUIDFactory.random());
+        empGroups.setDateline(System.currentTimeMillis() + "");
+        empGroups.setGroupid(Constants.DEFAULT_GROUP_ID1);
+        empGroups.setEmpid(emp.getEmpid());
+        empGroupsDao.save(empGroups);
+
         HappyHandMessage happyHandMessage1 = new HappyHandMessage();
         happyHandMessage1.setMsgid(UUIDFactory.random());
         happyHandMessage1.setDateline(System.currentTimeMillis() + "");
@@ -76,8 +89,8 @@ public class AppEmpUpdateCard implements UpdateService {
         happyHandMessage1.setEmpid(emp.getEmpid());
         messagesDao.save(happyHandMessage1);
 
-        if(!StringUtil.isNullOrEmpty(emp.getChannelId())){
-            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳会员交流群。", "1", emp.getChannelId());
+        if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳会员交流群。", "1", emp1.getChannelId());
         }
 
         return 200;
