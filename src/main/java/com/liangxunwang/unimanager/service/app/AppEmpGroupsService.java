@@ -54,9 +54,19 @@ public class AppEmpGroupsService implements ListService,SaveService,FindService 
         EmpGroups empGroups = (EmpGroups) object;
         empGroups.setEmpgroupsid(UUIDFactory.random());
         empGroups.setDateline(System.currentTimeMillis()+"");
-        empGroupsDao.save(empGroups);
-        //环信加入群聊
-        easemobChatGroup.addSingleUserToChatGroup(empGroups.getGroupid(), empGroups.getEmpid());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("empid", empGroups.getEmpid());
+        map.put("groupid", empGroups.getGroupid());
+        List<EmpGroups> lists = empGroupsDao.findById(map);
+        if(lists != null && lists.size()>0){
+            return 0;
+        }else {
+            empGroupsDao.save(empGroups);
+            //环信加入群聊
+            easemobChatGroup.addSingleUserToChatGroup(empGroups.getGroupid(), empGroups.getEmpid());
+        }
+
         return 200;
     }
 

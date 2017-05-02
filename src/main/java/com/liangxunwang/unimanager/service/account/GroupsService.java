@@ -1,7 +1,10 @@
 package com.liangxunwang.unimanager.service.account;
 
+import com.google.gson.Gson;
 import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.GroupsDao;
+import com.liangxunwang.unimanager.model.CreateGroupsData;
+import com.liangxunwang.unimanager.model.GroupidData;
 import com.liangxunwang.unimanager.model.HappyHandGroup;
 import com.liangxunwang.unimanager.query.GroupsQuery;
 import com.liangxunwang.unimanager.service.*;
@@ -56,13 +59,18 @@ public class GroupsService implements ListService,SaveService,DeleteService,Exec
     @Override
     public Object save(Object object) throws ServiceException {
         HappyHandGroup happyHandGroup = (HappyHandGroup) object;
-        happyHandGroup.setGroupid(UUIDFactory.random());
-        happyHandGroup.setIs_use("1");
-        groupsDao.save(happyHandGroup);
-        //添加群组成功，在环信添加群组
         Group group = new Group();
         group.groupname(happyHandGroup.getTitle()).desc(happyHandGroup.getContent())._public(true).maxusers(2000).approval(false).owner(Constants.DEFAULT_GROUP_OWNER);
-        Object result = easemobChatGroup.createChatGroup(group);
+        String result = (String) easemobChatGroup.createChatGroup(group);
+        CreateGroupsData createGroupsData = new Gson().fromJson(result, CreateGroupsData.class);
+        if(createGroupsData != null){
+            GroupidData groupidData = createGroupsData.getData();
+            if(groupidData != null){
+                happyHandGroup.setGroupid(groupidData.getGroupid());
+                happyHandGroup.setIs_use("1");
+                groupsDao.save(happyHandGroup);
+            }
+        }
         return null;
     }
 
