@@ -27,6 +27,8 @@ public class Constants {
 
         //群组管理员-默认的
         public static final String DEFAULT_GROUP_OWNER = "8f86531533e34d22923613a68c2c2c1b";
+        public static final String DEFAULT_GROUP_ID1 = "14989449560068";
+        public static final String DEFAULT_GROUP_ID2 = "14989470531585";
 
 
         //微信支付回调--会员认证

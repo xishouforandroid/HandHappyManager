@@ -1,5 +1,6 @@
 package com.liangxunwang.unimanager.service.app;
 
+import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.EmpKuDao;
 import com.liangxunwang.unimanager.dao.MessagesDao;
@@ -8,10 +9,7 @@ import com.liangxunwang.unimanager.model.EmpKu;
 import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.service.ServiceException;
 import com.liangxunwang.unimanager.service.UpdateService;
-import com.liangxunwang.unimanager.util.BaiduPush;
-import com.liangxunwang.unimanager.util.MD5Util;
-import com.liangxunwang.unimanager.util.StringUtil;
-import com.liangxunwang.unimanager.util.UUIDFactory;
+import com.liangxunwang.unimanager.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,8 @@ public class AppEmpUpdateCard implements UpdateService {
     @Autowired
     @Qualifier("messagesDao")
     private MessagesDao messagesDao;
+
+    private EasemobChatGroup easemobChatGroup = new EasemobChatGroup();
 
     @Override
     public Object update(Object object) {
@@ -67,16 +67,19 @@ public class AppEmpUpdateCard implements UpdateService {
             BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!", "1", emp1.getChannelId());
         }
 
+        //加群
+        easemobChatGroup.addSingleUserToChatGroup(Constants.DEFAULT_GROUP_ID1, emp.getEmpid());
         HappyHandMessage happyHandMessage1 = new HappyHandMessage();
         happyHandMessage1.setMsgid(UUIDFactory.random());
         happyHandMessage1.setDateline(System.currentTimeMillis() + "");
-        happyHandMessage1.setTitle("推荐并欢迎你加入沈阳会员交流群。!");
+        happyHandMessage1.setTitle("推荐并欢迎你加入沈阳会员交流群。");
         happyHandMessage1.setEmpid(emp.getEmpid());
         messagesDao.save(happyHandMessage1);
 
         if(!StringUtil.isNullOrEmpty(emp.getChannelId())){
-            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳会员交流群。!", "1", emp.getChannelId());
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳会员交流群。", "1", emp.getChannelId());
         }
+
         return 200;
     }
 }

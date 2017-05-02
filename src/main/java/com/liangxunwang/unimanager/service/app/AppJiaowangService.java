@@ -1,6 +1,7 @@
 package com.liangxunwang.unimanager.service.app;
 
 
+import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.EmpDao;
 import com.liangxunwang.unimanager.dao.JiaowangDao;
 import com.liangxunwang.unimanager.dao.MessagesDao;
@@ -113,7 +114,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         return list;
     }
 
-
+    private EasemobChatGroup easemobChatGroup = new EasemobChatGroup();
     //处理交往申请
     @Override
     public Object update(Object object) {
@@ -178,6 +179,34 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
                 BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", "恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！", "4", emp2.getChannelId());
             }
+
+            //加群
+            easemobChatGroup.addSingleUserToChatGroup(Constants.DEFAULT_GROUP_ID2, emp1.getEmpid());
+            easemobChatGroup.addSingleUserToChatGroup(Constants.DEFAULT_GROUP_ID2, emp2.getEmpid());
+
+            HappyHandMessage happyHandMessage11 = new HappyHandMessage();
+            happyHandMessage11.setMsgid(UUIDFactory.random());
+            happyHandMessage11.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage11.setTitle("推荐并欢迎你加入沈阳情侣群。");
+            happyHandMessage11.setEmpid(emp1.getEmpid());
+            messagesDao.save(happyHandMessage11);
+
+            if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳情侣群。", "1", emp1.getChannelId());
+            }
+
+
+            HappyHandMessage happyHandMessage12 = new HappyHandMessage();
+            happyHandMessage12.setMsgid(UUIDFactory.random());
+            happyHandMessage12.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage12.setTitle("推荐并欢迎你加入沈阳情侣群。");
+            happyHandMessage12.setEmpid(emp2.getEmpid());
+            messagesDao.save(happyHandMessage12);
+
+            if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳情侣群。", "1", emp2.getChannelId());
+            }
+
         }else{
             //拒绝请求 要通知对方
             //todo
