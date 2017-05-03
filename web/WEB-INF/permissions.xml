@@ -38,6 +38,9 @@
     <group id="REPORT_MANAGE" name="投诉中心">
         <permission id="REPORT_LIST" name="投诉中心"/>
     </group>
+    <group id="APPLY_BACK_MANAGE" name="退还保证金">
+        <permission id="APPLY_BACK_LIST" name="申请列表"/>
+    </group>
 
     <group id="NOTICE_MANAGE" name="公告管理">
         <permission id="ADD_NOTICE" name="添加公告"/>

@@ -28,4 +28,6 @@ public interface CxrzDao {
      */
     public void update(HappyHandCxrz happyHandCxrz);
 
+    public void updateByEmpId(HappyHandCxrz happyHandCxrz);
+
 }

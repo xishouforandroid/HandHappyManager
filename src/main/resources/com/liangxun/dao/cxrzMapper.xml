@@ -43,4 +43,8 @@
         UPDATE happy_hand_cxrz SET is_use=#{is_use}  WHERE cxrzid=#{cxrzid}
     </update>
 
+    <update id="updateByEmpId" parameterType="com.liangxunwang.unimanager.model.HappyHandCxrz">
+        UPDATE happy_hand_cxrz SET is_use=#{is_use}  WHERE empid=#{empid}
+    </update>
+
 </mapper>

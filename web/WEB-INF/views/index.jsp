@@ -252,6 +252,20 @@
                     </li>
                 </c:if>
 
+                <c:if test="${um:permission('APPLY_BACK_LIST', sessionScope.powers)}">
+                    <li class="dropdown">
+                        <a href="javascript:void (0);" class="dropdown-toggle">
+                            <i class="fa fa-envelope"></i>
+                            <span>退还保证金</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <c:if test="${um:permission('APPLY_BACK_LIST', sessionScope.powers)}">
+                                <li><a href="javascript:void(0);" onclick="toPage('/applyBack/list','1')">申请列表</a></li>
+                            </c:if>
+                        </ul>
+                    </li>
+                </c:if>
+
                 <c:if test="${um:permission('ADD_NOTICE', sessionScope.powers)||um:permission('NOTICE_LIST', sessionScope.powers)}">
                     <li class="dropdown">
                         <a href="javascript:void (0);" class="dropdown-toggle">
