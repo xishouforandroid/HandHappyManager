@@ -34,7 +34,6 @@ public class IndexController extends ControllerConstants {
     @RequestMapping("/mainPage")
     public String mainPage(HttpSession session,ModelMap map){
         Admin admin = (Admin) session.getAttribute(ControllerConstants.ACCOUNT_KEY);
-
         return "/main";
     }
 
@@ -51,6 +50,9 @@ public class IndexController extends ControllerConstants {
         return "redirect:/index.do";
     }
 
-
+    @RequestMapping("/welcome")
+    public String welcome(){
+        return "html/index";
+    }
 
 }

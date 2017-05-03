@@ -43,7 +43,8 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>/index.do</welcome-file>
+        <!--<welcome-file>/html/index.html</welcome-file>-->
+        <welcome-file>/welcome.do</welcome-file>
     </welcome-file-list>
 
     <error-page>
