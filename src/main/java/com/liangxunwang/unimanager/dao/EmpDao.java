@@ -57,4 +57,6 @@ public interface EmpDao {
 
     List<Emp> listsSearch(Map<String, Object> map);
 
+    void updateIsPush(@Param(value = "is_push") String empid, @Param(value = "password") String password);
+
 }

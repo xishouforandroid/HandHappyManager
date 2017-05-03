@@ -30,6 +30,7 @@
         <result column="userId" property="userId"/>
         <result column="channelId" property="channelId"/>
         <result column="deviceType" property="deviceType"/>
+        <result column="is_push" property="is_push"/>
 
         <result column="chooseid" property="chooseid"/>
         <result column="agestart" property="agestart"/>
@@ -368,4 +369,8 @@
         limit #{index},#{size}
     </select>
 
+
+    <update id="updateIsPush" parameterType="String">
+        UPDATE emp SET is_push=#{is_push} WHERE empid=#{empid}
+    </update>
 </mapper>

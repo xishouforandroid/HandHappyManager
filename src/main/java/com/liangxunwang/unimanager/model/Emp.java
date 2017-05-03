@@ -36,6 +36,7 @@ public class Emp
     private String channelId;
 
     private String deviceType;
+    private String is_push;//是否允许推送 默认0是 1否
 
     //择偶要求
     private String chooseid;
@@ -50,6 +51,14 @@ public class Emp
     //城市
     private String pname;
     private String cityName;
+
+    public String getIs_push() {
+        return is_push;
+    }
+
+    public void setIs_push(String is_push) {
+        this.is_push = is_push;
+    }
 
     public String getUserId() {
         return userId;
