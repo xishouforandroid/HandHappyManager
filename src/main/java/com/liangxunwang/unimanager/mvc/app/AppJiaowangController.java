@@ -6,10 +6,7 @@ import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.query.FriendsQuery;
 import com.liangxunwang.unimanager.query.JiaowangQuery;
-import com.liangxunwang.unimanager.service.DeleteService;
-import com.liangxunwang.unimanager.service.ListService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.UpdateService;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +35,11 @@ public class AppJiaowangController extends ControllerConstants {
     @Autowired
     @Qualifier("appJiaowangService")
     private DeleteService appJiaowangServiceDelete;
+
+    @Autowired
+    @Qualifier("appJiaowangService")
+    private ExecuteService appJiaowangServiceExe;
+
 
     @RequestMapping(value = "/appSaveJiaowang", produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -107,11 +109,28 @@ public class AppJiaowangController extends ControllerConstants {
     }
 
 
+    //取消邀请交往请求
     @RequestMapping(value = "/appDeleteJiaowang", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String appDeleteJiaowang(HappyHandJw happyHandJw){
         try {
             appJiaowangServiceDelete.delete(happyHandJw);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));
+        }
+    }
+
+
+    //删除交往对象 解除交往关系
+    @RequestMapping(value = "/appDeleteJiaowangDx", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appDeleteJiaowangDx(HappyHandJw happyHandJw){
+        try {
+            appJiaowangServiceExe.execute(happyHandJw);
             DataTip tip = new DataTip();
             tip.setData(SUCCESS);
             return toJSONString(tip);

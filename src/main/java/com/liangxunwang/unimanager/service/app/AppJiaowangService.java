@@ -28,7 +28,7 @@ import java.util.Map;
  * Created by zhl on 2015/3/3.
  */
 @Service("appJiaowangService")
-public class AppJiaowangService implements SaveService,ListService,UpdateService,DeleteService {
+public class AppJiaowangService implements SaveService,ListService,UpdateService,DeleteService , ExecuteService{
     @Autowired
     @Qualifier("jiaowangDao")
     private JiaowangDao jiaowangDao;
@@ -252,5 +252,12 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
     }
 
 
-
+    @Override
+    public Object execute(Object object) throws Exception {
+        HappyHandJw happyHandJw = (HappyHandJw) object;
+        jiaowangDao.delete(happyHandJw);
+        empDao.updateState(happyHandJw.getEmpid1(), "1");
+        empDao.updateState(happyHandJw.getEmpid2(), "1");
+        return 200;
+    }
 }

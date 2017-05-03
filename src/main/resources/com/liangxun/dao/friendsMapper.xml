@@ -86,4 +86,9 @@
     </select>
 
 
+    <delete id="delete" parameterType="String">
+        DELETE FROM friends where empid1 = #{empid1} AND empid2 = #{empid2}
+    </delete>
+
+
 </mapper>

@@ -10,10 +10,7 @@ import com.liangxunwang.unimanager.model.HappyHandMessage;
 import com.liangxunwang.unimanager.model.HappyHandPhoto;
 import com.liangxunwang.unimanager.query.EmpQuery;
 import com.liangxunwang.unimanager.query.FriendsQuery;
-import com.liangxunwang.unimanager.service.ListService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.ServiceException;
-import com.liangxunwang.unimanager.service.UpdateService;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,7 +24,7 @@ import java.util.Map;
  * Created by zhl on 2015/3/3.
  */
 @Service("appFriendsService")
-public class AppFriendsService implements SaveService,ListService,UpdateService {
+public class AppFriendsService implements SaveService,ListService,UpdateService,ExecuteService {
     @Autowired
     @Qualifier("friendsDao")
     private FriendsDao friendsDao;
@@ -188,4 +185,26 @@ public class AppFriendsService implements SaveService,ListService,UpdateService 
         return 200;
     }
 
+    @Override
+    public Object execute(Object object) throws Exception {
+        Friends friends = (Friends) object;
+        if(StringUtil.isNullOrEmpty(friends.getEmpid1())){
+            throw new ServiceException("empidisnull");
+        }
+        if(StringUtil.isNullOrEmpty(friends.getEmpid2())){
+            throw new ServiceException("empidisnull");
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("empid1" ,friends.getEmpid1());
+        map.put("empid2" ,friends.getEmpid2());
+        map.put("is_check" ,"1");
+
+        List<Friends> listss = friendsDao.lists(map);
+        if(listss != null && listss.size()>0){
+            friendsDao.delete(friends);
+        }else {
+            throw new ServiceException("noexist");
+        }
+        return 200;
+    }
 }

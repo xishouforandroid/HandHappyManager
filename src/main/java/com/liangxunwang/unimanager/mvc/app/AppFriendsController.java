@@ -5,6 +5,7 @@ import com.liangxunwang.unimanager.model.HappyHandLike;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
 import com.liangxunwang.unimanager.query.FriendsQuery;
+import com.liangxunwang.unimanager.service.ExecuteService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.SaveService;
 import com.liangxunwang.unimanager.service.UpdateService;
@@ -32,6 +33,11 @@ public class AppFriendsController extends ControllerConstants {
     @Autowired
     @Qualifier("appFriendsService")
     private UpdateService appFriendsServiceUpdate;
+
+    @Autowired
+    @Qualifier("appFriendsService")
+    private ExecuteService appFriendsServiceExe;
+
 
 
     @RequestMapping(value = "/appSaveFriends", produces = "text/plain;charset=UTF-8")
@@ -97,4 +103,27 @@ public class AppFriendsController extends ControllerConstants {
             }
         }
     }
+
+    //删除好友
+    @RequestMapping(value = "/appDeleteFriends", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appDeleteFriends(Friends friends){
+        try {
+            appFriendsServiceExe.execute(friends);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            String msg = e.getMessage();
+            if (msg.equals("empidisnull")){
+                return toJSONString(new ErrorTip(1, "请检查该会员ID是否存在！"));
+            }else if(msg.equals("noexist")){
+                return toJSONString(new ErrorTip(1, "该会员和您不是好友关系！"));
+            }
+            else{
+                return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));
+            }
+        }
+    }
+
 }
