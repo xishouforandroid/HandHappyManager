@@ -83,6 +83,7 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appPublicGroups\\.do$)" +
                         "|(^/appSearchPeoplesByKeyWords\\.do$)" +
                         "|(^/appSearchGroupsByKeywords\\.do$)" +
+                        "|(^/appTel\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
