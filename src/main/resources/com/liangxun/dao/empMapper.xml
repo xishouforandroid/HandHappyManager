@@ -309,4 +309,63 @@
         UPDATE emp set userId=#{userId}, channelId=#{channelId}, deviceType=#{deviceType} WHERE empid=#{empid}
     </update>
 
+
+    <select id="listsSearch" resultMap="emp">
+        SELECT sn.*,
+        lcity.cityName as cityName,
+        lpro.pname as pname
+        from emp sn
+        LEFT JOIN province lpro ON lpro.provinceid = sn.provinceid
+        LEFT JOIN city lcity ON lcity.cityid = sn.cityid
+        WHERE 1=1 AND sn.rzstate1 ='1' AND  sn.is_use = '1'
+
+        <if test="agestart != null and agestart != ''">
+            AND sn.age &gt; #{agestart}
+        </if>
+
+        <if test="ageend != null and ageend != ''">
+            AND sn.age &lt; #{ageend}
+        </if>
+
+        <if test="heightlstart != null and heightlstart != ''">
+            AND sn.heightl &gt; #{heightlstart}
+        </if>
+
+        <if test="heightlend != null and heightlend != ''">
+            AND sn.heightl &lt; #{heightlend}
+        </if>
+
+        <if test="educationm == '5'">
+            AND sn.education = '5'
+        </if>
+        <if test="educationm == '4'">
+            AND (sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="educationm == '3'">
+            AND (sn.education = '3' OR sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="educationm == '2'">
+            AND (sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="educationm == '1'">
+            AND (sn.education = '1' OR sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
+        </if>
+        <if test="marriagem != null and marriagem != ''">
+            AND sn.marriage = #{marriagem}
+        </if>
+        <if test="state != null and state != ''">
+            AND sn.state = #{state}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sn.sex = #{sex}
+        </if>
+        <if test="likeids != null and likeids != ''">
+            AND sn.likeids like CONCAT('%',#{likeids},'%')
+        </if>
+        <if test="keywords != null and keywords != ''">
+            AND sn.mobile like CONCAT('%',#{keywords},'%')
+        </if>
+        limit #{index},#{size}
+    </select>
+
 </mapper>

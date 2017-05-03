@@ -79,4 +79,17 @@
 
     </select>
 
+
+    <select id="listsSearch" resultMap="groups">
+        SELECT sn.* from happy_hand_group sn
+        WHERE 1=1
+        <if test="likeids != null and likeids != ''">
+            AND sn.likeid = #{likeids}
+        </if>
+        <if test="keywords != null and keywords != ''">
+            AND (sn.title like CONCAT('%',#{keywords},'%') OR  sn.content like CONCAT('%',#{keywords},'%'))
+        </if>
+    </select>
+
+
 </mapper>

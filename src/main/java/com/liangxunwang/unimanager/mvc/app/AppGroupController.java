@@ -1,9 +1,9 @@
 package com.liangxunwang.unimanager.mvc.app;
 
-import com.liangxunwang.unimanager.model.Emp;
 import com.liangxunwang.unimanager.model.HappyHandGroup;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
+import com.liangxunwang.unimanager.query.AppGroupsQuery;
 import com.liangxunwang.unimanager.service.FindService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
@@ -13,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -56,4 +54,23 @@ public class AppGroupController extends ControllerConstants {
             return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
         }
     }
+
+    @Autowired
+    @Qualifier("appGroupsSearchService")
+    private ListService appGroupsSearchServiceList;
+
+    //按照条件查询群列表
+    @RequestMapping(value = "/appSearchGroupsByKeywords", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appSearchGroupsByKeywords(AppGroupsQuery query){
+        try {
+            List<HappyHandGroup> lists = (List<HappyHandGroup>) appGroupsSearchServiceList.list(query);
+            DataTip tip = new DataTip();
+            tip.setData(lists);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
+
 }

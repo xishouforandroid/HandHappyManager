@@ -5,6 +5,7 @@ import com.liangxunwang.unimanager.model.HappyHandCompany;
 import com.liangxunwang.unimanager.model.HappyHandGroup;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
+import com.liangxunwang.unimanager.query.PersonQuery;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.util.ControllerConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class AppTuijianController extends ControllerConstants {
     @Qualifier("appEmpService")
     private ListService appEmpServiceList;
 
+    //推荐人
     @RequestMapping(value = "/appTuijianPeoples", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String appTuijianPeoples(String empid, String state, String size, String sex){
@@ -56,6 +58,7 @@ public class AppTuijianController extends ControllerConstants {
     @Qualifier("appGroupsService")
     private ListService appGroupsServiceList;
 
+    //推荐群
     @RequestMapping(value = "/appTuijianGroups", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String appTuijianGroups(String empid){
@@ -68,4 +71,23 @@ public class AppTuijianController extends ControllerConstants {
             return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
         }
     }
+
+
+
+    @Autowired
+    @Qualifier("appEmpSearchService")
+    private ListService appEmpSearchServiceList;
+    @RequestMapping(value = "/appSearchPeoplesByKeyWords", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appSearchPeoplesByKeyWords(PersonQuery query){
+        try {
+            List<Emp> lists = (List<Emp>) appEmpSearchServiceList.list(query);
+            DataTip tip = new DataTip();
+            tip.setData(lists);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
+        }
+    }
+
 }

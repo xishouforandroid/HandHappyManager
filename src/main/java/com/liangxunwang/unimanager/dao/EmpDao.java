@@ -55,5 +55,6 @@ public interface EmpDao {
      */
     void updatePushId(@Param(value = "empid") String id, @Param(value = "userId") String userId, @Param(value = "channelId") String channelId, @Param(value = "deviceType")String deviceType);
 
+    List<Emp> listsSearch(Map<String, Object> map);
 
 }

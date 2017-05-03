@@ -38,4 +38,6 @@ public interface GroupsDao {
     List<HappyHandGroup> listsByLikeIds(Map<String, Object> map);
 
     List<HappyHandGroup> listsPublic(Map<String, Object> map);
+
+    List<HappyHandGroup> listsSearch(Map<String, Object> map);
 }
