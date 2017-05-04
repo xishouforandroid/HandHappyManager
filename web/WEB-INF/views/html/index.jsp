@@ -20,7 +20,7 @@
 <div class="header">
     <div class="container clearfix">
         <a href="" class="logo"><img src="../../../html/pics/logo_long.png" alt="牵手吧"></a>
-        <a href="tel:02431054568" class="phone"><img src="../../../html/pics/phone.png" alt=""><span>024-31054568</span></a>
+        <a href="tel:02431054568" class="phone"><img src="../../../html/pics/phone.png" alt=""><span>客服电话: 024-31054568</span></a>
     </div>
 </div>
 
@@ -60,7 +60,7 @@
     <p class="footer-detail">联系我们：<a href="tel:02431054568">86（024）31054568</a>   (周一至周日 早9:00-晚5:00) <br/>
         沈阳熙民信息技术有限公司<br/>
         地址：沈阳市沈河区北站路61号财富中心A座17层<br/>
-        备案号  辽ICP备16017121号<br/>
+        备案号  <a href="http://www.miibeian.gov.cn" target="_blank">辽ICP备16017121号</a><br/>
         Copyright © 2016-2017 All Rights Reserved.</p>
 </div>
 
