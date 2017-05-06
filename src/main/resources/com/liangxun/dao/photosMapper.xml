@@ -49,7 +49,7 @@
     </select>
 
     <update id="update" parameterType="String">
-        UPDATE happy_hand_photo SET title=#{title},photos=#{photos} WHERE photoid=#{photoid}
+        UPDATE happy_hand_photo SET title=#{title, jdbcType=VARCHAR},photos=#{photos} WHERE photoid=#{photoid}
     </update>
 
     <select id="findByEmpid" resultMap="photos">

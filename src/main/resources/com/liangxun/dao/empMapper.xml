@@ -286,9 +286,6 @@
         <if test="educationm == '2'">
             AND (sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
         </if>
-        <if test="educationm == '1'">
-            AND (sn.education = '1' OR sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
-        </if>
 
         <if test="marriagem != null and marriagem != ''">
             AND sn.marriage = #{marriagem}
@@ -348,9 +345,7 @@
         <if test="educationm == '2'">
             AND (sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
         </if>
-        <if test="educationm == '1'">
-            AND (sn.education = '1' OR sn.education = '2' OR sn.education = '3' OR sn.education = '4' OR sn.education = '5')
-        </if>
+
         <if test="marriagem != null and marriagem != ''">
             AND sn.marriage = #{marriagem}
         </if>

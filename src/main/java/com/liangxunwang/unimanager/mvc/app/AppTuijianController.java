@@ -42,7 +42,6 @@ public class AppTuijianController extends ControllerConstants {
         if("1".equals(sex)){
             map.put("sex", "0");
         }
-
         try {
             List<Emp> lists = (List<Emp>) appEmpServiceList.list(map);
             DataTip tip = new DataTip();

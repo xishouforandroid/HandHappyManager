@@ -128,8 +128,7 @@
                         <label class="col-sm-2 control-label">学历</label>
                         <div class="col-sm-4">
                             <select class="form-control" id="education">
-                                <option value="1" ${emp.education=='1'?'selected':''}>高中及以下</option>
-                                <option value="2" ${emp.education=='2'?'selected':''}>中专</option>
+                                <option value="2" ${emp.education=='2'?'selected':''}>专科以下</option>
                                 <option value="3" ${emp.education=='3'?'selected':''}>专科</option>
                                 <option value="4" ${emp.education=='4'?'selected':''}>本科</option>
                                 <option value="5" ${emp.education=='5'?'selected':''}>研究生及以上</option>

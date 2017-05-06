@@ -173,7 +173,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage1.setEmpid(happyHandJw.getEmpid1());
             messagesDao.save(happyHandMessage1);
             if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "交往消息", "恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！", "4", emp1.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "交往消息", "恭喜你与"+emp2.getNickname()+"交往，期待你们传来好消息！", "7", emp1.getChannelId());
             }
 
             HappyHandMessage happyHandMessage2 = new HappyHandMessage();
@@ -183,7 +183,7 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
             happyHandMessage2.setEmpid(happyHandJw.getEmpid2());
             messagesDao.save(happyHandMessage2);
             if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", "恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！", "4", emp2.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "交往消息", "恭喜你与"+emp1.getNickname()+"交往，期待你们传来好消息！", "7", emp2.getChannelId());
             }
 
             //加群
@@ -258,6 +258,31 @@ public class AppJiaowangService implements SaveService,ListService,UpdateService
         jiaowangDao.delete(happyHandJw);
         empDao.updateState(happyHandJw.getEmpid1(), "1");
         empDao.updateState(happyHandJw.getEmpid2(), "1");
+
+        Emp emp1 = empDao.findById(happyHandJw.getEmpid1());
+        Emp emp2 = empDao.findById(happyHandJw.getEmpid2());
+
+        HappyHandMessage happyHandMessage11 = new HappyHandMessage();
+        happyHandMessage11.setMsgid(UUIDFactory.random());
+        happyHandMessage11.setDateline(System.currentTimeMillis() + "");
+        happyHandMessage11.setTitle("您与"+emp2.getNickname()+"已解除交往关系");
+        happyHandMessage11.setEmpid(happyHandJw.getEmpid1());
+        messagesDao.save(happyHandMessage11);
+
+        if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "您与"+emp2.getNickname()+"已解除交往关系", "6", emp1.getChannelId());
+        }
+
+        HappyHandMessage happyHandMessage12 = new HappyHandMessage();
+        happyHandMessage12.setMsgid(UUIDFactory.random());
+        happyHandMessage12.setDateline(System.currentTimeMillis() + "");
+        happyHandMessage12.setTitle("您与"+emp1.getNickname()+"已解除交往关系");
+        happyHandMessage12.setEmpid(happyHandJw.getEmpid2());
+        messagesDao.save(happyHandMessage12);
+
+        if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "系统消息", "您与"+emp1.getNickname()+"已解除交往关系", "6", emp2.getChannelId());
+        }
         return 200;
     }
 }

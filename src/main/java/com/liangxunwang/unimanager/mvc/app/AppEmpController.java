@@ -40,7 +40,7 @@ public class AppEmpController extends ControllerConstants {
         }catch (Exception e){
             String msg = e.getMessage();
             if (msg.equals("NotFound")){
-                return toJSONString(new ErrorTip(1, "账号不存在！"));
+                return toJSONString(new ErrorTip(2, "账号不存在！"));
             }else  if (msg.equals("PassNull")){
                 return toJSONString(new ErrorTip(1, "密码不能为空！"));
             }else  if (msg.equals("PassError")){

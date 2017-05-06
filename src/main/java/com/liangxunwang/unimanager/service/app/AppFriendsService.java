@@ -139,6 +139,13 @@ public class AppFriendsService implements SaveService,ListService,UpdateService,
         if(StringUtil.isNullOrEmpty(friends.getFriendsid())){
             throw new ServiceException("friendsidnull");
         }
+        //先查看是否已经是好友了
+        Friends friends11 = friendsDao.findById(friends.getFriendsid());
+        if("1".equals(friends11.getIs_check())){
+            friendsDao.deleteById(friends.getFriendsid());
+            //说明已经是好友了
+            throw new ServiceException("hasFriends");
+        }
         friends.setAccepttime(System.currentTimeMillis()+"");
         friendsDao.update(friends);
         if("1".equals(friends.getIs_check())){
@@ -202,6 +209,10 @@ public class AppFriendsService implements SaveService,ListService,UpdateService,
         List<Friends> listss = friendsDao.lists(map);
         if(listss != null && listss.size()>0){
             friendsDao.delete(friends);
+            //删除好友关系之后 通知对方
+            Emp emp1 = empDao.findById(friends.getEmpid1());
+            Emp emp2 = empDao.findById(friends.getEmpid2());
+            //todo
         }else {
             throw new ServiceException("noexist");
         }

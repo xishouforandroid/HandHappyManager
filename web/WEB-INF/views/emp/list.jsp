@@ -54,8 +54,7 @@
                     <div class="form-group">
                         <select class="form-control" id="education">
                             <option value="">--选择受教育程度--</option>
-                            <option value="1" ${query.education=='1'?'selected':''}>高中及以下</option>
-                            <option value="2" ${query.education=='2'?'selected':''}>中专</option>
+                            <option value="2" ${query.education=='2'?'selected':''}>专科以下</option>
                             <option value="3" ${query.education=='3'?'selected':''}>专科</option>
                             <option value="4" ${query.education=='4'?'selected':''}>本科</option>
                             <option value="5" ${query.education=='5'?'selected':''}>研究生及以上</option>
@@ -148,8 +147,7 @@
                             </td>
                             <td>${e.heightl}</td>
                             <td>
-                                <c:if test="${e.education=='1'}">高中以下</c:if>
-                                <c:if test="${e.education=='2'}">中专</c:if>
+                                <c:if test="${e.education=='2'}">专科以下</c:if>
                                 <c:if test="${e.education=='3'}">专科</c:if>
                                 <c:if test="${e.education=='4'}">本科</c:if>
                                 <c:if test="${e.education=='5'}">研究生以上</c:if>

@@ -27,4 +27,6 @@ public interface FriendsDao {
     long count(Map<String, Object> map);
 
     void delete(Friends friendsid);
+
+    void deleteById(String friendsid);
 }

@@ -81,7 +81,6 @@ public class AppFriendsController extends ControllerConstants {
     }
 
 
-
     //接受好友申请
     @RequestMapping(value = "/appAcceptFriends", produces = "text/plain;charset=UTF-8")
     @ResponseBody
@@ -97,6 +96,8 @@ public class AppFriendsController extends ControllerConstants {
                 return toJSONString(new ErrorTip(1, "请检查该申请ID是否存在！"));
             }else if(msg.equals("ischecknull")){
                 return toJSONString(new ErrorTip(1, "请确认是否传值正确！"));
+            }else if(msg.equals("hasFriends")){
+                return toJSONString(new ErrorTip(2, "对方已经是您的好友了！"));
             }
             else{
                 return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));

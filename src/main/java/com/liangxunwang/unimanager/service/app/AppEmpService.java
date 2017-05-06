@@ -1,14 +1,8 @@
 package com.liangxunwang.unimanager.service.app;
 
 import com.liangxunwang.unimanager.chat.impl.EasemobIMUsers;
-import com.liangxunwang.unimanager.dao.ChooseDao;
-import com.liangxunwang.unimanager.dao.EmpDao;
-import com.liangxunwang.unimanager.dao.EmpKuDao;
-import com.liangxunwang.unimanager.dao.MessagesDao;
-import com.liangxunwang.unimanager.model.Emp;
-import com.liangxunwang.unimanager.model.EmpKu;
-import com.liangxunwang.unimanager.model.HappyHandChoose;
-import com.liangxunwang.unimanager.model.HappyHandMessage;
+import com.liangxunwang.unimanager.dao.*;
+import com.liangxunwang.unimanager.model.*;
 import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.*;
 import io.swagger.client.model.RegisterUsers;
@@ -78,10 +72,10 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
     public Object save(Object object) throws ServiceException {
         Emp emp = (Emp) object;
         //根据mobile查询库里面是否存在改手机号码
-        EmpKu empKu = empKuDao.findByMobile(emp.getMobile());
-        if(empKu == null){
-            throw new ServiceException("MobileNotFound");
-        }
+//        EmpKu empKu = empKuDao.findByMobile(emp.getMobile());
+//        if(empKu == null){
+//            throw new ServiceException("MobileNotFound");
+//        }
         //查询该手机号是否已经注册
         Emp emp1 = empDao.findByMobile(emp.getMobile());
         if(emp1 != null){
@@ -116,11 +110,12 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
         happyHandMessage1.setTitle("请使用搜索按钮，查找和添加会员，浏览会员信息!");
         happyHandMessage1.setEmpid(emp.getEmpid());
         messagesDao.save(happyHandMessage1);
-
-
-//
         return emp.getEmpid();
     }
+
+    @Autowired
+    @Qualifier("photosDao")
+    private PhotosDao photosDao;
 
     @Override
     public Object update(Object object) {
@@ -128,6 +123,25 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
         if(!StringUtil.isNullOrEmpty(emp.getEmpid()) && !StringUtil.isNullOrEmpty(emp.getCover())){
             //更新头像
             empDao.updateCover(emp.getEmpid(), emp.getCover());
+            //添加头像文件到相册
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("empid", emp.getEmpid());
+            List<HappyHandPhoto> lists = photosDao.findByEmpid(map);
+
+            if(lists != null && lists.size() > 0){
+                //说明存在了 更新
+                HappyHandPhoto photo = lists.get(0);//原先的相册
+                photo.setPhotos(photo.getPhotos()+","+ emp.getCover());
+                photosDao.update(photo);
+            }else {
+                //添加
+                HappyHandPhoto photo = new  HappyHandPhoto();
+                photo.setPhotoid(UUIDFactory.random());
+                photo.setDateline(System.currentTimeMillis() + "");
+                photo.setEmpid(emp.getEmpid());
+                photo.setPhotos(emp.getCover());
+                photosDao.save(photo);
+            }
         }
         return 200;
     }
@@ -142,7 +156,6 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
     public Object list(Object object) throws ServiceException {
         Map<String, String> map1 = (Map<String, String>) object;
         String empid = map1.get("empid");
-        String state = map1.get("state");
         String size = map1.get("size");
         String sex = map1.get("sex");
 
@@ -168,13 +181,17 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
             map.put("heightlend", heightlend);
             map.put("educationm", educationm);
             map.put("marriagem", marriagem);
-            map.put("state", state);
+
             if(!StringUtil.isNullOrEmpty(sex)){
                 map.put("sex", sex);
             }
-            list = empDao.listsChoose(map);
-            if(list != null){
-                for(Emp member:list){
+            map.put("state", "1");
+            List<Emp> list1 = empDao.listsChoose(map);//单身的
+            map.put("state", "2");
+            List<Emp> list2 = empDao.listsChoose(map);//交往中的
+
+            if(list1 != null){
+                for(Emp member:list1){
                     if(!StringUtil.isNullOrEmpty(member.getCover())){
                         if (member.getCover().startsWith("upload")) {
                             member.setCover(Constants.URL + member.getCover());
@@ -189,8 +206,29 @@ public class AppEmpService implements ExecuteService,SaveService,UpdateService,L
                             member.setCardpic(Constants.QINIU_URL + member.getCardpic());
                         }
                     }
+                    list.add(member);
                 }
             }
+            if(list2 != null){
+                for(Emp member:list2){
+                    if(!StringUtil.isNullOrEmpty(member.getCover())){
+                        if (member.getCover().startsWith("upload")) {
+                            member.setCover(Constants.URL + member.getCover());
+                        }else {
+                            member.setCover(Constants.QINIU_URL + member.getCover());
+                        }
+                    }
+                    if(!StringUtil.isNullOrEmpty(member.getCardpic())){
+                        if (member.getCardpic().startsWith("upload")) {
+                            member.setCardpic(Constants.URL + member.getCardpic());
+                        }else {
+                            member.setCardpic(Constants.QINIU_URL + member.getCardpic());
+                        }
+                    }
+                    list.add(member);
+                }
+            }
+
 
         }
         return list;
