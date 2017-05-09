@@ -201,7 +201,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">身份认证</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="rzstate1" readonly="readonly">
+                            <select class="form-control" id="rzstate1">
                                 <option value="0" ${emp.rzstate1=='0'?'selected':''}>未认证</option>
                                 <option value="1" ${emp.rzstate1=='1'?'selected':''}>已认证</option>
                             </select>
@@ -210,7 +210,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">会员认证</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="rzstate2" readonly="readonly">
+                            <select class="form-control" id="rzstate2">
                                 <option value="0" ${emp.rzstate2=='0'?'selected':''}>未认证</option>
                                 <option value="1" ${emp.rzstate2=='1'?'selected':''}>已认证</option>
                             </select>
@@ -219,7 +219,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">诚信认证</label>
                         <div class="col-sm-4">
-                            <select class="form-control" id="rzstate3" readonly="readonly">
+                            <select class="form-control" id="rzstate3">
                                 <option value="0" ${emp.rzstate3=='0'?'selected':''}>未认证</option>
                                 <option value="1" ${emp.rzstate3=='1'?'selected':''}>已认证</option>
                             </select>
@@ -271,6 +271,9 @@
         var marriage = $("#marriage").val();
         var company = $("#company").val();
         var sex = $("#sex").val();
+        var rzstate1 = $("#rzstate1").val();
+        var rzstate2 = $("#rzstate2").val();
+        var rzstate3 = $("#rzstate3").val();
 
         var provinceid = $("#provinceid").val();
         var cityid = $("#cityid").val();
@@ -383,6 +386,9 @@
                 "company": company,
                 "provinceid": provinceid,
                 "cityid": cityid,
+                "rzstate1": rzstate1,
+                "rzstate2": rzstate2,
+                "rzstate3": rzstate3,
                 "is_use": is_use
             },
             async: false,

@@ -171,7 +171,7 @@ public class AppFriendsService implements SaveService,ListService,UpdateService,
             messagesDao.save(happyHandMessage);
 
             if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", emp2.getNickname()+"已经同意你的好友请求", "1", emp1.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", emp2.getNickname()+"已经同意你的好友请求", "9", emp1.getChannelId());
             }
         }else{
             //说明拒绝了
@@ -186,7 +186,7 @@ public class AppFriendsService implements SaveService,ListService,UpdateService,
             messagesDao.save(happyHandMessage);
 
             if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", emp2.getNickname()+"已经拒绝你的好友请求", "1", emp1.getChannelId());
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", emp2.getNickname()+"已经拒绝你的好友请求", "10", emp1.getChannelId());
             }
         }
         return 200;
@@ -202,20 +202,62 @@ public class AppFriendsService implements SaveService,ListService,UpdateService,
             throw new ServiceException("empidisnull");
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("empid1" ,friends.getEmpid1());
-        map.put("empid2" ,friends.getEmpid2());
+        String empid1 = friends.getEmpid1();
+        String empid2 = friends.getEmpid2();
+
+        Emp emp1 = empDao.findById(empid1);
+        Emp emp2 = empDao.findById(empid2);//被删除人
+
+
+        map.put("empid1" , empid1);
+        map.put("empid2" , empid2);
         map.put("is_check" ,"1");
 
-        List<Friends> listss = friendsDao.lists(map);
-        if(listss != null && listss.size()>0){
+        List<Friends> listss1 = friendsDao.lists(map);
+        if(listss1 != null && listss1.size()>0){
             friendsDao.delete(friends);
-            //删除好友关系之后 通知对方
-            Emp emp1 = empDao.findById(friends.getEmpid1());
-            Emp emp2 = empDao.findById(friends.getEmpid2());
-            //todo
+
+            HappyHandMessage happyHandMessage1 = new HappyHandMessage();
+            happyHandMessage1.setMsgid(UUIDFactory.random());
+            happyHandMessage1.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage1.setTitle("你已经把" + emp2.getNickname()+"从好友列表中删除");
+            happyHandMessage1.setEmpid(emp1.getEmpid());
+            messagesDao.save(happyHandMessage1);
+
+            if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "你已经把" + emp2.getNickname()+"从好友列表中删除", "8", emp1.getChannelId());
+            }
+
+
         }else {
-            throw new ServiceException("noexist");
+//            throw new ServiceException("noexist");
         }
+
+        map.put("empid1" , empid2);
+        map.put("empid2" , empid1);
+        List<Friends> listss2 = friendsDao.lists(map);
+
+
+        if(listss2 != null && listss2.size()>0){
+            friends.setEmpid1(empid2);
+            friends.setEmpid2(empid1);
+            friendsDao.delete(friends);
+
+            HappyHandMessage happyHandMessage2 = new HappyHandMessage();
+            happyHandMessage2.setMsgid(UUIDFactory.random());
+            happyHandMessage2.setDateline(System.currentTimeMillis() + "");
+            happyHandMessage2.setTitle(emp1.getNickname()+" 已经把你从好友列表中删除");
+            happyHandMessage2.setEmpid(emp2.getEmpid());
+            messagesDao.save(happyHandMessage2);
+
+            if(!StringUtil.isNullOrEmpty(emp2.getChannelId())){
+                BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp2.getDeviceType()), "系统消息", emp1.getNickname()+" 已经把你从好友列表中删除", "8", emp2.getChannelId());
+            }
+
+        }else {
+//            throw new ServiceException("noexist");
+        }
+
         return 200;
     }
 }

@@ -200,6 +200,9 @@
         marriage=#{marriage},
         company=#{company},
         sex=#{sex},
+        rzstate1=#{rzstate1},
+        rzstate2=#{rzstate2},
+        rzstate3=#{rzstate3},
         is_use = #{is_use}
         WHERE empid=#{empid}
     </update>

@@ -65,12 +65,14 @@ public class AppEmpUpdateCard implements UpdateService {
         HappyHandMessage happyHandMessage = new HappyHandMessage();
         happyHandMessage.setMsgid(UUIDFactory.random());
         happyHandMessage.setDateline(System.currentTimeMillis() + "");
-        happyHandMessage.setTitle("恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!");
+        happyHandMessage.setTitle("恭喜你认证成功！可以免费体验一个月哦，快来体验吧！真心期待您成为我们的会员，我们会努力做得更好！\n" +
+                "温馨提示：你浏览和交流的会员，均是其工作单位推荐。会员身份如有虚假，请随时向我们投诉和反馈。我们会与该会员工作单位沟通、核实，如确实违反服务条款，幸福牵手吧有权暂停或终止该会员的帐号，暂停或终止提供幸福牵手吧提供的全部或部分服务。请幸福牵手吧会员，遵守服务条款，真诚交友。让我们一起携手，共建一个真实、安全的婚恋交友环境！");
         happyHandMessage.setEmpid(emp.getEmpid());
         messagesDao.save(happyHandMessage);
 
         if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "恭喜你认证成功!幸福牵手吧为你提供了一个真实的婚恋交友平台，快来体验吧!幸福牵手吧送您一个月的交友体验，时间到期后，体验结束。真心期待您成为我们的会员，我们会努力做得更好!", "1", emp1.getChannelId());
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "恭喜你认证成功！可以免费体验一个月哦，快来体验吧！真心期待您成为我们的会员，我们会努力做得更好！\n" +
+                    "温馨提示：你浏览和交流的会员，均是其工作单位推荐。会员身份如有虚假，请随时向我们投诉和反馈。我们会与该会员工作单位沟通、核实，如确实违反服务条款，幸福牵手吧有权暂停或终止该会员的帐号，暂停或终止提供幸福牵手吧提供的全部或部分服务。请幸福牵手吧会员，遵守服务条款，真诚交友。让我们一起携手，共建一个真实、安全的婚恋交友环境！", "1", emp1.getChannelId());
         }
 
         //加群
@@ -90,7 +92,7 @@ public class AppEmpUpdateCard implements UpdateService {
         messagesDao.save(happyHandMessage1);
 
         if(!StringUtil.isNullOrEmpty(emp1.getChannelId())){
-            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "推荐并欢迎你加入沈阳会员交流群。", "1", emp1.getChannelId());
+            BaiduPush.PushMsgToSingleDevice(Integer.parseInt(emp1.getDeviceType()), "系统消息", "推荐并欢迎加入沈阳会员交流群。快去找寻真爱吧，祝你早日找到幸福！", "1", emp1.getChannelId());
         }
 
         return 200;
