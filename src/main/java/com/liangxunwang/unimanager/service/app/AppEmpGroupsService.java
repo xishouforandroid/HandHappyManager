@@ -3,10 +3,7 @@ package com.liangxunwang.unimanager.service.app;
 import com.liangxunwang.unimanager.chat.impl.EasemobChatGroup;
 import com.liangxunwang.unimanager.dao.EmpGroupsDao;
 import com.liangxunwang.unimanager.model.EmpGroups;
-import com.liangxunwang.unimanager.service.FindService;
-import com.liangxunwang.unimanager.service.ListService;
-import com.liangxunwang.unimanager.service.SaveService;
-import com.liangxunwang.unimanager.service.ServiceException;
+import com.liangxunwang.unimanager.service.*;
 import com.liangxunwang.unimanager.util.Constants;
 import com.liangxunwang.unimanager.util.StringUtil;
 import com.liangxunwang.unimanager.util.UUIDFactory;
@@ -22,7 +19,7 @@ import java.util.Map;
  * Created by zhl on 2015/3/3.
  */
 @Service("appEmpGroupsService")
-public class AppEmpGroupsService implements ListService,SaveService,FindService {
+public class AppEmpGroupsService implements ListService,SaveService,FindService,DeleteService {
     @Autowired
     @Qualifier("empGroupsDao")
     private EmpGroupsDao empGroupsDao;
@@ -82,5 +79,12 @@ public class AppEmpGroupsService implements ListService,SaveService,FindService 
         }else{
             return false;
         }
+    }
+
+    @Override
+    public Object delete(Object object) throws ServiceException {
+        EmpGroups empGroups = (EmpGroups) object;
+        empGroupsDao.delete(empGroups);
+        return 200;
     }
 }

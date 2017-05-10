@@ -3,6 +3,7 @@ package com.liangxunwang.unimanager.mvc.app;
 import com.liangxunwang.unimanager.model.EmpGroups;
 import com.liangxunwang.unimanager.model.tip.DataTip;
 import com.liangxunwang.unimanager.model.tip.ErrorTip;
+import com.liangxunwang.unimanager.service.DeleteService;
 import com.liangxunwang.unimanager.service.FindService;
 import com.liangxunwang.unimanager.service.ListService;
 import com.liangxunwang.unimanager.service.SaveService;
@@ -25,12 +26,21 @@ public class AppEmpGroupsController extends ControllerConstants {
     private ListService appEmpGroupsService;
 
     @Autowired
+    @Qualifier("appEmpGroupsListService")
+    private ListService appEmpGroupsListServiceList;
+
+    @Autowired
     @Qualifier("appEmpGroupsService")
     private SaveService appEmpGroupsServiceSave;
 
     @Autowired
     @Qualifier("appEmpGroupsService")
     private FindService appEmpGroupsServiceFind;
+
+
+    @Autowired
+    @Qualifier("appEmpGroupsService")
+    private DeleteService appEmpGroupsServiceDel;
 
     //查询用户的群组
     @RequestMapping(value = "/appEmpGroupsByEmpId", produces = "text/plain;charset=UTF-8")
@@ -92,6 +102,43 @@ public class AppEmpGroupsController extends ControllerConstants {
 
         }catch (Exception e){
             return toJSONString(new ErrorTip(1, "操作失败，请稍后重试！"));
+        }
+    }
+
+    //根据用户id和群组iD删除群信息
+    @RequestMapping(value = "/appDeleteGroupsById", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appDeleteGroupsById(EmpGroups empGroups){
+        if(StringUtil.isNullOrEmpty(empGroups.getEmpid())){
+            return toJSONString(new ErrorTip(1, "会员ID为空，请检查或者重新登录！"));
+        }
+        if(StringUtil.isNullOrEmpty(empGroups.getGroupid())){
+            return toJSONString(new ErrorTip(1, "群组ID为空，请检查或者重新登录！"));
+        }
+        try {
+            appEmpGroupsServiceDel.delete(empGroups);
+            DataTip tip = new DataTip();
+            tip.setData(SUCCESS);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "退群操作失败，请稍后重试！"));
+        }
+    }
+
+    //查询用户组根据群ID
+    @RequestMapping(value = "/appEmpByGroupId", produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String appEmpByGroupId(String groupid){
+        if(StringUtil.isNullOrEmpty(groupid)){
+            return toJSONString(new ErrorTip(1, "群组ID为空，请检查或者重新登录！"));
+        }
+        try {
+            List<EmpGroups> lists = (List<EmpGroups> ) appEmpGroupsListServiceList.list(groupid);
+            DataTip tip = new DataTip();
+            tip.setData(lists);
+            return toJSONString(tip);
+        }catch (Exception e){
+            return toJSONString(new ErrorTip(1, "获取数据失败，请稍后重试！"));
         }
     }
 }

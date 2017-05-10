@@ -19,4 +19,6 @@ public interface EmpGroupsDao {
     void save(EmpGroups aboutUs);
 
     List<EmpGroups> findById(Map<String, Object> map);
+
+    void delete(EmpGroups empGroups);
 }

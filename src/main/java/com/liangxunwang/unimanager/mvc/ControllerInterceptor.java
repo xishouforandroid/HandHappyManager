@@ -87,6 +87,8 @@ public class ControllerInterceptor extends ControllerConstants implements Handle
                         "|(^/appSaveApplyBack\\.do$)" +
                         "|(^/appDeleteFriends\\.do$)" +
                         "|(^/appDeleteJiaowangDx\\.do$)" +
+                        "|(^/appDeleteGroupsById\\.do$)" +
+                        "|(^/appEmpByGroupId\\.do$)" +
 
                         "|(^/uploadUnCompressImage\\.do$)"
 
